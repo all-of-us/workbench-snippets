@@ -1,0 +1,13 @@
+# This plot assumes that most_recent_measurement_of_interest.sql has been run.
+options(repr.plot.height = 4, repr.plot.width = 8)
+
+most_recent_measurement_of_interest_df %>%
+    filter(value_as_number < 9999999) %>% # Get rid of nonsensical outliers.
+    ggplot(aes(x = src_hpo_id, y = value_as_number)) +
+    geom_boxplot() +
+    stat_summary(fun.data = get_boxplot_fun_data, geom = 'text', size = 2,
+                 position = position_dodge(width = 0.9), vjust = -0.8) +
+#    scale_y_log10() +  # Uncomment if the data looks skewed.
+    coord_flip() +
+    ylab(str_glue('{UNIT_NAME}')) +
+    ggtitle(str_glue('Most recent {MEASUREMENT_NAME} measurement\nper person, by site'))

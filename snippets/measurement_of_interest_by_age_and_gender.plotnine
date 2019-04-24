@@ -1,0 +1,21 @@
+# This plot assumes that measurement_of_interest.sql has been run.
+
+measurement_of_interest_df['age'] = (pd.to_datetime('today').year
+                                     - measurement_of_interest_df.birth_datetime.map(lambda x: x.year))
+measurement_of_interest_df['age_group'] = pd.cut(measurement_of_interest_df['age'],
+                                                 [-np.inf, 34.5, 49.5, 64.5, np.inf],
+                                                 labels=["<35", "35-49", "50-64", "65+"])
+# meas_filter is a column of True and False
+meas_filter = measurement_of_interest_df['value_as_number'] < 9999999 # Get rid of nonsensical outliers.
+
+(ggplot(measurement_of_interest_df[meas_filter], aes(x = 'age_group', y = 'value_as_number')) +
+    geom_boxplot() +
+    stat_summary(fun_data = get_boxplot_fun_data, geom = 'text', size = 10,
+                 position = position_dodge(width = 0.9), va = 'top') +
+#    scale_y_log10() +  # Uncomment if the data looks skewed.
+    coord_flip() +
+    facet_wrap('~ gender', nrow = len(measurement_of_interest_df.gender.unique())) +
+    xlab('age') +
+    ylab(f'{UNIT_NAME}') +
+    ggtitle(f'All {MEASUREMENT_NAME} measurements, by age, faceted by gender') +
+    theme(figure_size=(12, 12)))
