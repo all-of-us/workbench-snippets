@@ -1,8 +1,16 @@
+# Get setup for GitHub
+
+(1) If you are new to GitHub, don't start here. Instead, work through a GitHub tutorial such as one of these:
+    * https://guides.github.com/activities/hello-world/
+    * http://r-pkgs.had.co.nz/git.html.
+
+(2) Follow [the instructions](https://github.com/all-of-us/workbench#git-secrets) to install [git-secrets](https://github.com/awslabs/git-secrets). Its a git commit hook that "Prevents you from committing passwords and other sensitive information to a git repository.".
+
 # How to contribute a snippet
 
 1. Write the SQL to retrieve the data of interest.
     * Try to put as much of the data wrangling logic into SQL as possible. This means there's less data wrangling code to write twice (e.g., once in [pandas](https://pandas.pydata.org/) for Python and again [dplyr](https://dplyr.tidyverse.org/) for R).
-    * Choose a good prefix for your `<my-query>.sql` filename. The file name helps users decide whether its useful to them. It will also become the name of the dataframe holding the query results (e.g. `<my-query>_df`).
+    * Choose a good prefix for your `<my-query>.sql` file name. The file name helps users decide whether its useful to them. It will also become the name of the dataframe holding the query results (e.g. `<my-query>_df`).
     * Put some comments in your query too. Look at the other `.sql` files for examples.
     * Tip: Paste your SQL into the [BigQuery web UI](https://bigquery.cloud.google.com/) and click on the 'format' button to format it nicely.
 1. If your query has any parameter(s) other than `DATASET`, add default values for those parameters to both [`snippets_setup.R`](./snippets/snippets_setup.R) and [`snippets_setup.py`](./snippets/snippets_setup.py) so that the query will work as-is.
@@ -23,6 +31,7 @@ For more detail, see the [Snippets Menu](https://jupyter-contrib-nbextensions.re
     git clone https://github.com/all-of-us/code-snippets.git
     cd code-snippets/build
     python3 ./generate_jupyter_snippets_menu_extension_config.py
+    # If you get an error about a missing jinja2 library, run command 'pip3 install --user jinja2'
     ```
 1. Then copy and paste the contents of the newly created file `jupyter_snippets_menu_extension_config.json` to form field '*JSON string parsed to define custom menus (only used if the option above is checked)*' in the Snippets Menu extension configuration.
 

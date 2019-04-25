@@ -111,9 +111,11 @@ with open(R_SMOKE_TEST, 'w') as f:
   for snippet in r_snippets_config['sub-menu']:
     f.write('#---[ This is snippet: {} ]---\n{}\n\n'.format(snippet['name'],
                                                             snippet['snippet']))
+  f.write('\nprint("Smoke test complete!")')
 
 with open(PY_SMOKE_TEST, 'w') as f:
   f.write('#!/usr/bin/env python3\n\n')
   for snippet in py_snippets_config['sub-menu']:
     f.write('#---[ This is snippet: {} ]---\n{}\n\n'.format(snippet['name'],
                                                             snippet['snippet']))
+  f.write('\nprint("Smoke test complete!")')
