@@ -1,0 +1,14 @@
+treat_missing_values <- function(data, val = NULL){
+## remove or replace missing values
+    # by default, function only removes missing values
+    # if another input is given, missing values will be replaced by that input
+ 
+ if(is.null(val)) {
+        cat(blue("Missing values have been removed with no replacement."))
+        data<- na.exclude(data)
+    } else{
+        cat(blue("Missing values have been replaced with",val,"."))
+        data[is.na(data)] <- val
+    }
+return(data)
+}
