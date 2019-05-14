@@ -1,10 +1,9 @@
 # Get setup for GitHub
 
-(1) If you are new to GitHub, don't start here. Instead, work through a GitHub tutorial such as one of these:
+1. If you are new to GitHub, don't start here. Instead, work through a GitHub tutorial such as one of these:
     * https://guides.github.com/activities/hello-world/
     * http://r-pkgs.had.co.nz/git.html.
-
-(2) Follow [the instructions](https://github.com/all-of-us/workbench#git-secrets) to install [git-secrets](https://github.com/awslabs/git-secrets). Its a git commit hook that "Prevents you from committing passwords and other sensitive information to a git repository.".
+2. Follow [the instructions](https://github.com/all-of-us/workbench#git-secrets) to install [git-secrets](https://github.com/awslabs/git-secrets). Its a git commit hook that "Prevents you from committing passwords and other sensitive information to a git repository.".
 
 # How to contribute a snippet
 
