@@ -1,0 +1,20 @@
+All of Us R snippets:
+  - Setup: snippets/snippets_setup.R
+  - Documentation: https://github.com/all-of-us/workbench-snippets
+  - divider: divider
+  - Participant counts:
+    - total_number_of_participants.sql: snippets/total_number_of_participants.sql
+    - number_of_participants_with_measurements.sql: snippets/number_of_participants_with_measurements.sql
+    - number_of_participants_with_med_conditions.sql: snippets/number_of_participants_with_med_conditions.sql
+  - Summarize available measurements of interest:
+    - measurements_of_interest_summary.sql: snippets/measurements_of_interest_summary.sql
+  - Retrieve a measurement of interest:
+    - measurement_of_interest.sql: snippets/measurement_of_interest.sql
+    - measurement_of_interest_by_age_and_gender.ggplot: snippets/measurement_of_interest_by_age_and_gender.ggplot
+    - measurement_of_interest_by_gender.ggplot: snippets/measurement_of_interest_by_gender.ggplot
+    - measurement_of_interest_by_site.ggplot: snippets/measurement_of_interest_by_site.ggplot
+  - Retrieve the most recent measurement of interest per person:
+    - most_recent_measurement_of_interest.sql: snippets/most_recent_measurement_of_interest.sql
+    - most_recent_measurement_of_interest_by_age_and_gender.ggplot: snippets/most_recent_measurement_of_interest_by_age_and_gender.ggplot
+    - most_recent_measurement_of_interest_by_gender.ggplot: snippets/most_recent_measurement_of_interest_by_gender.ggplot
+    - most_recent_measurement_of_interest_by_site.ggplot: snippets/most_recent_measurement_of_interest_by_site.ggplot

@@ -1,4 +1,4 @@
-"""Auto-generate AoU configuration for Jupyter 'Snippets Menu' extension.
+"""Auto-generate All of Us configuration for Jupyter 'Snippets Menu' extension.
 
 Additionally, create smoke test scripts for both R and Python that include all
 the snippets.
@@ -9,17 +9,14 @@ See also: https://jupyter-contrib-nbextensions.readthedocs.io/en/latest/nbextens
 import jinja2
 import json
 import os
-
-# Output files.
-JSON_OUTPUT = 'jupyter_snippets_menu_extension_config.json'
-R_SMOKE_TEST = 'smoke_test.R'
-PY_SMOKE_TEST = 'smoke_test.py'
+import yaml
 
 # Input file directory.
-SNIPPETS_ROOT = '../snippets'
+SNIPPETS_ROOT = '../'
 
-# R configuration constants.
-R_SETUP_SNIPPET = 'snippets_setup.R'
+R_MENU_CONFIG = './r_snippets_menu_config.yml'
+PY_MENU_CONFIG = './py_snippets_menu_config.yml'
+
 R_QUERY_TEMPLATE = '''
 {{ dataframe }} <- bq_table_download(bq_project_query(
     BILLING_PROJECT_ID,
@@ -30,92 +27,86 @@ print(skim({{ dataframe }}))
 head({{ dataframe }})
 '''
 
-# Python configuration constants.
-PY_SETUP_SNIPPET = 'snippets_setup.py'
 PY_QUERY_TEMPLATE = """
 {{ dataframe }} = pd.io.gbq.read_gbq(f'''
 {{ query }}
 ''',
-  project_id=BILLING_PROJECT_ID,
   dialect='standard')
 
 {{ dataframe }}.head()
 """
 
-r_setup_snippet = {
-  'name': 'Setup',
-  'snippet': open(os.path.join(SNIPPETS_ROOT, R_SETUP_SNIPPET), 'r').read()
-}
+R_SHEBANG = '#!/usr/bin/env Rscript\n\n'
+PY_SHEBANG = '#!/usr/bin/env python3\n\n'
 
-py_setup_snippet = {
-  'name': 'Setup',
-  'snippet': open(os.path.join(SNIPPETS_ROOT, PY_SETUP_SNIPPET), 'r').read()
-}
+# Output files.
+R_JSON_OUTPUT = 'r_jupyter_snippets_menu_extension_config.json'
+PY_JSON_OUTPUT = 'py_jupyter_snippets_menu_extension_config.json'
+R_SMOKE_TEST = 'smoke_test.R'
+PY_SMOKE_TEST = 'smoke_test.py'
 
-r_snippets_config = {
-  'name': 'All of Us R snippets',
-  'sub-menu': [r_setup_snippet]  # The loop below will add more here.
-}
 
-py_snippets_config = {
-  'name': 'All of Us Py snippets',
-  'sub-menu': [py_setup_snippet]  # The loop below will add more here.
-}
+def generate_config(d, query_template, smoke_test_fh):
+  """Given a dictionary, convert that to snippets menu configuration."""
+  for key, value in d.items():
+    if isinstance(value, list):
+      return {
+          'name': key,
+          'sub-menu': [generate_config(x, query_template, smoke_test_fh)
+                       for x in value]
+      }
 
-snippets_config = {
-  'name': 'All of Us snipppets',
-  'sub-menu': [r_snippets_config, py_snippets_config]
-}
+    if value == 'divider':
+      return '---'
 
-for root, dirs, files in os.walk(SNIPPETS_ROOT):
-  # This sort, along with our filenaming convention, ensures that the SQL
-  # snippet will occur before the dependent plot snippets.
-  files.sort()
+    if value.startswith('http'):
+      return {
+          'name': key,
+          'external-link': value
+      }
 
-  for filename in files:
-    # This file may or may not be used for a snippet in a particular language.
-    r_code_snippet = None
-    py_code_snippet = None
+    if os.path.isfile(os.path.join(SNIPPETS_ROOT, value)):
+      if value.endswith('.sql'):
+        # Render SQL to snippets in the desired language.
+        sql = open(os.path.join(SNIPPETS_ROOT, value), 'r').read()
+        dataframe_name = os.path.splitext(os.path.basename(value))[0] + '_df'
+        code = jinja2.Template(query_template).render(
+            {'dataframe': dataframe_name, 'query': sql})
+      else:
+        # It's a non-sql file, just read it in.
+        code = open(os.path.join(SNIPPETS_ROOT, value), 'r').read()
 
-    # Render SQL to snippets in both languages.
-    if filename.endswith('.sql'):
-      sql = open(os.path.join(SNIPPETS_ROOT, filename), 'r').read()
-      r_code_snippet = jinja2.Template(R_QUERY_TEMPLATE).render(
-          {'dataframe': filename.replace('.sql', '_df'), 'query': sql})
-      py_code_snippet = jinja2.Template(PY_QUERY_TEMPLATE).render(
-          {'dataframe': filename.replace('.sql', '_df'), 'query': sql})
+      smoke_test_fh.write('#---[ This is snippet: {} ]---\n{}\n\n'.format(key,
+                                                                          code))
+      return {
+          'name': key,
+          'snippet': code
+      }
 
-    elif filename.endswith('.ggplot'):
-      r_code_snippet = open(os.path.join(SNIPPETS_ROOT, filename), 'r').read()
+    # Its not a file, so we will use the value directly.
+    return {
+        'name': key,
+        'snippet': value
+    }
 
-    elif filename.endswith('.plotnine'):
-      py_code_snippet = open(os.path.join(SNIPPETS_ROOT, filename), 'r').read()
 
-    if r_code_snippet is not None:
-      snippet = {}
-      snippet['name'] = filename
-      snippet['snippet'] = r_code_snippet
-      r_snippets_config['sub-menu'].append(snippet)
+def render_files(config_file, query_template, output_file,
+                 shebang, smoke_test_file):
+  """Use configuration to drive the autogeneration of snippets and tests."""
+  with open(config_file, 'r') as f:
+    config = yaml.load(f.read())
 
-    if py_code_snippet is not None:
-      snippet = {}
-      snippet['name'] = filename
-      snippet['snippet'] = py_code_snippet
-      py_snippets_config['sub-menu'].append(snippet)
+  print(yaml.dump(config))
 
-with open(JSON_OUTPUT, 'w') as f:
-  json.dump(snippets_config, f)
+  with open(smoke_test_file, 'w') as f:
+    f.write(shebang)
+    snippets_config = generate_config(config, query_template, f)
+    f.write('\nprint("Smoke test complete!")')
 
-with open(R_SMOKE_TEST, 'w') as f:
-  f.write('#!/usr/bin/env Rscript\n\n')
-  for snippet in r_snippets_config['sub-menu']:
-    f.write('#---[ This is snippet: {} ]---\n{}\n\n'.format(snippet['name'],
-                                                            snippet['snippet']))
-  f.write('\nprint("Smoke test complete!")')
+  with open(output_file, 'w') as f:
+    json.dump(snippets_config, f)
 
-with open(PY_SMOKE_TEST, 'w') as f:
-  f.write('#!/usr/bin/env python3\n\n')
-  for snippet in py_snippets_config['sub-menu']:
-    f.write('#---[ This is snippet: {} ]---\n{}\n\n'.format(snippet['name'],
-                                                            snippet['snippet']))
-  f.write('\nprint("Smoke test complete!")')
+render_files(R_MENU_CONFIG, R_QUERY_TEMPLATE, R_JSON_OUTPUT,
+             R_SHEBANG, R_SMOKE_TEST)
+render_files(PY_MENU_CONFIG, PY_QUERY_TEMPLATE, PY_JSON_OUTPUT,
+             PY_SHEBANG, PY_SMOKE_TEST)

@@ -3,7 +3,7 @@
 1. If you are new to GitHub, don't start here. Instead, work through a GitHub tutorial such as one of these:
     * https://guides.github.com/activities/hello-world/
     * http://r-pkgs.had.co.nz/git.html.
-2. Follow [the instructions](https://github.com/all-of-us/workbench#git-secrets) to install [git-secrets](https://github.com/awslabs/git-secrets). Its a git commit hook that "Prevents you from committing passwords and other sensitive information to a git repository.".
+2. Follow [the instructions](https://github.com/all-of-us/workbench#git-secrets) to install [git-secrets](https://github.com/awslabs/git-secrets). Its a git commit hook that *"Prevents you from committing passwords and other sensitive information to a git repository."*.
 
 # How to contribute a snippet
 
@@ -18,6 +18,7 @@
     * Write it first in [ggplot2](https://ggplot2.tidyverse.org/) or [plotnine](https://plotnine.readthedocs.io/en/stable/), depending on your preference, and iterate until you like the look of it.
     * Once you have it the way you want it, port it to the other language.
     * Name the files `<my-query>_<viz-description>.ggplot` and `<my-query>_<viz-description>.plotnine`
+1. Update [r_snippets_menu_config.yml](build/r_snippets_menu_config.yml) and [py_snippets_menu_config.yml](build/py_snippets_menu_config.yml) to add your snippet where ever you would like it to be displayed within the menu.
 
 Don't like these conventions? We can change them! This is just a starting point. Keep in mind we'll need to reflect those changes in the auto-generation script described in the next section.
 
@@ -32,7 +33,7 @@ For more detail, see the [Snippets Menu](https://jupyter-contrib-nbextensions.re
     python3 ./generate_jupyter_snippets_menu_extension_config.py
     # If you get an error about a missing jinja2 library, run command 'pip3 install --user jinja2'
     ```
-1. Then copy and paste the contents of the newly created file `jupyter_snippets_menu_extension_config.json` to form field '*JSON string parsed to define custom menus (only used if the option above is checked)*' in the Snippets Menu extension configuration.
+1. Then copy and paste the contents of the newly created file `r_jupyter_snippets_menu_extension_config.json` or `py_jupyter_snippets_menu_extension_config.json` into form field '*JSON string parsed to define custom menus (only used if the option above is checked)*' in the Snippets Menu extension configuration.
 
 # Testing
 
