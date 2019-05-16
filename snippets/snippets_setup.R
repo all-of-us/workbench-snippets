@@ -1,3 +1,11 @@
+# Only install missing libraries, per https://stackoverflow.com/a/23286257/4138705.
+install_if_missing <- function(packages) {
+  if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
+    install.packages(setdiff(packages, rownames(installed.packages())))
+  }
+}
+install_if_missing(c('viridis', 'ggthemes', 'scales', 'skimr', 'lubridate', 'bigrquery', 'tidyverse'))
+
 library(viridis)    # A nice color scheme for plots.
 library(ggthemes)   # Common themes to change the look and feel of plots.
 library(scales)     # Graphical scales map data to aesthetics in plots.

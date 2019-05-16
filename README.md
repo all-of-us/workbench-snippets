@@ -27,8 +27,8 @@ For more detail, see the [Snippets Menu](https://jupyter-contrib-nbextensions.re
 
 1. Generate the JSON configuration:
     ```
-    git clone https://github.com/all-of-us/code-snippets.git
-    cd code-snippets/build
+    git clone https://github.com/all-of-us/workbench-snippets.git
+    cd workbench-snippets/build
     python3 ./generate_jupyter_snippets_menu_extension_config.py
     # If you get an error about a missing jinja2 library, run command 'pip3 install --user jinja2'
     ```
@@ -48,8 +48,8 @@ To run a test:
 # BQTestCase is only compatible with Python 2.7 right now.
 pip2.7 install git+https://github.com/verilylifesciences/analysis-py-utils.git@v0.3.0
 
-git clone https://github.com/all-of-us/code-snippets.git
-cd code-snippets/build
+git clone https://github.com/all-of-us/workbench-snippets.git
+cd workbench-snippets/build
 
 # This should be the id of a Cloud Platform project to which you can write temporary BigQuery tables.
 export TEST_PROJECT=<your-project-id>

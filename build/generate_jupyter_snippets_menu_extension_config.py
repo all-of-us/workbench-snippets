@@ -53,17 +53,17 @@ py_setup_snippet = {
 }
 
 r_snippets_config = {
-  'name': 'AoU R snippets',
+  'name': 'All of Us R snippets',
   'sub-menu': [r_setup_snippet]  # The loop below will add more here.
 }
 
 py_snippets_config = {
-  'name': 'AoU Py snippets',
+  'name': 'All of Us Py snippets',
   'sub-menu': [py_setup_snippet]  # The loop below will add more here.
 }
 
 snippets_config = {
-  'name': 'AoU snipppets',
+  'name': 'All of Us snipppets',
   'sub-menu': [r_snippets_config, py_snippets_config]
 }
 
