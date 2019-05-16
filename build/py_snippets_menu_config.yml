@@ -1,0 +1,20 @@
+All of Us Py snippets:
+  - Setup: snippets/snippets_setup.py
+  - Documentation: https://github.com/all-of-us/workbench-snippets
+  - divider: divider
+  - Participant counts:
+    - total_number_of_participants.sql: snippets/total_number_of_participants.sql
+    - number_of_participants_with_measurements.sql: snippets/number_of_participants_with_measurements.sql
+    - number_of_participants_with_med_conditions.sql: snippets/number_of_participants_with_med_conditions.sql
+  - Summarize available measurements of interest:
+    - measurements_of_interest_summary.sql: snippets/measurements_of_interest_summary.sql
+  - Retrieve a measurement of interest:
+    - measurement_of_interest.sql: snippets/measurement_of_interest.sql
+    - measurement_of_interest_by_age_and_gender.plotnine: snippets/measurement_of_interest_by_age_and_gender.plotnine
+    - measurement_of_interest_by_gender.plotnine: snippets/measurement_of_interest_by_gender.plotnine
+    - measurement_of_interest_by_site.plotnine: snippets/measurement_of_interest_by_site.plotnine
+  - Retrieve the most recent measurement of interest per person:
+    - most_recent_measurement_of_interest.sql: snippets/most_recent_measurement_of_interest.sql
+    - most_recent_measurement_of_interest_by_age_and_gender.plotnine: snippets/most_recent_measurement_of_interest_by_age_and_gender.plotnine
+    - most_recent_measurement_of_interest_by_gender.plotnine: snippets/most_recent_measurement_of_interest_by_gender.plotnine
+    - most_recent_measurement_of_interest_by_site.plotnine: snippets/most_recent_measurement_of_interest_by_site.plotnine
