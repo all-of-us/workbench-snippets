@@ -15,7 +15,6 @@ library(bigrquery)  # BigQuery R client.
 library(tidyverse)  # Data wrangling packages.
 
 ## CHANGE THESE AS NEEDED - default parameter values for snippets.
-DATASET <- 'aou-res-curation-output-prod.R2019Q1R2'
 MEASUREMENT_OF_INTEREST <- 'hemoglobin'
 # Tip: the next four parameters could be set programmatically using one row from
 # the result of measurements_of_interest_summary.sql
@@ -23,6 +22,12 @@ MEASUREMENT_CONCEPT_ID <- 3000963        # Hemoglobin
 UNIT_CONCEPT_ID <- 8713                  # gram per deciliter
 MEASUREMENT_NAME <- '<this should be the measurement name>'
 UNIT_NAME <- '<this should be the unit name>'
+
+# Get the BigQuery curated dataset for the current workspace context.
+DATASET <- system(paste("echo ",
+    "$(jq -r '.CDR_VERSION_CLOUD_PROJECT' .all_of_us_config.json).",
+    "$(jq -r '.CDR_VERSION_BIGQUERY_DATASET' .all_of_us_config.json)"),
+    intern = TRUE)
 
 ## BigQuery setup.
 BILLING_PROJECT_ID <- Sys.getenv('GOOGLE_PROJECT')
