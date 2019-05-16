@@ -73,7 +73,7 @@ def generate_config(d, query_template, smoke_test_fh):
         code = jinja2.Template(query_template).render(
             {'dataframe': dataframe_name, 'query': sql})
       else:
-        # Its a non-sql file, just read it in.
+        # It's a non-sql file, just read it in.
         code = open(os.path.join(SNIPPETS_ROOT, value), 'r').read()
 
       smoke_test_fh.write('#---[ This is snippet: {} ]---\n{}\n\n'.format(key,
