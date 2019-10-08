@@ -1,10 +1,5 @@
-# Only install missing libraries, per https://stackoverflow.com/a/23286257/4138705.
-install_if_missing <- function(packages) {
-  if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
-    install.packages(setdiff(packages, rownames(installed.packages())))
-  }
-}
-install_if_missing(c('viridis', 'ggthemes', 'scales', 'skimr', 'lubridate', 'bigrquery', 'tidyverse'))
+lapply(c('viridis', 'ggthemes', 'skimr'),
+       function(pkg_name) { if(! pkg_name %in% installed.packages()) { install.packages(pkg_name)} } )
 
 library(viridis)    # A nice color scheme for plots.
 library(ggthemes)   # Common themes to change the look and feel of plots.
@@ -22,7 +17,6 @@ DATASET <- system(paste0("echo ",
 
 ## BigQuery setup.
 BILLING_PROJECT_ID <- Sys.getenv('GOOGLE_PROJECT')
-bigrquery::set_service_token(Ronaldo::getServiceAccountKey())
 
 ## Plot setup.
 theme_set(theme_minimal()) # Default theme for plots.
