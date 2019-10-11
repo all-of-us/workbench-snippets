@@ -107,7 +107,7 @@ for r_yaml in glob.glob('r_*.yml'):
     smoke_test_file=r_yaml.replace('.yml', '_smoke_test.R'),
     )
 
-for py_yaml in glob.glob('r_*.yml'):
+for py_yaml in glob.glob('py_*.yml'):
   render_files(
     config_file=py_yaml,
     query_template=PY_QUERY_TEMPLATE,
