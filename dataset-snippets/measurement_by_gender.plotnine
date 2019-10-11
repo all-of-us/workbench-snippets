@@ -1,0 +1,12 @@
+# TODO(deflaux): update this to match the corresponding ggplot.
+
+# meas_filter is a column of True and False
+meas_filter = measurement_df['value_as_number'] < 9999999 # Get rid of nonsensical outliers.
+(ggplot(measurement_df[meas_filter], aes(x = 'gender', y = 'value_as_number')) +
+    geom_boxplot() +
+    stat_summary(fun_data = get_boxplot_fun_data, geom = 'text', size = 10,
+                 position = position_dodge(width = 0.9), va = 'top') +
+#    scale_y_log10() +  # Uncomment if the data looks skewed.
+    ylab(f'{UNIT_NAME}') +
+    ggtitle(f'All {MEASUREMENT_NAME} measurements, by site') +
+    theme(figure_size=(12, 6)))

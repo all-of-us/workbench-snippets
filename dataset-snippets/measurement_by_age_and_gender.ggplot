@@ -1,0 +1,21 @@
+# This plot assumes 'measurement_df' was created using snippet 'Basic operations -> join_dataframes'.
+options(repr.plot.height = 16, repr.plot.width = 16)
+
+# There could be many different measurements in the dataframe. By default, plot the first one.
+measurement_to_plot <- unique(measurement_df$STANDARD_CONCEPT_NAME)[1]
+
+measurement_df %>%
+    filter(STANDARD_CONCEPT_NAME == measurement_to_plot) %>%
+    filter(UNIT_CONCEPT_ID > 0) %>%
+    filter(GENDER_CONCEPT_ID > 0) %>%
+    filter(VALUE_AS_NUMBER < 9999999) %>% # Get rid of nonsensical outliers.
+    mutate(age = year(as.period(interval(start = DATE_OF_BIRTH, end = now())))) %>%
+    ggplot(aes(x = cut_width(age, width = 5, boundary = 0), y = VALUE_AS_NUMBER)) +
+    geom_boxplot() +
+    stat_summary(fun.data = get_boxplot_fun_data, geom = 'text', size = 2,
+                 position = position_dodge(width = 0.9), vjust = -0.8) +
+#    scale_y_log10() +  # Uncomment if the data looks skewed.
+    coord_flip() +
+    facet_wrap(STANDARD_CONCEPT_NAME + UNIT_CONCEPT_NAME ~ GENDER, ncol = 2, scales = 'free') +
+    xlab('age') +
+    labs(title = str_glue('Numeric values of measurements by age and gender'), caption = 'Source: All Of Us Data')

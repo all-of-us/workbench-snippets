@@ -31,7 +31,7 @@ For more detail, see the [Snippets Menu](https://jupyter-contrib-nbextensions.re
     git clone https://github.com/all-of-us/workbench-snippets.git
     cd workbench-snippets/build
     python3 ./generate_jupyter_snippets_menu_extension_config.py
-    # If you get an error about a missing jinja2 library, run command 'pip3 install --user jinja2'
+    # If you get an error about a missing library, run command 'pip3 install --user Jinja2 pyyaml'
     ```
 1. Then copy and paste the contents of the newly created file `r_jupyter_snippets_menu_extension_config.json` or `py_jupyter_snippets_menu_extension_config.json` into form field '*JSON string parsed to define custom menus (only used if the option above is checked)*' in the Snippets Menu extension configuration.
 
