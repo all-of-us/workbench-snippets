@@ -4,8 +4,7 @@ import os
 import numpy as np
 import pandas as pd
 import pandas_profiling
-import plotnine  # NOTE: if you get error "cannot import name 'factorial'" this is due to the
-                 # older version of package statsmodels. Restart your kernel.
+import plotnine
 from plotnine import *  # Provides a ggplot-like interface to matplotlib.
 
 ## Plot setup.
@@ -21,3 +20,5 @@ def get_boxplot_fun_data(df):
   """
   d = {'y': max(df), 'label': f'N = {len(df)}'}
   return(pd.DataFrame(data=d, index=[0]))
+
+# NOTE: if you get any errors from this cell, restart your kernel and run it again.
