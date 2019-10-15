@@ -16,8 +16,9 @@ measurement_df['age_group'] = pd.cut(measurement_df['age'],
 
 # meas_filter is a column of True and False
 meas_filter = ((measurement_df.STANDARD_CONCEPT_NAME == measurement_to_plot)
-  & (measurement_df.UNIT_CONCEPT_NAME != 'No matching concept') 
-  & (measurement_df.GENDER != 'No matching concept') 
+  & (measurement_df.UNIT_CONCEPT_NAME != 'No matching concept')
+  & (measurement_df.UNIT_CONCEPT_NAME.notna())
+  & (measurement_df.GENDER != 'No matching concept')
   & (measurement_df.VALUE_AS_NUMBER < 9999999)  # Get rid of nonsensical outliers.
 )
 
@@ -30,4 +31,4 @@ meas_filter = ((measurement_df.STANDARD_CONCEPT_NAME == measurement_to_plot)
     facet_wrap(('STANDARD_CONCEPT_NAME + UNIT_CONCEPT_NAME', 'GENDER'), ncol = 2, scales = 'free') +
     xlab('age group') +
     ggtitle('Numeric values of measurements by age and gender\nSource: All Of Us Data') +
-    theme(figure_size=(12, 12)))
+    theme(figure_size = (12, 12), panel_spacing = .5))

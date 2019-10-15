@@ -9,7 +9,8 @@ measurement_to_plot = measurement_df.STANDARD_CONCEPT_NAME.unique()[0]
 
 # meas_filter is a column of True and False.
 meas_filter = ((measurement_df.STANDARD_CONCEPT_NAME == measurement_to_plot)
-  & (measurement_df.UNIT_CONCEPT_NAME != 'No matching concept') 
+  & (measurement_df.UNIT_CONCEPT_NAME != 'No matching concept')
+  & (measurement_df.UNIT_CONCEPT_NAME.notna())
   & (measurement_df.VALUE_AS_NUMBER < 9999999)  # Get rid of nonsensical outliers.
 )
 

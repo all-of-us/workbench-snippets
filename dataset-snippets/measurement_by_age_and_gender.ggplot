@@ -11,7 +11,7 @@ measurement_to_plot <- unique(measurement_df$STANDARD_CONCEPT_NAME)[1]
 
 measurement_df %>%
     filter(STANDARD_CONCEPT_NAME == measurement_to_plot) %>%
-    filter(UNIT_CONCEPT_NAME != 'No matching concept') %>%
+    filter(!UNIT_CONCEPT_NAME %in% c('No matching concept', 'NULL')) %>%
     filter(GENDER != 'No matching concept') %>%
     filter(VALUE_AS_NUMBER < 9999999) %>%  # Get rid of nonsensical outliers.
     mutate(age = year(as.period(interval(start = DATE_OF_BIRTH, end = now())))) %>%
