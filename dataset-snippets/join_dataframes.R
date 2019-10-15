@@ -11,3 +11,5 @@
 measurement_df <- inner_join(YOUR_DATASET_NAME_person_df,
                              YOUR_DATASET_NAME_measurement_df) %>%
   mutate_if(is.list, as.character)  # Convert column type list as character.
+
+dim(measurement_df)

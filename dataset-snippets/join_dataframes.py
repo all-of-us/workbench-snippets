@@ -9,3 +9,5 @@
 
 ## -----[ CHANGE THE DATAFRAME NAME(S) TO MATCH YOURS FROM DATASET BUILDER] -----
 measurement_df = pd.merge(left=YOUR_DATASET_NAME_person_df, right=YOUR_DATASET_NAME_measurement_df, how='inner')
+
+measurement_df.shape
