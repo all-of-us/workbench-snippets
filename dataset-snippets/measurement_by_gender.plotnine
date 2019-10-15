@@ -21,4 +21,4 @@ meas_filter = ((measurement_df.STANDARD_CONCEPT_NAME == measurement_to_plot)
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     facet_wrap(('STANDARD_CONCEPT_NAME', 'UNIT_CONCEPT_NAME'), ncol = 2, scales = 'free') +
     ggtitle(f'Numeric values of measurements, by gender\nSource: All Of Us Data') +
-    theme(figure_size=(12, 6)))
+    theme(figure_size=(12, 6), panel_spacing = .5))
