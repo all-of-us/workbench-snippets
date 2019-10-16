@@ -102,12 +102,12 @@ STRUCT<measurement_id INT64,
         UNIT_CONCEPT_ID=456)
 
     expected = [
-        # person_id	birth_datetime	gender	src_id	measurement_concept_id	unit_concept_id	measurement_date	measurement_datetime	measurement_type_concept_id	operator_concept_id	value_as_number	value_as_concept_id	range_low	range_high
-        (1001, datetime(1990, 12, 31, 0, 0, tzinfo=tz.gettz("UTC")),  "MALE", "site1", 123, 456, date(2005, 12, 31), datetime(2005, 12, 31, 10, 30, tzinfo=tz.gettz("UTC")), None, None, 42.0, None, 0, 999),
-        (1001, datetime(1990, 12, 31, 0, 0, tzinfo=tz.gettz("UTC")),  "MALE", "site1", 123, 456, date(2007,  9, 11), datetime(2007,  9, 11,  8,  0, tzinfo=tz.gettz("UTC")), None, None, 13.5, None, 0, 999),
-        (1001, datetime(1990, 12, 31, 0, 0, tzinfo=tz.gettz("UTC")),  "MALE", "site1", 123, 456, date(2007,  9, 11), datetime(2007,  9, 11, 20, 59, tzinfo=tz.gettz("UTC")), None, None, None,  100, 0, 999),
-        (1002, datetime(1950, 8, 1, 0, 0, tzinfo=tz.gettz("UTC")),  "FEMALE", "site2", 123, 456, date(2008,  2, 10), datetime(2008,  2, 10, 23, 30, tzinfo=tz.gettz("UTC")), None, None, None, None, 0, 999)
-        (1002, datetime(1950, 8, 1, 0, 0, tzinfo=tz.gettz("UTC")),  "FEMALE", "site2", 123, 456, date(2008,  2, 10), datetime(2008,  2, 10, 23, 30, tzinfo=tz.gettz("UTC")), None,  789,  7.2, None, 0, 999)
+        # person_id	birth_datetime	gender	src_id	measurement_concept_id	measurement_date	measurement_datetime	measurement_type_concept_id	operator_concept_id	value_as_number	value_as_concept_id	unit_concept_id	range_low	range_high
+        (1001, datetime(1990, 12, 31, 0, 0, tzinfo=tz.gettz("UTC")),  "MALE", "site1", 123, date(2005, 12, 31), datetime(2005, 12, 31, 10, 30, tzinfo=tz.gettz("UTC")), None, None, 42.0, None, 456, 0, 999),
+        (1001, datetime(1990, 12, 31, 0, 0, tzinfo=tz.gettz("UTC")),  "MALE", "site1", 123, date(2007,  9, 11), datetime(2007,  9, 11,  8,  0, tzinfo=tz.gettz("UTC")), None, None, 13.5, None, 456, 0, 999),
+        (1001, datetime(1990, 12, 31, 0, 0, tzinfo=tz.gettz("UTC")),  "MALE", "site1", 123, date(2007,  9, 11), datetime(2007,  9, 11, 20, 59, tzinfo=tz.gettz("UTC")), None, None, None,  100, 456, 0, 999),
+        (1002, datetime(1950, 8, 1, 0, 0, tzinfo=tz.gettz("UTC")),  "FEMALE", "site2", 123, date(2008,  2, 10), datetime(2008,  2, 10, 23, 30, tzinfo=tz.gettz("UTC")), None, None, None, None, 456, 0, 999), 
+        (1002, datetime(1950, 8, 1, 0, 0, tzinfo=tz.gettz("UTC")),  "FEMALE", "site2", 123, date(2008,  2, 10), datetime(2008,  2, 10, 23, 30, tzinfo=tz.gettz("UTC")), None,  789,  7.2, None, 456, 0, 999)
         ]
     self.expect_query_result(query=sql, expected=expected)
 
