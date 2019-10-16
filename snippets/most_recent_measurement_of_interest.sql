@@ -51,9 +51,9 @@ measurements AS (
 sites AS (
   SELECT
     measurement_id,
-    src_hpo_id
+    src_id
   FROM
-    `{CDR}._mapping_measurement`
+    `{CDR}.measurement_ext`
   GROUP BY  # This GROUP BY is here to deal with duplicate rows in the R2019Q1R2 release of the table.
     1, 2)
   --
@@ -62,7 +62,7 @@ sites AS (
   --
 SELECT
   persons.*,
-  sites.src_hpo_id,
+  sites.src_id,
   measurements.* EXCEPT(person_id, measurement_id, recency_rank)
 FROM
   measurements
