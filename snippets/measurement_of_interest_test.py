@@ -97,7 +97,7 @@ STRUCT<measurement_id INT64,
 
   def test(self):
     sql = self.sql_to_test.format(
-        DATASET=self.src_dataset,
+        CDR=self.src_dataset,
         MEASUREMENT_CONCEPT_ID=123,
         UNIT_CONCEPT_ID=456)
 

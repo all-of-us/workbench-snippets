@@ -17,7 +17,7 @@ UNIT_NAME = '<this should be the unit name>'
 # Get the BigQuery curated dataset for the current workspace context.
 with open('.all_of_us_config.json') as f:
   config = json.load(f)
-  DATASET = config['CDR_VERSION_CLOUD_PROJECT'] + '.' + config['CDR_VERSION_BIGQUERY_DATASET']
+  CDR = config['CDR_VERSION_CLOUD_PROJECT'] + '.' + config['CDR_VERSION_BIGQUERY_DATASET']
 
 ## Plot setup.
 theme_set(theme_minimal()) # Default theme for plots.

@@ -62,7 +62,7 @@ STRUCT<measurement_concept_id INT64,
 
   def test(self):
     sql = self.sql_to_test.format(
-        DATASET=self.src_dataset,
+        CDR=self.src_dataset,
         MEASUREMENT_OF_INTEREST="hemoglobin")
 
     expected = [

@@ -3,5 +3,5 @@
 SELECT
   COUNT(DISTINCT person_id) AS total_number_of_participants
 FROM
-  `{DATASET}.person`
+  `{CDR}.person`
 

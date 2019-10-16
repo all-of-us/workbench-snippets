@@ -4,4 +4,4 @@
 SELECT
   COUNT(DISTINCT person_id) AS number_of_participants_with_measurements
 FROM
-  `{DATASET}.measurement`
+  `{CDR}.measurement`

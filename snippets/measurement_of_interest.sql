@@ -15,8 +15,8 @@ persons AS (
     birth_datetime,
     concept_name AS gender
   FROM
-    `{DATASET}.person`
-  LEFT JOIN `{DATASET}.concept` ON concept_id = gender_concept_id),
+    `{CDR}.person`
+  LEFT JOIN `{CDR}.concept` ON concept_id = gender_concept_id),
   --
   -- Retrieve the row-level data for our measurement of interest.
   --
@@ -35,7 +35,7 @@ measurements AS (
     range_low,
     range_high
   FROM
-    `{DATASET}.measurement`
+    `{CDR}.measurement`
   WHERE
     measurement_concept_id = {MEASUREMENT_CONCEPT_ID} AND unit_concept_id = {UNIT_CONCEPT_ID}),
   --
@@ -46,7 +46,7 @@ sites AS (
     measurement_id,
     src_hpo_id
   FROM
-    `{DATASET}._mapping_measurement`
+    `{CDR}._mapping_measurement`
   GROUP BY  # This GROUP BY is here to deal with duplicate rows in the R2019Q1R2 release of the table.
     1, 2)
   --
