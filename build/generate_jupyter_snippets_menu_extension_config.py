@@ -17,7 +17,7 @@ SNIPPETS_ROOT = '../'
 
 R_QUERY_TEMPLATE = '''
 {{ dataframe }} <- bq_table_download(bq_project_query(
-    BILLING_PROJECT_ID,
+    BILLING_PROJECT_ID, page_size = 25000,
     query = str_glue('{{ query }}')))
 
 print(skim({{ dataframe }}))
