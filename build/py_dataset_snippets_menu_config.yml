@@ -1,0 +1,10 @@
+All of Us Dataset Builder Python snippets:
+  - Setup: dataset-snippets/snippets_setup.py
+  - Documentation: https://github.com/all-of-us/workbench-snippets
+  - divider: divider
+  - Basic operations:
+    - join_dataframes.py: dataset-snippets/join_dataframes.py
+    - summarize_a_dataframe.py: dataset-snippets/summarize_a_dataframe.py
+  - Plot measurements:
+    - measurement_by_age_and_gender.plotnine: dataset-snippets/measurement_by_age_and_gender.plotnine
+    - measurement_by_gender.plotnine: dataset-snippets/measurement_by_gender.plotnine

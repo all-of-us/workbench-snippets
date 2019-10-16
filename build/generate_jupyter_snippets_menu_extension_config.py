@@ -6,6 +6,7 @@ the snippets.
 See also: https://jupyter-contrib-nbextensions.readthedocs.io/en/latest/nbextensions/snippets_menu/readme.html
 """
 
+import glob
 import jinja2
 import json
 import os
@@ -13,9 +14,6 @@ import yaml
 
 # Input file directory.
 SNIPPETS_ROOT = '../'
-
-R_MENU_CONFIG = './r_snippets_menu_config.yml'
-PY_MENU_CONFIG = './py_snippets_menu_config.yml'
 
 R_QUERY_TEMPLATE = '''
 {{ dataframe }} <- bq_table_download(bq_project_query(
@@ -38,12 +36,6 @@ PY_QUERY_TEMPLATE = """
 
 R_SHEBANG = '#!/usr/bin/env Rscript\n\n'
 PY_SHEBANG = '#!/usr/bin/env python3\n\n'
-
-# Output files.
-R_JSON_OUTPUT = 'r_jupyter_snippets_menu_extension_config.json'
-PY_JSON_OUTPUT = 'py_jupyter_snippets_menu_extension_config.json'
-R_SMOKE_TEST = 'smoke_test.R'
-PY_SMOKE_TEST = 'smoke_test.py'
 
 
 def generate_config(d, query_template, smoke_test_fh):
@@ -106,7 +98,21 @@ def render_files(config_file, query_template, output_file,
   with open(output_file, 'w') as f:
     json.dump(snippets_config, f)
 
-render_files(R_MENU_CONFIG, R_QUERY_TEMPLATE, R_JSON_OUTPUT,
-             R_SHEBANG, R_SMOKE_TEST)
-render_files(PY_MENU_CONFIG, PY_QUERY_TEMPLATE, PY_JSON_OUTPUT,
-             PY_SHEBANG, PY_SMOKE_TEST)
+for r_yaml in glob.glob('r_*.yml'):
+  render_files(
+    config_file=r_yaml,
+    query_template=R_QUERY_TEMPLATE,
+    output_file=r_yaml.replace('.yml', '.json'),
+    shebang=R_SHEBANG,
+    smoke_test_file=r_yaml.replace('.yml', '_smoke_test.R'),
+    )
+
+for py_yaml in glob.glob('py_*.yml'):
+  render_files(
+    config_file=py_yaml,
+    query_template=PY_QUERY_TEMPLATE,
+    output_file=py_yaml.replace('.yml', '.json'),
+    shebang=PY_SHEBANG,
+    smoke_test_file=py_yaml.replace('.yml', '_smoke_test.py'),
+    )
+    

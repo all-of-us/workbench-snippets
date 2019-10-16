@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+*smoke_test*
+*.json
