@@ -18,4 +18,4 @@ meas_filter = most_recent_measurement_of_interest_df['value_as_number'] < 999999
     xlab('age') +
     ylab(f'{UNIT_NAME}') +
     ggtitle(f'Most recent {MEASUREMENT_NAME} measurement\nper person, by age, faceted by gender') +
-    theme(figure_size=(12, 12)))
+    theme(figure_size=(12, 6)))

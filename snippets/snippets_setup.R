@@ -9,17 +9,17 @@ library(lubridate)  # Date library from the tidyverse.
 library(bigrquery)  # BigQuery R client.
 library(tidyverse)  # Data wrangling packages.
 
+## BigQuery setup.
+BILLING_PROJECT_ID <- Sys.getenv('GOOGLE_PROJECT')
 # Get the BigQuery curated dataset for the current workspace context.
 CDR <- system(paste0("echo ",
     "$(jq -r '.CDR_VERSION_CLOUD_PROJECT' .all_of_us_config.json).",
     "$(jq -r '.CDR_VERSION_BIGQUERY_DATASET' .all_of_us_config.json)"),
     intern = TRUE)
 
-## BigQuery setup.
-BILLING_PROJECT_ID <- Sys.getenv('GOOGLE_PROJECT')
 
 ## Plot setup.
-theme_set(theme_minimal()) # Default theme for plots.
+theme_set(theme_bw(base_size = 14)) # Default theme for plots.
 
 #' Returns a data frame with a y position and a label, for use annotating ggplot boxplots.
 #'
