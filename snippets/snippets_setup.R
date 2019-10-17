@@ -10,7 +10,7 @@ library(bigrquery)  # BigQuery R client.
 library(tidyverse)  # Data wrangling packages.
 
 # Get the BigQuery curated dataset for the current workspace context.
-DATASET <- system(paste0("echo ",
+CDR <- system(paste0("echo ",
     "$(jq -r '.CDR_VERSION_CLOUD_PROJECT' .all_of_us_config.json).",
     "$(jq -r '.CDR_VERSION_BIGQUERY_DATASET' .all_of_us_config.json)"),
     intern = TRUE)

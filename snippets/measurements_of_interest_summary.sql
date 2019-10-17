@@ -17,10 +17,10 @@ WITH
     unit_concept_id,
     unit_concept.concept_name AS unit_name
   FROM
-    `{DATASET}.measurement`
-  LEFT JOIN `{DATASET}.concept` AS measurement_concept
+    `{CDR}.measurement`
+  LEFT JOIN `{CDR}.concept` AS measurement_concept
   ON measurement_concept.concept_id = measurement_concept_id
-  LEFT JOIN `{DATASET}.concept` AS unit_concept
+  LEFT JOIN `{CDR}.concept` AS unit_concept
   ON unit_concept.concept_id = unit_concept_id
   WHERE
     REGEXP_CONTAINS(measurement_concept.concept_name, r"(?i){MEASUREMENT_OF_INTEREST}")
@@ -53,7 +53,7 @@ SELECT
   measurement_concept_id,
   unit_concept_id
 FROM
-  `{DATASET}.measurement`
+  `{CDR}.measurement`
 INNER JOIN
   labs_of_interest
 USING
