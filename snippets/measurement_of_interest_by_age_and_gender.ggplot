@@ -1,5 +1,5 @@
 # This plot assumes that most_recent_measurement_of_interest.sql has been run.
-options(repr.plot.height = 14, repr.plot.width = 8)
+options(repr.plot.height = 20, repr.plot.width = 16)
 
 measurement_of_interest_df %>%
     filter(value_as_number < 9999999) %>% # Get rid of nonsensical outliers.
@@ -7,7 +7,7 @@ measurement_of_interest_df %>%
     mutate(age = year(as.period(interval(start = birth_datetime, end = now())))) %>%
     ggplot(aes(x = cut_width(age, width = 5, boundary = 0), y = value_as_number)) +
     geom_boxplot() +
-    stat_summary(fun.data = get_boxplot_fun_data, geom = 'text', size = 2,
+    stat_summary(fun.data = get_boxplot_fun_data, geom = 'text', size = 4,
                  position = position_dodge(width = 0.9), vjust = -0.8) +
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     coord_flip() +
