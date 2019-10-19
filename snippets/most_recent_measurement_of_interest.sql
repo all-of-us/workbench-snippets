@@ -1,5 +1,5 @@
 
--- Return row level data for a measurement, limited to only the most recent result per person.
+-- Return row level data for a measurement, limited to only the most recent result per person in our cohort.
 --
 -- PARAMETERS:
 --   MEASUREMENT_CONCEPT_ID: for example 3000963  # Hemoglobin
@@ -36,6 +36,7 @@ measurements AS (
     value_as_concept_id,
     range_low,
     range_high,
+    IF(src_concepts.vocabulary_id = "PPI", "PPI", "EHR") AS measurement_source,
     ROW_NUMBER() OVER (PARTITION BY person_id
                        ORDER BY measurement_date DESC,
                                 measurement_datetime DESC,
@@ -43,8 +44,11 @@ measurements AS (
 
   FROM
     `{CDR}.measurement`
+  LEFT JOIN `{CDR}.concept` AS src_concepts
+    ON src_concepts.concept_id = measurement_source_concept_id
   WHERE
-    measurement_concept_id = {MEASUREMENT_CONCEPT_ID} AND unit_concept_id = {UNIT_CONCEPT_ID}),
+    measurement_concept_id = {MEASUREMENT_CONCEPT_ID} AND unit_concept_id = {UNIT_CONCEPT_ID}
+    AND person_id IN ({COHORT_QUERY})),
   --
   -- Get the human-readable names for the site from which the measurement came.
   --

@@ -1,5 +1,5 @@
 
--- Return row level data for a measurement.
+-- Return row level data for a measurement for our cohort.
 --
 -- PARAMETERS:
 --   MEASUREMENT_CONCEPT_ID: for example 3000963  # Hemoglobin
@@ -33,11 +33,15 @@ measurements AS (
     value_as_concept_id,
     unit_concept_id,
     range_low,
-    range_high
+    range_high,
+    IF(src_concepts.vocabulary_id = "PPI", "PPI", "EHR") AS measurement_source
   FROM
     `{CDR}.measurement`
+  LEFT JOIN `{CDR}.concept` AS src_concepts
+    ON src_concepts.concept_id = measurement_source_concept_id
   WHERE
-    measurement_concept_id = {MEASUREMENT_CONCEPT_ID} AND unit_concept_id = {UNIT_CONCEPT_ID}),
+    measurement_concept_id = {MEASUREMENT_CONCEPT_ID} AND unit_concept_id = {UNIT_CONCEPT_ID}
+    AND person_id IN ({COHORT_QUERY})),
   --
   -- Get the human-readable names for the site from which the measurement came.
   --
