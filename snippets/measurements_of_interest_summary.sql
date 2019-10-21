@@ -55,9 +55,10 @@ SELECT
   unit_concept_id
 FROM
   `{CDR}.measurement`
-INNER JOIN labs_of_interest
-  USING(measurement_concept_id, unit_concept_id)
-LEFT JOIN `{CDR}.measurement_ext` USING(measurement_id)
+INNER JOIN
+ labs_of_interest USING(measurement_concept_id, unit_concept_id)
+LEFT JOIN
+  `{CDR}.measurement_ext` USING(measurement_id)
 WHERE
   person_id IN ({COHORT_QUERY})
 GROUP BY

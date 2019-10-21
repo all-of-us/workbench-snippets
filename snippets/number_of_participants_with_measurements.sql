@@ -7,4 +7,3 @@ FROM
   `{CDR}.measurement`
 WHERE
   person_id IN ({COHORT_QUERY})
-

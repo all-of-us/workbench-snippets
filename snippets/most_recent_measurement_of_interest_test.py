@@ -74,7 +74,6 @@ STRUCT<measurement_id INT64,
 SELECT * FROM UNNEST([
 STRUCT<measurement_id INT64,
        person_id INT64,
-       measurement_source_concept_id INT64,
        measurement_concept_id INT64,
        unit_concept_id INT64,
        operator_concept_id INT64,
@@ -85,13 +84,13 @@ STRUCT<measurement_id INT64,
        value_as_concept_id INT64,
        range_low FLOAT64,
        range_high FLOAT64>
-    (1, 1001, 123, 123, 456, NULL, '2005-12-31', '2005-12-31 10:30:00 UTC', NULL, 42.0, NULL, 0, 999),
-    (2, 1001, 123, 123, 456, NULL, '2007-09-11', '2007-09-11 08:00:00 UTC', NULL, 13.5, NULL, 0, 999),
-    (3, 1001, 123, 123, 456, NULL, '2007-09-11', '2007-09-11 20:59:00 UTC', NULL, NULL,  100, 0, 999),
-    (4, 1002, 123, 123, 456, NULL, '2008-02-10', '2008-02-10 23:30:00 UTC', NULL, NULL, NULL, 0, 999),
-    (5, 1002, 123, 123, 456,  789, '2008-02-10', '2008-02-10 23:30:00 UTC', NULL,  7.2, NULL, 0, 999),
+    (1, 1001, 123, 456, NULL, '2005-12-31', '2005-12-31 10:30:00 UTC', NULL, 42.0, NULL, 0, 999),
+    (2, 1001, 123, 456, NULL, '2007-09-11', '2007-09-11 08:00:00 UTC', NULL, 13.5, NULL, 0, 999),
+    (3, 1001, 123, 456, NULL, '2007-09-11', '2007-09-11 20:59:00 UTC', NULL, NULL,  100, 0, 999),
+    (4, 1002, 123, 456, NULL, '2008-02-10', '2008-02-10 23:30:00 UTC', NULL, NULL, NULL, 0, 999),
+    (5, 1002, 123, 456,  789, '2008-02-10', '2008-02-10 23:30:00 UTC', NULL,  7.2, NULL, 0, 999),
     # This measurement is for someone not in our cohort.
-    (6, 1003, 123, 123, 456,  789, '2010-01-01', '2010-10-01 23:30:00 UTC', NULL,  500, NULL, 0, 999)
+    (6, 1003, 123, 456,  789, '2010-01-01', '2010-10-01 23:30:00 UTC', NULL,  500, NULL, 0, 999)
 ])
     """, cls.client.path("measurement"))
 
