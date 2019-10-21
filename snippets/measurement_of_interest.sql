@@ -33,12 +33,9 @@ measurements AS (
     value_as_concept_id,
     unit_concept_id,
     range_low,
-    range_high,
-    IF(src_concepts.vocabulary_id = "PPI", "PPI", "EHR") AS measurement_source
+    range_high
   FROM
     `{CDR}.measurement`
-  LEFT JOIN `{CDR}.concept` AS src_concepts
-    ON src_concepts.concept_id = measurement_source_concept_id
   WHERE
     measurement_concept_id = {MEASUREMENT_CONCEPT_ID} AND unit_concept_id = {UNIT_CONCEPT_ID}
     AND person_id IN ({COHORT_QUERY})),
@@ -51,7 +48,7 @@ sites AS (
     src_id
   FROM
     `{CDR}.measurement_ext`
-  GROUP BY  # This GROUP BY is here to deal with duplicate rows in the R2019Q1R2 release of the table.
+  GROUP BY  # This GROUP BY is here to deal with any duplicate rows in the table.
     1, 2)
   --
   -- Lastly, JOIN all this data together so that we have the birthdate, gender and site for each measurement.

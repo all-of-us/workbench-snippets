@@ -50,7 +50,7 @@ To run a test:
 pip2.7 install git+https://github.com/verilylifesciences/analysis-py-utils.git@v0.3.0
 
 git clone https://github.com/all-of-us/workbench-snippets.git
-cd workbench-snippets/build
+cd workbench-snippets/snippets
 
 # This should be the id of a Cloud Platform project to which you can write temporary BigQuery tables.
 export TEST_PROJECT=<your-project-id>

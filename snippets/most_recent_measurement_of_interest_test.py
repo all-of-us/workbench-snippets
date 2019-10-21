@@ -48,13 +48,12 @@ STRUCT<person_id INT64,
     cls.client.create_table_from_query("""
 SELECT * FROM UNNEST([
 STRUCT<concept_id INT64,
-       concept_name STRING,
-       vocabulary_id STRING>
-    (  0, 'No matching concept', 'None'),
-    (123, 'Hemoglobin', 'LOINC'),
-    (456, 'gram per deciliter', 'UCUM'),
-    (500, 'FEMALE', 'Gender'),
-    (501, 'MALE', 'Gender')
+       concept_name STRING>
+    (  0, 'No matching concept'),
+    (123, 'Hemoglobin'),
+    (456, 'gram per deciliter'),
+    (500, 'FEMALE'),
+    (501, 'MALE')
 ])
     """, cls.client.path("concept"))
 
@@ -62,11 +61,12 @@ STRUCT<concept_id INT64,
 SELECT * FROM UNNEST([
 STRUCT<measurement_id INT64,
        src_id STRING>
-    (1, 'site1'),
-    (2, 'site1'),
-    (3, 'site1'),
-    (4, 'site2'),
-    (5, 'site2')
+    (1, 'EHR site1'),
+    (2, 'EHR site1'),
+    (3, 'PPI/PM'),
+    (4, 'EHR site2'),
+    (5, 'EHR site2'),
+    (6, 'EHR site2')
 ])
     """, cls.client.path("measurement_ext"))
 
@@ -108,9 +108,9 @@ STRUCT<measurement_id INT64,
         UNIT_CONCEPT_ID=456)
 
     expected = [
-        # person_id	birth_datetime	gender	src_id	measurement_concept_id	unit_concept_id	measurement_date	measurement_datetime	measurement_type_concept_id	operator_concept_id	value_as_number	value_as_concept_id	range_low	range_high measurement_source
-        (1001, datetime(1990, 12, 31, 0, 0, tzinfo=tz.gettz("UTC")),  "MALE", "site1", 123, 456, date(2007, 9, 11), datetime(2007, 9, 11, 20, 59, tzinfo=tz.gettz("UTC")), None, None, None,  100, 0, 999, "EHR"),
-        (1002, datetime(1950, 8, 1, 0, 0, tzinfo=tz.gettz("UTC")),  "FEMALE", "site2", 123, 456, date(2008, 2, 10), datetime(2008, 2, 10, 23, 30, tzinfo=tz.gettz("UTC")), None,  789,  7.2, None, 0, 999, "EHR")
+        # person_id	birth_datetime	gender	src_id	measurement_concept_id	unit_concept_id	measurement_date	measurement_datetime	measurement_type_concept_id	operator_concept_id	value_as_number	value_as_concept_id	range_low	range_high
+        (1001, datetime(1990, 12, 31, 0, 0, tzinfo=tz.gettz("UTC")),  "MALE", "PPI/PM", 123, 456, date(2007, 9, 11), datetime(2007, 9, 11, 20, 59, tzinfo=tz.gettz("UTC")), None, None, None,  100, 0, 999),
+        (1002, datetime(1950, 8, 1, 0, 0, tzinfo=tz.gettz("UTC")),  "FEMALE", "EHR site2", 123, 456, date(2008, 2, 10), datetime(2008, 2, 10, 23, 30, tzinfo=tz.gettz("UTC")), None,  789,  7.2, None, 0, 999)
         ]
     self.expect_query_result(query=sql, expected=expected)
 

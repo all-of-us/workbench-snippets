@@ -54,20 +54,34 @@ STRUCT<concept_id INT64,
 
     cls.client.create_table_from_query("""
 SELECT * FROM UNNEST([
-STRUCT<person_id INT64,
+STRUCT<measurement_id INT64,
+       src_id STRING>
+    (1, 'EHR site1'),
+    (2, 'EHR site1'),
+    (3, 'EHR site1'),
+    (4, 'EHR site2'),
+    (5, 'EHR site2'),
+    (6, 'PPI/PM')
+])
+    """, cls.client.path("measurement_ext"))
+
+    cls.client.create_table_from_query("""
+SELECT * FROM UNNEST([
+STRUCT<measurement_id INT64,
+       person_id INT64,
        measurement_source_concept_id INT64,
        measurement_concept_id INT64,
        unit_concept_id INT64,
        operator_concept_id INT64,
        value_as_number FLOAT64,
        value_as_concept_id INT64>
-    (1001, 123, 123, 456, NULL, 42.0, NULL),
-    (1001, 123, 123, 456, NULL, 13.5, NULL),
-    (1002, 123, 123, 456, NULL, NULL, 100),
-    (1002, 123, 123, 456, NULL, NULL, NULL),
-    (1002, 123, 123, 456, 789, 7.2, NULL),
+    (1, 1001, 123, 123, 456, NULL, 42.0, NULL),
+    (2, 1001, 123, 123, 456, NULL, 13.5, NULL),
+    (3, 1002, 123, 123, 456, NULL, NULL, 100),
+    (4, 1002, 123, 123, 456, NULL, NULL, NULL),
+    (5, 1002, 123, 123, 456, 789, 7.2, NULL),
     # This measurement is for someone not in our cohort.
-    (1003, 123, 123, 456, NULL, 500, NULL)
+    (6, 1003, 123, 123, 456, NULL, 500, NULL)
 ])
     """, cls.client.path("measurement"))
 
