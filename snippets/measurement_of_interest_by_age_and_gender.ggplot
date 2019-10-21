@@ -14,4 +14,5 @@ measurement_of_interest_df %>%
     facet_wrap(~ gender, nrow = length(unique(measurement_of_interest_df$gender))) +
     xlab('age') +
     ylab(str_glue('{UNIT_NAME}')) +
-    ggtitle(str_glue('All {MEASUREMENT_NAME} measurements, by age, faceted by gender'))
+    labs(title = str_glue('All {MEASUREMENT_NAME} measurements, by age, faceted by gender'),
+         caption = 'Source: All Of Us Data')

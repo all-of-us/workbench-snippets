@@ -8,5 +8,5 @@ meas_filter = measurement_of_interest_df['value_as_number'] < 9999999 # Get rid 
                  position = position_dodge(width = 0.9), va = 'top') +
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     ylab(f'{UNIT_NAME}') +
-    ggtitle(f'All {MEASUREMENT_NAME} measurements, by site') +
+    ggtitle(f'All {MEASUREMENT_NAME} measurements, by site\nSource: All Of Us Data') +
     theme(figure_size=(12, 6)))
