@@ -28,7 +28,7 @@ meas_filter = ((measurement_df.STANDARD_CONCEPT_NAME == measurement_to_plot)
                  position = position_dodge(width = 0.9), va = 'top') +
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     coord_flip() +
-    facet_wrap(('STANDARD_CONCEPT_NAME + UNIT_CONCEPT_NAME', 'GENDER'), ncol = 2, scales = 'free') +
+    facet_wrap(['STANDARD_CONCEPT_NAME + ": " + UNIT_CONCEPT_NAME', 'GENDER'], ncol = 2, scales = 'free') +
     xlab('age group') +
     ggtitle('Numeric values of measurements by age and gender\nSource: All Of Us Data') +
     theme(figure_size = (12, 12), panel_spacing = .5))
