@@ -1,5 +1,5 @@
 
--- Compute summary information for our measurements of interest.
+-- Compute summary information for our measurements of interest for our cohort.
 --
 -- PARAMETERS:
 --   MEASUREMENT_OF_INTEREST: a case-insensitive string, such as "hemoglobin", to be compared
@@ -50,17 +50,21 @@ SELECT
   COUNTIF(value_as_concept_id IS NOT NULL
       AND value_as_concept_id != 0) AS num_concept_values,
   COUNTIF(operator_concept_id IS NOT NULL) AS num_operators,
+  IF(src_id = "PPI/PM", "PPI", "EHR") AS measurement_source,
   measurement_concept_id,
   unit_concept_id
 FROM
   `{CDR}.measurement`
 INNER JOIN
-  labs_of_interest
-USING
-  (measurement_concept_id, unit_concept_id)
+ labs_of_interest USING(measurement_concept_id, unit_concept_id)
+LEFT JOIN
+  `{CDR}.measurement_ext` USING(measurement_id)
+WHERE
+  person_id IN ({COHORT_QUERY})
 GROUP BY
   measurement_concept_id,
   measurement_name,
+  measurement_source,
   unit_concept_id,
   unit_name
 ORDER BY

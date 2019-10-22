@@ -1,5 +1,5 @@
 
--- Return row level data for a measurement, limited to only the most recent result per person.
+-- Return row level data for a measurement, limited to only the most recent result per person in our cohort.
 --
 -- PARAMETERS:
 --   MEASUREMENT_CONCEPT_ID: for example 3000963  # Hemoglobin
@@ -44,32 +44,23 @@ measurements AS (
   FROM
     `{CDR}.measurement`
   WHERE
-    measurement_concept_id = {MEASUREMENT_CONCEPT_ID} AND unit_concept_id = {UNIT_CONCEPT_ID}),
-  --
-  -- Get the human-readable names for the site from which the measurement came.
-  --
-sites AS (
-  SELECT
-    measurement_id,
-    src_id
-  FROM
-    `{CDR}.measurement_ext`
-  GROUP BY  # This GROUP BY is here to deal with duplicate rows in the R2019Q1R2 release of the table.
-    1, 2)
+    measurement_concept_id = {MEASUREMENT_CONCEPT_ID}
+    AND unit_concept_id = {UNIT_CONCEPT_ID}
+    AND person_id IN ({COHORT_QUERY}))
   --
   -- Lastly, JOIN all this data together so that we have the birthdate, gender and site for each
   -- measurement, retaining only the most recent result per person.
   --
 SELECT
   persons.*,
-  sites.src_id,
+  src_id,
   measurements.* EXCEPT(person_id, measurement_id, recency_rank)
 FROM
   measurements
 LEFT JOIN
   persons USING (person_id)
 LEFT JOIN
-  sites USING (measurement_id)
+  `{CDR}.measurement_ext` USING (measurement_id)
 WHERE
   recency_rank = 1
 ORDER BY

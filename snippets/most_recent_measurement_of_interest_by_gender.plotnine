@@ -7,5 +7,5 @@ meas_filter = most_recent_measurement_of_interest_df['value_as_number'] < 999999
                  position = position_dodge(width = 0.9), va = 'top') +
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     ylab(f'{UNIT_NAME}') +
-    ggtitle(f'Most recent {MEASUREMENT_NAME} measurement\nper person, by gender') +
+    ggtitle(f'Most recent {MEASUREMENT_NAME} measurement\nper person, by gender\nSource: All Of Us Data') +
     theme(figure_size=(12, 6)))

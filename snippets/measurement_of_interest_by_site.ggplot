@@ -10,4 +10,5 @@ measurement_of_interest_df %>%
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     coord_flip() +
     ylab(str_glue('{UNIT_NAME}')) +
-    ggtitle(str_glue('All {MEASUREMENT_NAME} measurements, by site'))
+    labs(title = str_glue('All {MEASUREMENT_NAME} measurements, by site'),
+         caption = 'Source: All Of Us Data')
