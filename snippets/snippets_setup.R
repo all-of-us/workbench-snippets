@@ -36,6 +36,6 @@ MEASUREMENT_OF_INTEREST <- 'hemoglobin'
 # Tip: the next four parameters could be set programmatically using one row from
 # the result of measurements_of_interest_summary.sql
 MEASUREMENT_CONCEPT_ID <- 3000963        # Hemoglobin
-UNIT_CONCEPT_ID <- 8713                  # gram per deciliter
+UNIT_CONCEPT_ID <- 8636                  # gram per liter
 MEASUREMENT_NAME <- '<this should be the measurement name>'
 UNIT_NAME <- '<this should be the unit name>'
