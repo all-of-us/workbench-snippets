@@ -9,4 +9,4 @@ meas_filter = measurement_of_interest_df['value_as_number'] < 9999999 # Get rid 
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     ylab(f'{UNIT_NAME}') +
     ggtitle(f'All {MEASUREMENT_NAME} measurements, by site\nSource: All Of Us Data') +
-    theme(figure_size=(12, 6)))
+    theme(figure_size=(12, 6), axis_text_x = element_text(angle=25, hjust=1)))
