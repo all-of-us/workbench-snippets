@@ -1,4 +1,4 @@
-# This plot assumes that most_recent_measurement_of_interest.sql has been run.
+# This plot assumes that measurement_of_interest.sql has been run.
 options(repr.plot.height = 20, repr.plot.width = 16)
 
 measurement_of_interest_df %>%
