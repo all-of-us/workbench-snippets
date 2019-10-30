@@ -19,4 +19,5 @@ measurement_df %>%
                  position = position_dodge(width = 0.9), vjust = -0.8) +
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     facet_wrap(STANDARD_CONCEPT_NAME ~ UNIT_CONCEPT_NAME, ncol = 2, scales = 'free') +
-    labs(title = str_glue('Numeric values of measurements, by gender'), caption = 'Source: All Of Us Data')
+    labs(title = str_glue('Numeric values of measurements, by gender'), caption = 'Source: All Of Us Data') +
+    theme(axis.text.x = element_text(angle=25, hjust=1))
