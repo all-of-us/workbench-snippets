@@ -15,6 +15,7 @@ This snippets in this subdirectory are for workbench users who use Dataset Build
 1. After you are happy with your new snippet, port it to the other language or file a GitHub issue asking for help from someone else to do this.
 1. If your snippet has any inputs or parameters other than a dataframe created by Dataset Builder, add default values for those parameters to both [`snippets_setup.R`](./snippets_setup.R) and [`snippets_setup.py`](./snippets_setup.py) so that your snippet will work as-is.
 1. Update [r_dataset_snippets_menu_config.yml](../build/r_dataset_snippets_menu_config.yml) and [py_dataset_snippets_menu_config.yml](../build/py_dataset_snippets_menu_config.yml) to add your snippet where ever you would like it to be displayed within the menu.
+1. Send your pull request!
 
 Don't like these conventions? We can change them! This is just a starting point. Keep in mind we'll need to reflect those changes in the auto-generation script described in the next section.
 

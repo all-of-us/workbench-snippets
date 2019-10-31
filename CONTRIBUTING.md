@@ -29,3 +29,9 @@ For more detail, see the [Snippets Menu](https://jupyter-contrib-nbextensions.re
 To test individual snippets such as plots, the best thing to do is copy and paste them into a notebook on the workbench.
 
 There are more detailed testing instructions in [dataset-snippets/README](./dataset-snippets/README.md#testing) and [snippets/README](./snippets/README.md#testing).
+
+# Deployment
+
+For the updated snippets to be incorporated into the Workbench environment, the workbench team needs to trigger a manual process to pull in snippets updates for deployment.
+
+Once this happens, new snippets contents go live in users' Jupyter servers on a rolling basis over a period of a few weeks.

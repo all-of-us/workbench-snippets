@@ -16,6 +16,7 @@ This snippets in this subdirectory are for workbench users who either know SQL o
     * Once you have it the way you want it, port it to the other language.
     * Name the files `<my-query>_<viz-description>.ggplot` and `<my-query>_<viz-description>.plotnine`
 1. Update [r_snippets_menu_config.yml](../build/r_snippets_menu_config.yml) and [py_snippets_menu_config.yml](../build/py_snippets_menu_config.yml) to add your snippet where ever you would like it to be displayed within the menu.
+1. Send your pull request!
 
 Don't like these conventions? We can change them! This is just a starting point. Keep in mind we'll need to reflect those changes in the auto-generation script described in the next section.
 
