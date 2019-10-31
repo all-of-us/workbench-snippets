@@ -1,10 +1,10 @@
 All of Us Dataset Builder R snippets:
-  - Setup: dataset-snippets/snippets_setup.R
   - Documentation: https://github.com/all-of-us/workbench-snippets
   - divider: divider
-  - Basic operations:
+  - (1) Setup: dataset-snippets/snippets_setup.R
+  - (2) Basic operations:
     - join_dataframes.R: dataset-snippets/join_dataframes.R
     - summarize_a_dataframe.R: dataset-snippets/summarize_a_dataframe.R
-  - Plot measurements:
+  - (3) Plot measurements:
     - measurement_by_age_and_gender.ggplot: dataset-snippets/measurement_by_age_and_gender.ggplot
     - measurement_by_gender.ggplot: dataset-snippets/measurement_by_gender.ggplot
