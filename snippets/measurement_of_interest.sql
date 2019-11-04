@@ -3,7 +3,7 @@
 --
 -- PARAMETERS:
 --   MEASUREMENT_CONCEPT_ID: for example 3000963  # Hemoglobin
---   UNIT_CONCEPT_ID: for example 8713            # gram per deciliter
+--   UNIT_CONCEPT_ID: for example 8636            # gram per liter
 
 WITH
   --
