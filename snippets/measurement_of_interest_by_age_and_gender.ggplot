@@ -3,8 +3,8 @@ options(repr.plot.height = 20, repr.plot.width = 16)
 
 measurement_of_interest_df %>%
     filter(value_as_number < 9999999) %>% # Get rid of nonsensical outliers.
-    mutate(age = year(as.period(interval(start = birth_datetime, end = measurement_datetime))) %>%
-    ggplot(aes(x = cut_width(age, width = 5, boundary = 0), y = value_as_number)) +
+    mutate(age_at_measurement = year(as.period(interval(start = birth_datetime, end = measurement_datetime))) %>%
+    ggplot(aes(x = cut_width(age_at_measurement, width = 5, boundary = 0), y = value_as_number)) +
     geom_boxplot() +
     stat_summary(fun.data = get_boxplot_fun_data, geom = 'text', size = 4,
                  position = position_dodge(width = 0.9), vjust = -0.8) +
