@@ -5,6 +5,7 @@ All of Us Dataset Builder R snippets:
   - (2) Basic operations:
     - join_dataframes.R: dataset-snippets/join_dataframes.R
     - summarize_a_dataframe.R: dataset-snippets/summarize_a_dataframe.R
+    - add_age_to_demographics.R: dataset-snippets/add_age_to_demographics.R
   - (3) Plot measurements:
     - measurement_by_age_and_gender.ggplot: dataset-snippets/measurement_by_age_and_gender.ggplot
     - measurement_by_gender.ggplot: dataset-snippets/measurement_by_gender.ggplot
