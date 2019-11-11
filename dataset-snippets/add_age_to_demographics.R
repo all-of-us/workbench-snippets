@@ -7,4 +7,4 @@
 
 ## -----[ CHANGE THE DATAFRAME NAME(S) `YOUR_DATASET_NAME_person_df` TO MATCH YOURS FROM DATASET BUILDER] -----
 YOUR_DATASET_NAME_person_df %<>% mutate_if(is.list, as.character) %>% 
-                mutate(AGE = decimal_date(today()) - decimal_date(YOUR_DATASET_NAME_person_df$DATE_OF_BIRTH))
+                mutate(AGE = year(today()) - year(YOUR_DATASET_NAME_person_df$DATE_OF_BIRTH))
