@@ -1,6 +1,6 @@
 # This plot assumes that most_recent_measurement_of_interest.sql has been run.
 
-most_recent_measurement_of_interest_df['age'] = (pd.to_datetime('today').year
+most_recent_measurement_of_interest_df['age'] = (most_recent_measurement_of_interest['measurement_datetime].dt.year
                                                  - most_recent_measurement_of_interest_df.birth_datetime.map(lambda x: x.year))
 most_recent_measurement_of_interest_df['age_group'] = pd.cut(most_recent_measurement_of_interest_df['age'],
                                                              [-np.inf, 34.5, 49.5, 64.5, np.inf],
