@@ -5,6 +5,7 @@ All of Us Dataset Builder Python snippets:
   - (2) Basic operations:
     - join_dataframes.py: dataset-snippets/join_dataframes.py
     - summarize_a_dataframe.py: dataset-snippets/summarize_a_dataframe.py
+    - add_age_to_demographics.py: dataset-snippets/add_age_to_demographics.py
   - (3) Plot measurements:
     - measurement_by_age_and_gender.plotnine: dataset-snippets/measurement_by_age_and_gender.plotnine
     - measurement_by_gender.plotnine: dataset-snippets/measurement_by_gender.plotnine
