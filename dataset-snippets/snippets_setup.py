@@ -1,11 +1,17 @@
 !pip3 install --upgrade --user pandas_profiling statsmodels
 
+import json
 import os
 import numpy as np
 import pandas as pd
 import pandas_profiling
 import plotnine
 from plotnine import *  # Provides a ggplot-like interface to matplotlib.
+
+with open('.all_of_us_config.json') as f:
+    config = json.load(f)
+
+CDR = config["CDR_VERSION_CLOUD_PROJECT"] + '.' + config['CDR_VERSION_BIGQUERY_DATASET']
 
 ## Plot setup.
 theme_set(theme_bw(base_size = 11)) # Default theme for plots.
