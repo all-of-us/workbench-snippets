@@ -8,9 +8,7 @@ import plotnine
 from plotnine import *  # Provides a ggplot-like interface to matplotlib.
 
 # Get the BigQuery curated dataset for the current workspace context.
-with open('.all_of_us_config.json') as f:
-  config = json.load(f)
-  CDR = config['CDR_VERSION_CLOUD_PROJECT'] + '.' + config['CDR_VERSION_BIGQUERY_DATASET']
+CDR = os.environ['WORKSPACE_CDR']
 
 ## Plot setup.
 theme_set(theme_bw(base_size = 11)) # Default theme for plots.
