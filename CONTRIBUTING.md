@@ -94,7 +94,7 @@ git checkout master
 git reset --soft HEAD@{1}
 ```
 
-Or if you need to move back several commits to the most recent one in common with upstream, you can do something like this but change ‘1’ to be however many back you want to go.
+Or if you need to move back several commits to the most recent one in common with upstream, you can change ‘1’ to be however many commits back you need to go.
 
 (2) “stash” your now-unchecked-in changes so that you can get them back later.
 
