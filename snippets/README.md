@@ -2,6 +2,9 @@
 
 This snippets in this subdirectory are for workbench users who either know SQL or want to learn how to use SQL.
 
+# Get setup for GitHub
+The instructions are identical for both the SQL snippets and the Dataset Builder Snippets. See [CONTRIBUTING](../CONTRIBUTING.md#get-setup-for-github) for the details. If you are new to `git`, please see the example commands there. 
+
 # How to contribute a snippet to the SQL snippets menu group
 
 1. Write the SQL to retrieve the data of interest.
@@ -20,11 +23,9 @@ This snippets in this subdirectory are for workbench users who either know SQL o
 
 Don't like these conventions? We can change them! This is just a starting point. Keep in mind we'll need to reflect those changes in the auto-generation script described in the next section.
 
-# Auto-generation of Jupyter 'Snippets Menu' configuration.
+# Auto-generation of Jupyter 'Snippets Menu' configuration
 
-The instructions are identical for both the SQL snippets and the Dataset Builder Snippets.
-
-See [CONTRIBUTING](../CONTRIBUTING.md#auto-generation-of-jupyter-snippets-menu-configuration) for the details.
+The instructions are identical for both the SQL snippets and the Dataset Builder Snippets. See [CONTRIBUTING](../CONTRIBUTING.md#auto-generation-of-jupyter-snippets-menu-configuration) for the details.
 
 # Testing
 
@@ -61,3 +62,6 @@ Rscript r_snippets_menu_config_smoke_test.R  # There will be output, but there s
 # Check the Python snippets.
 python3 py_snippets_menu_config_smoke_test.py  # There will be output, but there should be no errors.
 ```
+
+# Deployment
+The instructions are identical for both the SQL snippets and the Dataset Builder Snippets. See [CONTRIBUTING](../CONTRIBUTING.md#deployment) for the details.

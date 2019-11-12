@@ -2,6 +2,9 @@
 
 This snippets in this subdirectory are for workbench users who use Dataset Builder to retrieve their data.
 
+# Get setup for GitHub
+The instructions are identical for both the SQL snippets and the Dataset Builder Snippets. See [CONTRIBUTING](../CONTRIBUTING.md#get-setup-for-github) for the details. If you are new to `git`, please see the example commands there. 
+
 # How to contribute a snippet to the Dataset Builder snippets menu group
 
 1. Write your snippet of code in your preferred language, R or Python.
@@ -19,11 +22,9 @@ This snippets in this subdirectory are for workbench users who use Dataset Build
 
 Don't like these conventions? We can change them! This is just a starting point. Keep in mind we'll need to reflect those changes in the auto-generation script described in the next section.
 
-# Auto-generation of Jupyter 'Snippets Menu' configuration.
+# Auto-generation of Jupyter 'Snippets Menu' configuration
 
-The instructions are identical for both the SQL snippets and the Dataset Builder Snippets.
-
-See [CONTRIBUTING](../CONTRIBUTING.md#auto-generation-of-jupyter-snippets-menu-configuration) for the details.
+The instructions are identical for both the SQL snippets and the Dataset Builder Snippets. See [CONTRIBUTING](../CONTRIBUTING.md#auto-generation-of-jupyter-snippets-menu-configuration) for the details.
 
 # Testing
 
@@ -31,3 +32,7 @@ See [CONTRIBUTING](../CONTRIBUTING.md#auto-generation-of-jupyter-snippets-menu-c
 To test individual snippets such as plots, the best thing to do is copy and paste them into a notebook on the workbench.
 
 See also https://github.com/all-of-us/workbench-snippets/issues/30
+
+# Deployment
+The instructions are identical for both the SQL snippets and the Dataset Builder Snippets. See [CONTRIBUTING](../CONTRIBUTING.md#deployment) for the details.
+
