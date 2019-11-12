@@ -1,7 +1,7 @@
 # This plot assumes that measurement_of_interest.sql has been run.
 
-measurement_of_interest_df['age_at_measurement'] = (measurement_of_interest_df['measurement_datetime'].dt.year
-                                     - measurement_of_interest_df['birth_datetime'].dt.year)
+measurement_of_interest_df['age_at_measurement'] = ((pd.to_datetime(measurement_of_interest_df['measurement_date'])
+                                     - measurement_of_interest_df['birth_datetime']).dt.days)//365.24
 measurement_of_interest_df['age_group'] = pd.cut(measurement_of_interest_df['age_at_measurement'],
                                                  [-np.inf, 34.5, 49.5, 64.5, np.inf],
                                                  labels=["<35", "35-49", "50-64", "65+"])
