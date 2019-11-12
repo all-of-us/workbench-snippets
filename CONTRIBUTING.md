@@ -43,6 +43,9 @@ Once this happens, new snippets contents go live in users' Jupyter servers on a 
 
 # Appendix
 
+For the workbench-snippets GitHub repository, we are doing ‘merge and squash’ of pull requests. So that means your fork does not match upstream after your pull request has been merged. The easiest way to manage this is to always work in a feature branch, instead of checking changes into your fork’s master branch.
+
+
 ## How to work on a new feature
 
 (1) Get the latest version of the upstream repo
