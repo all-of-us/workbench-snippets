@@ -34,9 +34,6 @@ PY_QUERY_TEMPLATE = """
 {{ dataframe }}.head()
 """
 
-R_SHEBANG = '#!/usr/bin/env Rscript\n\n'
-PY_SHEBANG = '#!/usr/bin/env python3\n\n'
-
 
 def generate_config(d, query_template, smoke_test_fh):
   """Given a dictionary, convert that to snippets menu configuration."""
@@ -83,7 +80,7 @@ def generate_config(d, query_template, smoke_test_fh):
 
 
 def render_files(config_file, query_template, output_file,
-                 shebang, smoke_test_file):
+                 smoke_test_setup_file, smoke_test_file):
   """Use configuration to drive the autogeneration of snippets and tests."""
   with open(config_file, 'r') as f:
     config = yaml.load(f.read())
@@ -91,7 +88,8 @@ def render_files(config_file, query_template, output_file,
   print(yaml.dump(config))
 
   with open(smoke_test_file, 'w') as f:
-    f.write(shebang)
+    with open(smoke_test_setup_file, 'r') as setup_f:
+      f.write(setup_f.read())
     snippets_config = generate_config(config, query_template, f)
     f.write('\nprint("Smoke test complete!")')
 
@@ -103,7 +101,7 @@ for r_yaml in glob.glob('r_*.yml'):
     config_file=r_yaml,
     query_template=R_QUERY_TEMPLATE,
     output_file=r_yaml.replace('.yml', '.json'),
-    shebang=R_SHEBANG,
+    smoke_test_setup_file=r_yaml.replace('.yml', '_smoke_test_setup.R'),
     smoke_test_file=r_yaml.replace('.yml', '_smoke_test.R'),
     )
 
@@ -112,7 +110,7 @@ for py_yaml in glob.glob('py_*.yml'):
     config_file=py_yaml,
     query_template=PY_QUERY_TEMPLATE,
     output_file=py_yaml.replace('.yml', '.json'),
-    shebang=PY_SHEBANG,
+    smoke_test_setup_file=py_yaml.replace('.yml', '_smoke_test_setup.py'),
     smoke_test_file=py_yaml.replace('.yml', '_smoke_test.py'),
     )
     

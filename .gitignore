@@ -2,5 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-*smoke_test*
+*smoke_test.R
+*smoke_test.py
 *.json
+*.html
