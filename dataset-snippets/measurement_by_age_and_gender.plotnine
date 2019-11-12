@@ -19,7 +19,8 @@ meas_filter = ((measurement_df.STANDARD_CONCEPT_NAME == measurement_to_plot)
   & (measurement_df.UNIT_CONCEPT_NAME != 'No matching concept')
   & (measurement_df.UNIT_CONCEPT_NAME.notna())
   & (measurement_df.GENDER != 'No matching concept')
-  & (measurement_df.VALUE_AS_NUMBER < 9999999)  # Get rid of nonsensical outliers.
+  & (measurement_df.VALUE_AS_NUMBER < 9999999)
+  & (measurement_df['age_at_measurement'].notnull())  # Get rid of nonsensical outliers.
 )
 
 (ggplot(measurement_df[meas_filter], aes(x = 'age_group', y = 'VALUE_AS_NUMBER')) +
