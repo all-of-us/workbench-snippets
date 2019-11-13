@@ -101,7 +101,7 @@ for r_yaml in glob.glob('r_*.yml'):
     config_file=r_yaml,
     query_template=R_QUERY_TEMPLATE,
     output_file=r_yaml.replace('.yml', '.json'),
-    smoke_test_setup_file=r_yaml.replace('.yml', '_smoke_test_setup.R'),
+    smoke_test_setup_file=r_yaml.replace('.yml', '.smoke_test_setup'),
     smoke_test_file=r_yaml.replace('.yml', '_smoke_test.R'),
     )
 
