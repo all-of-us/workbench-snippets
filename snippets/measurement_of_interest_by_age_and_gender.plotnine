@@ -1,14 +1,15 @@
 # This plot assumes that measurement_of_interest.sql has been run.
 
-measurement_of_interest_df['age_at_measurement'] = (measurement_of_interest['measurement_datetime'].dt.year
-                                     - measurement_of_interest_df['birth_datetime'].dt.year)
+measurement_of_interest_df['age_at_measurement'] = ((pd.to_datetime(measurement_of_interest_df['measurement_date'])
+                                     - measurement_of_interest_df['birth_datetime'].dt.tz_localize(None)).dt.days)//365.24
 measurement_of_interest_df['age_group'] = pd.cut(measurement_of_interest_df['age_at_measurement'],
                                                  [-np.inf, 34.5, 49.5, 64.5, np.inf],
                                                  labels=["<35", "35-49", "50-64", "65+"])
 # meas_filter is a column of True and False
 meas_filter = measurement_of_interest_df['value_as_number'] < 9999999 # Get rid of nonsensical outliers.
+age_group_not_null = (measurement_of_interest_df['age_group'].notnull())
 
-(ggplot(measurement_of_interest_df[meas_filter], aes(x = 'age_group', y = 'value_as_number')) +
+(ggplot(measurement_of_interest_df[meas_filter & age_group_not_null], aes(x = 'age_group', y = 'value_as_number')) +
     geom_boxplot() +
     stat_summary(fun_data = get_boxplot_fun_data, geom = 'text', size = 10,
                  position = position_dodge(width = 0.9), va = 'top') +

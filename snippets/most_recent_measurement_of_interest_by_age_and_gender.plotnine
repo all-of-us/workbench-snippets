@@ -1,14 +1,15 @@
 # This plot assumes that most_recent_measurement_of_interest.sql has been run.
 
-most_recent_measurement_of_interest_df['age_at_measurement'] = (most_recent_measurement_of_interest['measurement_datetime].dt.year
-                                                 - most_recent_measurement_of_interest_df['birth_datetime'].dt.year)
+most_recent_measurement_of_interest_df['age_at_measurement'] = ((pd.to_datetime(most_recent_measurement_of_interest_df['measurement_date'])
+                                                 - most_recent_measurement_of_interest_df['birth_datetime'].dt.tz_localize(None)).dt.days)//365.24
 most_recent_measurement_of_interest_df['age_group'] = pd.cut(most_recent_measurement_of_interest_df['age_at_measurement'],
                                                              [-np.inf, 34.5, 49.5, 64.5, np.inf],
                                                              labels=["<35", "35-49", "50-64", "65+"])
 # meas_filter is a column of True and False
 meas_filter = most_recent_measurement_of_interest_df['value_as_number'] < 9999999 # Get rid of nonsensical outliers.
+age_group_not_null = (most_recent_measurement_of_interest_df['age_group'].notnull())
 
-(ggplot(most_recent_measurement_of_interest_df[meas_filter], aes(x = 'age_group', y = 'value_as_number')) +
+(ggplot(most_recent_measurement_of_interest_df[meas_filter & age_group_not_null], aes(x = 'age_group', y = 'value_as_number')) +
     geom_boxplot() +
     stat_summary(fun_data = get_boxplot_fun_data, geom = 'text', size = 10,
                  position = position_dodge(width = 0.9), va = 'top') +
