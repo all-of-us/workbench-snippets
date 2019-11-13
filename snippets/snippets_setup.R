@@ -12,11 +12,7 @@ library(tidyverse)  # Data wrangling packages.
 ## BigQuery setup.
 BILLING_PROJECT_ID <- Sys.getenv('GOOGLE_PROJECT')
 # Get the BigQuery curated dataset for the current workspace context.
-CDR <- system(paste0("echo ",
-    "$(jq -r '.CDR_VERSION_CLOUD_PROJECT' .all_of_us_config.json).",
-    "$(jq -r '.CDR_VERSION_BIGQUERY_DATASET' .all_of_us_config.json)"),
-    intern = TRUE)
-
+CDR <- Sys.getenv('WORKSPACE_CDR')
 
 ## Plot setup.
 theme_set(theme_bw(base_size = 14)) # Default theme for plots.
