@@ -110,7 +110,7 @@ for py_yaml in glob.glob('py_*.yml'):
     config_file=py_yaml,
     query_template=PY_QUERY_TEMPLATE,
     output_file=py_yaml.replace('.yml', '.json'),
-    smoke_test_setup_file=py_yaml.replace('.yml', '_smoke_test_setup.py'),
+    smoke_test_setup_file=py_yaml.replace('.yml', '.smoke_test_setup'),
     smoke_test_file=py_yaml.replace('.yml', '_smoke_test.py'),
     )
     
