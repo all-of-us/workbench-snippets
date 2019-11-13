@@ -14,7 +14,7 @@ measurement_df %>%
     filter(!UNIT_CONCEPT_NAME %in% c('No matching concept', 'NULL')) %>%
     filter(GENDER != 'No matching concept') %>%
     filter(VALUE_AS_NUMBER < 9999999) %>%  # Get rid of nonsensical outliers.
-    mutate(age_at_measurement = year(as.period(interval(start = DATE_OF_BIRTH, end = MEASUREMENT_DATE)))) %>%
+    mutate(age_at_measurement = year(as.period(interval(start = DATE_OF_BIRTH, end = MEASUREMENT_DATETIME)))) %>%
     ggplot(aes(x = cut_width(age_at_measurement, width = 5, boundary = 0), y = VALUE_AS_NUMBER)) +
     geom_boxplot() +
     stat_summary(fun.data = get_boxplot_fun_data, geom = 'text', size = 2,
