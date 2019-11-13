@@ -52,7 +52,13 @@ python2.7 most_recent_measurement_of_interest_test.py
 We cannot current run these tests from the workbench because we are unable to create the BigQuery tables with syntheic data. Instead, run them from an environment such as [Terra](https://app.terra.bio/) or [Cloud Shell](https://cloud.google.com/shell/).
 
 ## Integration 'smoke tests'
-The script to auto-generate the Jupyter Snippets Menu configuration also emits both `r_snippets_menu_config_smoke_test.R` and `py_snippets_menu_config_smoke_test.py`. Those scripts each include, respectively, all the R SQL snippets and all the Python SQL snippets. If those scripts are run from the workbench environment and there are no obvious bugs in the snippets, they will run start-to-finish without error and emit _"Smoke test complete!"_ when they have completed successfully. (This won't necessarily catch all bugs, but its a good start.)
+If the smoke tests are run from the workbench environment and there are no obvious bugs in the snippets, they will run start-to-finish without error. (This won't necessarily catch all bugs, but its a good start.)
+
+* The script to auto-generate the Jupyter Snippets Menu configuration also emits both `r_snippets_menu_config_smoke_test.R` and `py_snippets_menu_config_smoke_test.py`.
+* Those scripts each include, respectively, all the R SQL snippets and all the Python SQL snippets.
+* The CDR that will be used is determined by the `WORKBENCH_CDR` environment variable. The example below shows how to override it, if desired.
+
+After opening a notebook in the production workbench environment, upload these smoke test files into Jupyter and then execute the following code from the Jupyter terminal or a Python notebook in the same directory. They will emit _"Smoke test complete!"_ when they have completed successfully.
 
 To run the R SQL snippets smoke tests:
 ```

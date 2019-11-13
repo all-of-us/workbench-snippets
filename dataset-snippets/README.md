@@ -32,9 +32,14 @@ The instructions are identical for both the SQL snippets and the Dataset Builder
 To test individual snippets such as plots, the best thing to do is copy and paste them into a notebook on the workbench.
 
 ## Integration 'smoke tests'
-The script to auto-generate the Jupyter Snippets Menu configuration also emits both `r_dataset_snippets_menu_config_smoke_test.R` and `py_dataset_snippets_menu_config_smoke_test.py`. Those scripts each include, respectively, all the R Dataset Builder snippets and all the Python Dataset Builder snippets. If those scripts are run from the workbench environment and there are no obvious bugs in the snippets, they will run start-to-finish without error and emit _"Smoke test complete!"_ when they have completed successfully. (This won't necessarily catch all bugs, but its a good start.)
 
-The Dataset from Dataset Builder is defined in [r_dataset_snippets_menu_config.smoke_test_setup](./r_dataset_snippets_menu_config.smoke_test_setup) and [py_dataset_snippets_menu_config.smoke_test_setup](./py_dataset_snippets_menu_config.smoke_test_setup), respectively. Update it as needed.
+If the smoke tests are run from the workbench environment and there are no obvious bugs in the snippets, they will run start-to-finish without error. (This won't necessarily catch all bugs, but its a good start.)
+
+* The script to auto-generate the Jupyter Snippets Menu configuration also emits both `r_dataset_snippets_menu_config_smoke_test.R` and `py_dataset_snippets_menu_config_smoke_test.py`. 
+* Those scripts each include, respectively, all the R Dataset Builder snippets and all the Python Dataset Builder snippets. 
+* The Dataset from Dataset Builder is defined in [r_dataset_snippets_menu_config.smoke_test_setup](./r_dataset_snippets_menu_config.smoke_test_setup) and [py_dataset_snippets_menu_config.smoke_test_setup](./py_dataset_snippets_menu_config.smoke_test_setup), respectively. Update it as needed.
+
+After opening a notebook in the production workbench environment, upload these smoke test files into Jupyter and then execute the following code from the Jupyter terminal or a Python notebook in the same directory. They will emit _"Smoke test complete!"_ when they have completed successfully.
 
 To run the R Dataset Builder snippets smoke tests:
 ```
