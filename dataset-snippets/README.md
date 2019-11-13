@@ -31,8 +31,33 @@ The instructions are identical for both the SQL snippets and the Dataset Builder
 ## Snippet tests
 To test individual snippets such as plots, the best thing to do is copy and paste them into a notebook on the workbench.
 
-See also https://github.com/all-of-us/workbench-snippets/issues/30
+## Integration 'smoke tests'
+
+If the smoke tests are run from the workbench environment and there are no obvious bugs in the snippets, they will run start-to-finish without error. (This won't necessarily catch all bugs, but its a good start.)
+
+* The script to auto-generate the Jupyter Snippets Menu configuration also emits both `r_dataset_snippets_menu_config_smoke_test.R` and `py_dataset_snippets_menu_config_smoke_test.py`. 
+* Those scripts each include, respectively, all the R Dataset Builder snippets and all the Python Dataset Builder snippets. 
+* The Dataset from Dataset Builder is defined in [r_dataset_snippets_menu_config.smoke_test_setup](./r_dataset_snippets_menu_config.smoke_test_setup) and [py_dataset_snippets_menu_config.smoke_test_setup](./py_dataset_snippets_menu_config.smoke_test_setup), respectively. Update it as needed.
+
+After opening a notebook in the production workbench environment, upload these smoke test files into Jupyter and then execute the following code from the Jupyter terminal or a Python notebook in the same directory. They will emit _"Smoke test complete!"_ when they have completed successfully.
+
+To run the R Dataset Builder snippets smoke tests:
+```
+%%bash
+
+Rscript r_dataset_snippets_menu_config_smoke_test.R  # There will be output, but there should be no errors.
+```
+
+To run the Python Dataset Builder snippets smoke tests:
+```
+%%bash
+
+# Any notebook '!' commands won't work in this context. Comment them out and run them explicitly first.
+perl -i -pe 's/!pip/#!pip/g' py_dataset_snippets_menu_config_smoke_test.py
+pip3 install --upgrade --user pandas_profiling statsmodels
+
+python3 py_dataset_snippets_menu_config_smoke_test.py  # There will be output, but there should be no errors.
+```
 
 # Deployment
 The instructions are identical for both the SQL snippets and the Dataset Builder Snippets. See [CONTRIBUTING](../CONTRIBUTING.md#deployment) for the details.
-

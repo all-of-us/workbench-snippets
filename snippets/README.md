@@ -52,14 +52,32 @@ python2.7 most_recent_measurement_of_interest_test.py
 We cannot current run these tests from the workbench because we are unable to create the BigQuery tables with syntheic data. Instead, run them from an environment such as [Terra](https://app.terra.bio/) or [Cloud Shell](https://cloud.google.com/shell/).
 
 ## Integration 'smoke tests'
-The script to auto-generate the Jupyter Snippets Menu configuration also emits both `r_snippets_menu_config_smoke_test.R` and `py_snippets_menu_config_smoke_test.py`. Those scripts each include, respectively, all the R SQL snippets and all the Python SQL snippets. If those scripts are run from the workbench environment and there are no obvious bugs in the snippets, they will run start-to-finish without error. (It won't necessarily catch all bugs, but its a good start.)
+If the smoke tests are run from the workbench environment and there are no obvious bugs in the snippets, they will run start-to-finish without error. (This won't necessarily catch all bugs, but its a good start.)
 
-To run the smoke tests:
+* The script to auto-generate the Jupyter Snippets Menu configuration also emits both `r_snippets_menu_config_smoke_test.R` and `py_snippets_menu_config_smoke_test.py`.
+* Those scripts each include, respectively, all the R SQL snippets and all the Python SQL snippets.
+* The CDR that will be used is determined by the `WORKBENCH_CDR` environment variable. The example below shows how to override it, if desired.
+
+After opening a notebook in the production workbench environment, upload these smoke test files into Jupyter and then execute the following code from the Jupyter terminal or a Python notebook in the same directory. They will emit _"Smoke test complete!"_ when they have completed successfully.
+
+To run the R SQL snippets smoke tests:
 ```
-# Check the R snippets.
-Rscript r_snippets_menu_config_smoke_test.R  # There will be output, but there should be no errors.
+%%bash
 
-# Check the Python snippets.
+export WORKSPACE_CDR='fc-aou-cdr-prod.THE-CDR-YOU-WANT-TO-TEST-AGAINST'
+Rscript r_snippets_menu_config_smoke_test.R  # There will be output, but there should be no errors.
+```
+
+To run the Python SQL snippets smoke tests:
+```
+%%bash
+
+export WORKSPACE_CDR='fc-aou-cdr-prod.THE-CDR-YOU-WANT-TO-TEST-AGAINST'
+
+# Any notebook '!' commands won't work in this context. Comment them out and run them explicitly first.
+perl -i -pe 's/!pip/#!pip/g' py_snippets_menu_config_smoke_test.py
+pip3 install --upgrade --user statsmodels
+
 python3 py_snippets_menu_config_smoke_test.py  # There will be output, but there should be no errors.
 ```
 
