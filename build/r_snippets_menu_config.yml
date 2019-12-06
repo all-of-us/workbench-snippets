@@ -18,3 +18,6 @@ All of Us R and SQL snippets:
     - most_recent_measurement_of_interest_by_age_and_gender.ggplot: snippets/most_recent_measurement_of_interest_by_age_and_gender.ggplot
     - most_recent_measurement_of_interest_by_gender.ggplot: snippets/most_recent_measurement_of_interest_by_gender.ggplot
     - most_recent_measurement_of_interest_by_site.ggplot: snippets/most_recent_measurement_of_interest_by_site.ggplot
+  - (5) Copy file to or from Google Bucket:
+    - copy_data_to_google_bucket.R: snippets/copy_data_to_google_bucket.R
+    - copy_file_from_google_bucket.R: snippets/copy_file_from_google_bucket.R
