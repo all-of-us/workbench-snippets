@@ -18,3 +18,6 @@ All of Us Python and SQL snippets:
     - most_recent_measurement_of_interest_by_age_and_gender.plotnine: snippets/most_recent_measurement_of_interest_by_age_and_gender.plotnine
     - most_recent_measurement_of_interest_by_gender.plotnine: snippets/most_recent_measurement_of_interest_by_gender.plotnine
     - most_recent_measurement_of_interest_by_site.plotnine: snippets/most_recent_measurement_of_interest_by_site.plotnine
+  - (5) Copy file to or from Google Bucket:
+    - copy_data_to_google_bucket.py: snippets/copy_data_to_google_bucket.py
+    - copy_file_from_google_bucket.py: snippets/copy_file_from_google_bucket.py 
