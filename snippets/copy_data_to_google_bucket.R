@@ -6,8 +6,11 @@ my_dataframe <- df
 # Replace 'test3.csv' with THE NAME of the file you're going to store in the bucket (don't delete the quotation marks)
 destination_filename <- 'test3.csv'
 
-################ DO NOT CHANGE ANYTHING ABOVE THIS LINE ##############################
-##########                                                           #################
+########################################################################
+##
+################# DON'T CHANGE FROM HERE ###############################
+##
+########################################################################
 
 # store the dataframe in current workspace
 write_excel_csv(my_dataframe, destination_filename)
