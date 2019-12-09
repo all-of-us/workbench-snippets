@@ -21,3 +21,4 @@ my_bucket = os.getenv('WORKSPACE_BUCKET')
 
 # copy csv file to the bucket
 !gsutil cp './{destination_filename}' '{my_bucket}'
+print(f'[INFO] {destination_filename} is successfully uploaded in your bucket.')
