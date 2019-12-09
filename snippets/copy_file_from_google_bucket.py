@@ -1,25 +1,22 @@
-!pip -q install --user google.cloud.storage
-# Imports useful library
-from google.cloud import storage
 import os
 import pandas as pd
 
-def copy_file_from_bucket(source_filename):
-    """Load file from bucket into a pandas dataframe"""
-    # Get access to the file in the bucket related to the current workspace
-    my_storage = storage.Client()
-    bucket_name = os.getenv('WORKSPACE_BUCKET').split('//')[1]
-    my_bucket = my_storage.get_bucket(bucket_name)
-    blob = my_bucket.blob(source_filename)
-    
-    # copy file from bucket to the current workspace 
-    blob.download_to_filename(source_filename)
-    print(f'[INFO] {source_filename} is successfully downloaded from the Bucket.')
-    return pd.read_csv(source_filename)
+# Replace 'test.csv' with THE NAME of the file you're going to download from the bucket (don't delete the quotation marks)
+source_filename = 'test.csv'
 
-# replace 'test.csv' with the name of the file in your google bucket (don't delete the quotation marks)
-name_of_file_in_bucket = 'test.csv'
+########################################################################
+##
+################# DON'T CHANGE FROM HERE ###############################
+##
+########################################################################
 
-# Load the file into a dataframe
-my_dataframe = copy_file_from_bucket(name_of_file_in_bucket)
+# get the bucket name
+my_bucket = os.getenv('WORKSPACE_BUCKET')
+
+# copy csv file from the bucket to the current working space
+!gsutil cp '{my_bucket}/{source_filename}' .
+
+print(f'[INFO] {source_filename} is successfully downloaded into your working space')
+# save dataframe in a csv file in the same workspace as the notebook
+my_dataframe = read_csv(source_filename)
 my_dataframe.head()
