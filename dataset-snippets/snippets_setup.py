@@ -1,4 +1,4 @@
-!pip3 install --upgrade --user pandas_profiling statsmodels
+!pip3 install --user pandas_profiling
 
 import os
 import numpy as np
