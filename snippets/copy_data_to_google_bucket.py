@@ -14,11 +14,11 @@ destination_filename = 'test.csv'
 ########################################################################
 
 # save dataframe in a csv file in the same workspace as the notebook
-my_dataframe.to_csv(filename, index=False)
+my_dataframe.to_csv(destination_filename, index=False)
 
 # get the bucket name
 my_bucket = os.getenv('WORKSPACE_BUCKET')
 
 # copy csv file to the bucket
-!gsutil cp './{destination_filename}' '{my_bucket}'
+os.system(f"gsutil cp './{destination_filename}' '{my_bucket}/data/'")
 print(f'[INFO] {destination_filename} is successfully uploaded in your bucket.')
