@@ -1,4 +1,6 @@
-library(tidyverse)
+# This snippet assumes that you run setup first
+
+# This code saves your dataframe into a csv file in a "data" folder in Google Bucket
 
 # Replace df with THE NAME OF YOUR DATAFRAME
 my_dataframe <- df

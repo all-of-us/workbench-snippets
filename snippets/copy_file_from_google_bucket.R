@@ -1,4 +1,5 @@
-library(tidyverse)
+# This snippet assumes that you run setup first
+# This code copies a file from your Google Bucket into a dataframe
 
 # replace 'test.csv' with the name of the file in your google bucket (don't delete the quotation marks)
 name_of_file_in_bucket <- 'test.csv'
