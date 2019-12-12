@@ -1,3 +1,7 @@
+# This snippet assumes you run setup first
+
+# This code copies file in your Google Bucket and loads it into a dataframe
+
 # Replace 'test.csv' with THE NAME of the file you're going to download from the bucket (don't delete the quotation marks)
 name_of_file_in_bucket = 'test.csv'
 
