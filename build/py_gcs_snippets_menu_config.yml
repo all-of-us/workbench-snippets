@@ -1,0 +1,9 @@
+Google Bucket snippets:
+  - Documentation: https://github.com/all-of-us/workbench-snippets
+  - divider: divider
+  - (1) Setup: gcs-snippets/snippets_setup.py
+  - (2) Copy file to or from Google Bucket:
+    - copy_data_to_google_bucket.py: gcs-snippets/copy_data_to_google_bucket.py
+    - copy_file_from_google_bucket.py: gcs-snippets/copy_file_from_google_bucket.py
+
+
