@@ -10,4 +10,4 @@ First see [CONTRIBUTING](./CONTRIBUTING.md) for general getting started instruct
 
 If you want to add/modify a snippet that uses a dataframe from Dataset Builder as its input, then see [dataset-snippets/README](./dataset-snippets/README.md).
 
-Otherwise, see [snippets/README](./snippets/README.md).
+Otherwise, see [sql-snippets/README](./sql-snippets/README.md).
