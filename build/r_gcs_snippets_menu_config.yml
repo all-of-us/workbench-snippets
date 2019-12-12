@@ -2,8 +2,8 @@ All of Us R and Cloud Storage snippets:
   - Documentation: https://github.com/all-of-us/workbench-snippets
   - divider: divider
   - (1) Setup: gcs-snippets/snippets_setup.R
-  - (2) Copy file to or from Google Bucket:
-    - copy_data_to_google_bucket.R: gcs-snippets/copy_data_to_google_bucket.R
-    - copy_file_from_google_bucket.R: gcs-snippets/copy_file_from_google_bucket.R
+  - (2) Copy file to or from Workspace Bucket:
+    - copy_data_to_workspace_bucket.R: gcs-snippets/copy_data_to_workspace_bucket.R
+    - copy_file_from_workspace_bucket.R: gcs-snippets/copy_file_from_workspace_bucket.R
 
 
