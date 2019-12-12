@@ -1,2 +1,5 @@
 #!/usr/bin/env Rscript
+library(tidyverse)
+
+df <- head(iris, 20)
 
