@@ -1,4 +1,4 @@
-Google Bucket snippets:
+All of Us Python and Cloud Storage snippets:
   - Documentation: https://github.com/all-of-us/workbench-snippets
   - divider: divider
   - (1) Setup: gcs-snippets/snippets_setup.py
