@@ -21,4 +21,3 @@ print(f'[INFO] {name_of_file_in_bucket} is successfully downloaded into your wor
 # save dataframe in a csv file in the same workspace as the notebook
 my_dataframe = pd.read_csv(name_of_file_in_bucket)
 my_dataframe.head()
-    
