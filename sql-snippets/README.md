@@ -74,10 +74,6 @@ To run the Python SQL snippets smoke tests:
 
 export WORKSPACE_CDR='fc-aou-cdr-prod.THE-CDR-YOU-WANT-TO-TEST-AGAINST'
 
-# Any notebook '!' commands won't work in this context. Comment them out and run them explicitly first.
-perl -i -pe 's/!pip/#!pip/g' py_sql_snippets_menu_config_smoke_test.py
-pip3 install --upgrade --user statsmodels
-
 python3 py_sql_snippets_menu_config_smoke_test.py  # There will be output, but there should be no errors.
 ```
 
