@@ -3,7 +3,7 @@ Google Bucket snippets:
   - divider: divider
   - (1) Setup: gbucket-snippets/snippets_setup.py
   - (2) Copy file to or from Google Bucket:
-    - copy_data_to_google_bucket.py: gbucket-snippets/copy_data_to_google_bucket.py
-    - copy_file_from_google_bucket.py: gbucket-snippets/copy_file_from_google_bucket.py
+    - copy_data_to_google_bucket.py: gcs-snippets/copy_data_to_google_bucket.py
+    - copy_file_from_google_bucket.py: gcs-snippets/copy_file_from_google_bucket.py
 
 
