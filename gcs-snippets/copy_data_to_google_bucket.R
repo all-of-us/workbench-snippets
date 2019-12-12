@@ -5,7 +5,7 @@
 # Replace df with THE NAME OF YOUR DATAFRAME
 my_dataframe <- df
 
-# Replace 'test3.csv' with THE NAME of the file you're going to store in the bucket (don't delete the quotation marks)
+# Replace 'test.csv' with THE NAME of the file you're going to store in the bucket (don't delete the quotation marks)
 destination_filename <- 'test.csv'
 
 ########################################################################
