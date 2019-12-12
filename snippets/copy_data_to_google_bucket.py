@@ -1,6 +1,6 @@
 # This snippet assumes you run setup first
 
-# This code copies your dataframe into a csv file in a data folder in your bucket
+# This code saves your dataframe into a csv file in a "data" folder in Google Bucket
 
 # Replace df with THE NAME OF YOUR DATAFRAME
 my_dataframe = df   
