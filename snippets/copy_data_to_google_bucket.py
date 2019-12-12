@@ -1,6 +1,3 @@
-import pandas as pd 
-import os 
-
 # Replace df with THE NAME OF YOUR DATAFRAME
 my_dataframe = df   
 
