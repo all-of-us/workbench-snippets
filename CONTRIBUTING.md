@@ -14,7 +14,7 @@ Small typos in code or documentation may be edited directly using the GitHub web
 
 If you want to add/modify a snippet that uses a dataframe from Dataset Builder as its input, then see [dataset-snippets/README](./dataset-snippets/README.md).
 
-Otherwise, see [snippets/README](./snippets/README.md).
+Otherwise, see the other snippets collections such as [sql-snippets/README](./sql-snippets/README.md) or [storage-snippets/README](./storage-snippets/README.md).
 
 # Auto-generation of Jupyter 'Snippets Menu' configuration
 
@@ -25,7 +25,7 @@ Otherwise, see [snippets/README](./snippets/README.md).
     python3 ./generate_jupyter_snippets_menu_extension_config.py
     # If you get an error about a missing library, run command 'pip3 install --user Jinja2 pyyaml'
     ```
-1. Then copy and paste the contents of the newly created file `r_jupyter_snippets_menu_extension_config.json` or `py_jupyter_snippets_menu_extension_config.json` into form field '*JSON string parsed to define custom menus (only used if the option above is checked)*' in the Snippets Menu extension configuration.
+1. Then copy and paste the contents of the newly created json file (such as `r_sql_snippets_menu_config.json` or `py_sql_snippets_menu_config.json` for the [sql-snippets](./sql-snippets/)) into form field '*JSON string parsed to define custom menus (only used if the option above is checked)*' in the Snippets Menu extension configuration.
 
 For more detail, see the [Snippets Menu](https://jupyter-contrib-nbextensions.readthedocs.io/en/latest/nbextensions/snippets_menu/readme.html) Jupyter extension documentation.
 
@@ -33,7 +33,7 @@ For more detail, see the [Snippets Menu](https://jupyter-contrib-nbextensions.re
 
 To test individual snippets such as plots, the best thing to do is copy and paste them into a notebook on the workbench.
 
-There are more detailed testing instructions in [dataset-snippets/README](./dataset-snippets/README.md#testing) and [snippets/README](./snippets/README.md#testing).
+There are more detailed testing instructions README for each of the snippets collections, such as [dataset-snippets/README](./dataset-snippets/README.md#testing) or [sql-snippets/README](./sql-snippets/README.md#testing).
 
 # Deployment
 

@@ -1,9 +1,9 @@
-Google Bucket snippets:
+All of Us Python and Cloud Storage snippets:
   - Documentation: https://github.com/all-of-us/workbench-snippets
   - divider: divider
-  - (1) Setup: gcs-snippets/snippets_setup.py
-  - (2) Copy file to or from Google Bucket:
-    - copy_data_to_google_bucket.py: gcs-snippets/copy_data_to_google_bucket.py
-    - copy_file_from_google_bucket.py: gcs-snippets/copy_file_from_google_bucket.py
+  - (1) Setup: storage-snippets/snippets_setup.py
+  - (2) Copy file to or from Workspace Bucket:
+    - copy_data_to_workspace_bucket.py: storage-snippets/copy_data_to_workspace_bucket.py
+    - copy_file_from_workspace_bucket.py: storage-snippets/copy_file_from_workspace_bucket.py
 
 

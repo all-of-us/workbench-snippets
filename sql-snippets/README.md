@@ -3,7 +3,7 @@
 This snippets in this subdirectory are for workbench users who either know SQL or want to learn how to use SQL.
 
 # Get setup for GitHub
-The instructions are identical for both the SQL snippets and the Dataset Builder Snippets. See [CONTRIBUTING](../CONTRIBUTING.md#get-setup-for-github) for the details. If you are new to `git`, please see the example commands there. 
+The instructions are identical for all of the snippets collections. See [CONTRIBUTING](../CONTRIBUTING.md#get-setup-for-github) for the details. If you are new to `git`, please see the example commands there. 
 
 # How to contribute a snippet to the SQL snippets menu group
 
@@ -18,14 +18,14 @@ The instructions are identical for both the SQL snippets and the Dataset Builder
     * Write it first in [ggplot2](https://ggplot2.tidyverse.org/) or [plotnine](https://plotnine.readthedocs.io/en/stable/), depending on your preference, and iterate until you like the look of it.
     * Once you have it the way you want it, port it to the other language.
     * Name the files `<my-query>_<viz-description>.ggplot` and `<my-query>_<viz-description>.plotnine`
-1. Update [r_snippets_menu_config.yml](../build/r_snippets_menu_config.yml) and [py_snippets_menu_config.yml](../build/py_snippets_menu_config.yml) to add your snippet where ever you would like it to be displayed within the menu.
+1. Update [r_sql_snippets_menu_config.yml](../build/r_sql_snippets_menu_config.yml) and [py_sql_snippets_menu_config.yml](../build/py_sql_snippets_menu_config.yml) to add your snippet where ever you would like it to be displayed within the menu.
 1. Send your pull request!
 
 Don't like these conventions? We can change them! This is just a starting point. Keep in mind we'll need to reflect those changes in the auto-generation script described in the next section.
 
 # Auto-generation of Jupyter 'Snippets Menu' configuration
 
-The instructions are identical for both the SQL snippets and the Dataset Builder Snippets. See [CONTRIBUTING](../CONTRIBUTING.md#auto-generation-of-jupyter-snippets-menu-configuration) for the details.
+The instructions are identical for all of the snippets collections. See [CONTRIBUTING](../CONTRIBUTING.md#auto-generation-of-jupyter-snippets-menu-configuration) for the details.
 
 # Testing
 
@@ -54,7 +54,7 @@ We cannot current run these tests from the workbench because we are unable to cr
 ## Integration 'smoke tests'
 If the smoke tests are run from the workbench environment and there are no obvious bugs in the snippets, they will run start-to-finish without error. (This won't necessarily catch all bugs, but its a good start.)
 
-* The script to auto-generate the Jupyter Snippets Menu configuration also emits both `r_snippets_menu_config_smoke_test.R` and `py_snippets_menu_config_smoke_test.py`.
+* The script to auto-generate the Jupyter Snippets Menu configuration also emits both `r_sql_snippets_menu_config_smoke_test.R` and `py_sql_snippets_menu_config_smoke_test.py`.
 * Those scripts each include, respectively, all the R SQL snippets and all the Python SQL snippets.
 * The CDR that will be used is determined by the `WORKBENCH_CDR` environment variable. The example below shows how to override it, if desired.
 
@@ -65,7 +65,7 @@ To run the R SQL snippets smoke tests:
 %%bash
 
 export WORKSPACE_CDR='fc-aou-cdr-prod.THE-CDR-YOU-WANT-TO-TEST-AGAINST'
-Rscript r_snippets_menu_config_smoke_test.R  # There will be output, but there should be no errors.
+Rscript r_sql_snippets_menu_config_smoke_test.R  # There will be output, but there should be no errors.
 ```
 
 To run the Python SQL snippets smoke tests:
@@ -74,12 +74,8 @@ To run the Python SQL snippets smoke tests:
 
 export WORKSPACE_CDR='fc-aou-cdr-prod.THE-CDR-YOU-WANT-TO-TEST-AGAINST'
 
-# Any notebook '!' commands won't work in this context. Comment them out and run them explicitly first.
-perl -i -pe 's/!pip/#!pip/g' py_snippets_menu_config_smoke_test.py
-pip3 install --upgrade --user statsmodels
-
-python3 py_snippets_menu_config_smoke_test.py  # There will be output, but there should be no errors.
+python3 py_sql_snippets_menu_config_smoke_test.py  # There will be output, but there should be no errors.
 ```
 
 # Deployment
-The instructions are identical for both the SQL snippets and the Dataset Builder Snippets. See [CONTRIBUTING](../CONTRIBUTING.md#deployment) for the details.
+The instructions are identical for all of the snippets collections. See [CONTRIBUTING](../CONTRIBUTING.md#deployment) for the details.

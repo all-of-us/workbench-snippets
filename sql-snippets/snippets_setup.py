@@ -1,5 +1,3 @@
-!pip3 install --upgrade --user statsmodels
-
 import json
 import os
 import numpy as np
@@ -34,5 +32,3 @@ MEASUREMENT_CONCEPT_ID = 3000963        # Hemoglobin
 UNIT_CONCEPT_ID = 8636                  # gram per liter
 MEASUREMENT_NAME = '<this should be the measurement name>'
 UNIT_NAME = '<this should be the unit name>'
-
-# NOTE: if you get any errors from this cell, restart your kernel and run it again.
