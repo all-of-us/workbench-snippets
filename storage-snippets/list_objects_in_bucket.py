@@ -7,3 +7,5 @@ my_bucket = os.getenv('WORKSPACE_BUCKET')
 
 # List objects in the bucket
 os.system(f"gsutil ls '{my_bucket}'")
+
+
