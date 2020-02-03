@@ -1,5 +1,3 @@
-!pip3 install --user pandas_profiling
-
 import os
 import numpy as np
 import pandas as pd
