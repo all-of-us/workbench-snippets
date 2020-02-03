@@ -2,7 +2,9 @@ All of Us R and Cloud Storage snippets:
   - Documentation: https://github.com/all-of-us/workbench-snippets
   - divider: divider
   - (1) Setup: storage-snippets/snippets_setup.R
-  - (2) Copy file to or from Workspace Bucket:
+  - (2) List objects in Workspace Bucket:
+    - list_objects_in_bucket.R: storage-snippets/list_objects_in_bucket.R
+  - (3) Copy file to or from Workspace Bucket:
     - copy_data_to_workspace_bucket.R: storage-snippets/copy_data_to_workspace_bucket.R
     - copy_file_from_workspace_bucket.R: storage-snippets/copy_file_from_workspace_bucket.R
 
