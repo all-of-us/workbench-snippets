@@ -6,6 +6,6 @@
 my_bucket = os.getenv('WORKSPACE_BUCKET')
 
 # List objects in the bucket
-os.system(f"gsutil ls '{my_bucket}'")
+print(subprocess.check_output(f"gsutil ls {my_bucket}", shell=True).decode('utf-8'))
 
 
