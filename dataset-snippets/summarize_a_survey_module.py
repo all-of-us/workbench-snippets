@@ -1,5 +1,5 @@
 # Use snippet 'summarize_a_survey_module' to print a table of participant counts by question in a module
-# The snippet assumes that a dataframe containing survey questions and answers
+# The snippet assumes that a dataframe containing survey questions and answers already exists
 
 # Update the next 3 lines
 survey_df = None
