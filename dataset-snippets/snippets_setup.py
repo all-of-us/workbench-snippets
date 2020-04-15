@@ -4,6 +4,7 @@ import pandas as pd
 import pandas_profiling
 import plotnine
 from plotnine import *  # Provides a ggplot-like interface to matplotlib.
+from IPython.display import display
 
 ## Plot setup.
 theme_set(theme_bw(base_size = 11)) # Default theme for plots.
