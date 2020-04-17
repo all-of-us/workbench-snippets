@@ -147,7 +147,8 @@ YOUR_DATASET_NAME_person_df.head(5)
 
 import pandas as pd 
 
-YOUR_DATASET_survey_sql = """SELECT answer.question, answer.survey, answer.survey_datetime, answer.answer_concept_id, answer.question_concept_id, answer.person_id, answer.answer    FROM `""" + os.environ["WORKSPACE_CDR"] + """.ds_survey` answer WHERE 
+YOUR_DATASET_survey_sql = """SELECT answer.question, answer.survey, answer.survey_datetime, answer.answer_concept_id, answer.question_concept_id, answer.person_id, answer.answer    
+FROM `fc-aou-cdr-prod.R2019Q4R3.ds_survey` answer WHERE 
 (question_concept_id IN (1585784, 1585789, 1585375, 1585791, 1585811, 1585748, 1585940, 1585845, 1586135, 1585386, 1585802, 1585803, 1585806, 1585711, 1585952, 1585890, 1585892) OR 
 answer_concept_id IN (1585784, 1585789, 1585375, 1585791, 1585811, 1585748, 1585940, 1585845, 1586135, 1585386, 1585802, 1585803, 1585806, 1585711, 1585952, 1585890, 1585892)) 
 AND (answer.PERSON_ID IN (select person_id
