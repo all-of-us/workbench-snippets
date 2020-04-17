@@ -9,3 +9,7 @@ All of Us Dataset Builder R snippets:
   - (3) Plot measurements:
     - measurement_by_age_and_gender.ggplot: dataset-snippets/measurement_by_age_and_gender.ggplot
     - measurement_by_gender.ggplot: dataset-snippets/measurement_by_gender.ggplot
+  - (4) Summarize survey data:
+    - summarize_a_survey_module.R: dataset-snippets/summarize_a_survey_module.R
+    - summarize_a_survey_by_question_concept_id.R: dataset-snippets/summarize_a_survey_by_question_concept_id.R
+
