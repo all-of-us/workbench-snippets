@@ -124,14 +124,14 @@ LIMIT """ + max_number_of_rows
 YOUR_DATASET_NAME_person_query_config = {
   'query': {
   'parameterMode': 'NAMED',
-  'queryParameters': [
+  'queryPrameters': [
       {
         'name': "p1_586",
         'parameterType': {'type': "ARRAY",'arrayType': {'type': "INT64"},},
         'parameterValue': {'arrayValues': [{'value': 261255},{'value': 256646},{'value': 4092216},{'value': 4092217},{'value': 4311501},{'value': 255507},{'value': 257825},{'value': 4094876},{'value': 4089756},{'value': 4089754},{'value': 37110034},{'value': 36712981},{'value': 37110032},{'value': 37110033},{'value': 4246126},{'value': 762427},{'value': 4157454},{'value': 762426},{'value': 433973},{'value': 45768846},{'value': 45768844},{'value': 4093960},{'value': 46273652},{'value': 4312567},{'value': 37110031},{'value': 4112770},{'value': 36712816},{'value': 4054524},{'value': 4131454},{'value': 4110591},{'value': 258369},{'value': 4131453},{'value': 4110588},{'value': 4054526},{'value': 4110586},{'value': 258375},{'value': 4110587},{'value': 4128889},{'value': 4128888},{'value': 4128887},{'value': 4246027},{'value': 4110706},{'value': 4110705},{'value': 43530696},{'value': 4213396},{'value': 4055272},{'value': 4246805},{'value': 4247832},{'value': 4129381},{'value': 4129380},{'value': 4112738},{'value': 46270492},{'value': 36712815},{'value': 760916},{'value': 40492938},{'value': 257513},{'value': 4151250},{'value': 45768916},{'value': 4310703},{'value': 45768917},{'value': 4242353},{'value': 4115276},{'value': 45769033},{'value': 46270513},{'value': 254583},{'value': 261236},{'value': 443388},{'value': 42539251},{'value': 254591},{'value': 37109576}]}
       },
       {
-        'name': "p0_586",
+        'aname': "p0_586",
         'parameterType': {'type': "INT64"},
         'parameterValue': {'value': "1"}
       }
@@ -144,6 +144,8 @@ YOUR_DATASET_NAME_person_query_config = {
 YOUR_DATASET_NAME_person_df = pandas.read_gbq(YOUR_DATASET_NAME_person_sql, dialect="standard", configuration=YOUR_DATASET_NAME_person_query_config)
 
 YOUR_DATASET_NAME_person_df.head(5)
+
+import pandas as pd 
 
 YOUR_DATASET_survey_sql = """SELECT answer.question, answer.survey, answer.survey_datetime, answer.answer_concept_id, answer.question_concept_id, answer.person_id, answer.answer    FROM `""" + os.environ["WORKSPACE_CDR"] + """.ds_survey` answer WHERE 
 (question_concept_id IN (1585784, 1585789, 1585375, 1585791, 1585811, 1585748, 1585940, 1585845, 1586135, 1585386, 1585802, 1585803, 1585806, 1585711, 1585952, 1585890, 1585892) OR 
@@ -160,4 +162,4 @@ where ((is_standard = 0 and concept_id in (903133))
 )) LIMIT 100000
 """
 
-YOUR_SURVEY_df = pandas.read_gbq(YOUR_DATASET_survey_sql, dialect="standard")
+YOUR_SURVEY_df = pd.read_gbq(YOUR_DATASET_survey_sql, dialect="standard")
