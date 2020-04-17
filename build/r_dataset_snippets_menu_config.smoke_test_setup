@@ -150,7 +150,7 @@ library(bigrquery)
 library(tidyverse)
 
 extract_data <- function(query){
-  tq <- bq_project_query(Sys.getenv('GOOGLE_PROJECT'), query)
+  tb <- bq_project_query(Sys.getenv('GOOGLE_PROJECT'), query)
   bq_table_download(tb)
 }
 
