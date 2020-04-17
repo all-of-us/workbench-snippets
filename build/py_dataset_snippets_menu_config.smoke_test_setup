@@ -145,7 +145,7 @@ YOUR_DATASET_NAME_person_df = pandas.read_gbq(YOUR_DATASET_NAME_person_sql, dial
 
 YOUR_DATASET_NAME_person_df.head(5)
 
-dataset_18499191_survey_sql = """SELECT answer.question, answer.survey, answer.survey_datetime, answer.answer_concept_id, answer.question_concept_id, answer.person_id, answer.answer    FROM `""" + os.environ["WORKSPACE_CDR"] + """.ds_survey` answer WHERE 
+YOUR_DATASET_survey_sql = """SELECT answer.question, answer.survey, answer.survey_datetime, answer.answer_concept_id, answer.question_concept_id, answer.person_id, answer.answer    FROM `""" + os.environ["WORKSPACE_CDR"] + """.ds_survey` answer WHERE 
 (question_concept_id IN (1585784, 1585789, 1585375, 1585791, 1585811, 1585748, 1585940, 1585845, 1586135, 1585386, 1585802, 1585803, 1585806, 1585711, 1585952, 1585890, 1585892) OR 
 answer_concept_id IN (1585784, 1585789, 1585375, 1585791, 1585811, 1585748, 1585940, 1585845, 1586135, 1585386, 1585802, 1585803, 1585806, 1585711, 1585952, 1585890, 1585892)) 
 AND (answer.PERSON_ID IN (select person_id
@@ -160,4 +160,4 @@ where ((is_standard = 0 and concept_id in (903133))
 )) LIMIT 100000
 """
 
-YOUR_SURVEY_df = pandas.read_gbq(dataset_18499191_survey_sql, dialect="standard")
+YOUR_SURVEY_df = pandas.read_gbq(YOUR_DATASET_survey_sql, dialect="standard")
