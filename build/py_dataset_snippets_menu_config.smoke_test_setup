@@ -108,7 +108,12 @@ import pandas
 max_number_of_rows = '1000000'
 
 # This query represents dataset "dataSet" for domain "person"
-YOUR_DATASET_NAME_person_sql = """SELECT person.RACE_CONCEPT_ID, person.BIRTH_DATETIME as DATE_OF_BIRTH, person.PERSON_ID, person.ETHNICITY_CONCEPT_ID, person.GENDER_CONCEPT_ID, p_race_concept.concept_name as RACE, p_gender_concept.concept_name as GENDER, p_ethnicity_concept.concept_name as ETHNICITY FROM `fc-aou-cdr-prod.R2019Q4R3.person` person LEFT JOIN `fc-aou-cdr-prod.R2019Q4R3.concept` p_race_concept on person.race_concept_id = p_race_concept.CONCEPT_ID LEFT JOIN `fc-aou-cdr-prod.R2019Q4R3.concept` p_gender_concept on person.gender_concept_id = p_gender_concept.CONCEPT_ID LEFT JOIN `fc-aou-cdr-prod.R2019Q4R3.concept` p_ethnicity_concept on person.ethnicity_concept_id = p_ethnicity_concept.CONCEPT_ID
+YOUR_DATASET_NAME_person_sql = """SELECT person.RACE_CONCEPT_ID, person.BIRTH_DATETIME as DATE_OF_BIRTH, person.PERSON_ID, person.ETHNICITY_CONCEPT_ID, person.GENDER_CONCEPT_ID, 
+p_race_concept.concept_name as RACE, p_gender_concept.concept_name as GENDER, p_ethnicity_concept.concept_name as ETHNICITY 
+FROM `fc-aou-cdr-prod.R2019Q4R3.person` person 
+LEFT JOIN `fc-aou-cdr-prod.R2019Q4R3.concept` p_race_concept on person.race_concept_id = p_race_concept.CONCEPT_ID 
+LEFT JOIN `fc-aou-cdr-prod.R2019Q4R3.concept` p_gender_concept on person.gender_concept_id = p_gender_concept.CONCEPT_ID 
+LEFT JOIN `fc-aou-cdr-prod.R2019Q4R3.concept` p_ethnicity_concept on person.ethnicity_concept_id = p_ethnicity_concept.CONCEPT_ID
 WHERE person.PERSON_ID IN (select person_id
 from `fc-aou-cdr-prod.R2019Q4R3.person` person
 where
@@ -124,14 +129,14 @@ LIMIT """ + max_number_of_rows
 YOUR_DATASET_NAME_person_query_config = {
   'query': {
   'parameterMode': 'NAMED',
-  'queryPrameters': [
+  'queryParameters': [
       {
         'name': "p1_586",
         'parameterType': {'type': "ARRAY",'arrayType': {'type': "INT64"},},
         'parameterValue': {'arrayValues': [{'value': 261255},{'value': 256646},{'value': 4092216},{'value': 4092217},{'value': 4311501},{'value': 255507},{'value': 257825},{'value': 4094876},{'value': 4089756},{'value': 4089754},{'value': 37110034},{'value': 36712981},{'value': 37110032},{'value': 37110033},{'value': 4246126},{'value': 762427},{'value': 4157454},{'value': 762426},{'value': 433973},{'value': 45768846},{'value': 45768844},{'value': 4093960},{'value': 46273652},{'value': 4312567},{'value': 37110031},{'value': 4112770},{'value': 36712816},{'value': 4054524},{'value': 4131454},{'value': 4110591},{'value': 258369},{'value': 4131453},{'value': 4110588},{'value': 4054526},{'value': 4110586},{'value': 258375},{'value': 4110587},{'value': 4128889},{'value': 4128888},{'value': 4128887},{'value': 4246027},{'value': 4110706},{'value': 4110705},{'value': 43530696},{'value': 4213396},{'value': 4055272},{'value': 4246805},{'value': 4247832},{'value': 4129381},{'value': 4129380},{'value': 4112738},{'value': 46270492},{'value': 36712815},{'value': 760916},{'value': 40492938},{'value': 257513},{'value': 4151250},{'value': 45768916},{'value': 4310703},{'value': 45768917},{'value': 4242353},{'value': 4115276},{'value': 45769033},{'value': 46270513},{'value': 254583},{'value': 261236},{'value': 443388},{'value': 42539251},{'value': 254591},{'value': 37109576}]}
       },
       {
-        'aname': "p0_586",
+        'name': "p0_586",
         'parameterType': {'type': "INT64"},
         'parameterValue': {'value': "1"}
       }
