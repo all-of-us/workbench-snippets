@@ -29,7 +29,7 @@ def summarize_a_question_concept_id(df, question_concept_id, denominator=None):
               geom_bar(aes(x='answer', y='n_participant'), stat='identity') +
                coord_flip() +
                 labs(y="Participant count", x="") +
-               theme_minimal())
+               theme_bw())
     else:
         print("There is an error with your question_concept_id")
 

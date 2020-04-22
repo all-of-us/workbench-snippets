@@ -35,7 +35,7 @@ summarize_a_question_concept_id <- function(df, q_concept_id, denominator=NULL){
             geom_bar(aes(x=answer, y=n_participant), stat='identity') +
             coord_flip() +
             labs(y="Participant count", x="") +
-            theme_minimal()
+            theme_bw()
     }
     else {
         print("There is an error with your question_concept_id")
