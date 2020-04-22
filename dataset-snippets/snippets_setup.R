@@ -7,6 +7,7 @@ library(scales)     # Graphical scales map data to aesthetics in plots.
 library(skimr)      # Better summaries of data.
 library(lubridate)  # Date library from the tidyverse.
 library(tidyverse)  # Data wrangling packages.
+library(bigrquery)  # Data extraction from Google BigQuery
 
 ## Plot setup.
 theme_set(theme_bw(base_size = 14)) # Default theme for plots.
