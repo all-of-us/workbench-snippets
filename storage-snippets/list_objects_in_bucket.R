@@ -6,6 +6,6 @@
 my_bucket <- Sys.getenv('WORKSPACE_BUCKET')
 
 # List objects in the bucket
-system(paste0("gsutil ls ", my_bucket), intern=T)
+system(paste0("gsutil ls -r ", my_bucket), intern=T)
 
 
