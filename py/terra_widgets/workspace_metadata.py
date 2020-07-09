@@ -70,5 +70,11 @@ class WorkspaceMetadata:
       A dictionary of workspace names to workspace bucket names.
     """
     ws_mapping = self.get_workspace_name_to_id_mapping(include_readonly=include_readonly)
-    return {ws['workspace']['workspaceId']: ws['workspace']['bucketName'] for ws in self.terra_workspaces
-            if ws['workspace']['workspaceId'] in ws_mapping.values()}
+    if self.aou_workspaces:
+      # For All of Us workspaces, in the Terra workspace metadata the workspace names are actually
+      # the AoU workspace ids.
+      terra_metadata_key = 'name'
+    else:
+      terra_metadata_key = 'workspaceId'
+    return {ws['workspace'][terra_metadata_key]: ws['workspace']['bucketName'] for ws in self.terra_workspaces
+            if ws['workspace'][terra_metadata_key] in ws_mapping.values()}
