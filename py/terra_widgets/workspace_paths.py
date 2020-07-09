@@ -42,7 +42,7 @@ class WorkspacePaths:
 
   def formulate_destination_paths(self, notebooks: List[str]) -> Dict[str, WorkspaceDestination]:
     """Formulate paths within the workspace bucket where transformations of notebooka can be stored.
-    
+
     Args:
       notebooks: List of one or more notebook paths.
     Returns:

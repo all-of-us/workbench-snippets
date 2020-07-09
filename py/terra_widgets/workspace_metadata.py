@@ -1,4 +1,4 @@
-"""Methods to obtain workspace metadata for the current user in various format."""
+"""Methods to obtain workspace metadata for the current user in various formats."""
 
 import json
 import os
@@ -30,6 +30,7 @@ class WorkspaceMetadata:
 
   def get_workspace_name_to_id_mapping(self, include_readonly: bool = False) -> Dict[str, str]:
     """Retrieve a mapping of workspace names to ids.
+
     Args:
       include_readonly: whether to include workspaces for which the current user has only has read access.
     Returns:
@@ -44,15 +45,30 @@ class WorkspaceMetadata:
 
   def get_workspace_name_to_bucket_mapping(self, include_readonly: bool = False) -> Dict[str, str]:
     """Retrieve a mapping of workspace names to Cloud Storage bucket names.
+
     Args:
       include_readonly: whether to include workspaces for which the current user has only has read access.
     Returns:
       A dictionary of workspace names to workspace bucket names.
     """
     ws_mapping = self.get_workspace_name_to_id_mapping(include_readonly=include_readonly)
-    if self.aou_workspaces is None:
-      terra_ws_names = ws_mapping.keys()
-    else:
+    if self.aou_workspaces:
+      # For All of Us workspaces, in the Terra workspace metadata the workspace names are actually
+      # the AoU workspace ids.
       terra_ws_names = ws_mapping.values()
+    else:
+      terra_ws_names = ws_mapping.keys()
     return {ws['workspace']['name']: ws['workspace']['bucketName'] for ws in self.terra_workspaces
             if ws['workspace']['name'] in terra_ws_names}
+
+
+  def get_workspace_id_to_bucket_mapping(self, include_readonly: bool = False) -> Dict[str, str]:
+    """Retrieve a mapping of workspace ids to Cloud Storage bucket names.
+    Args:
+      include_readonly: whether to include workspaces for which the current user has only has read access.
+    Returns:
+      A dictionary of workspace names to workspace bucket names.
+    """
+    ws_mapping = self.get_workspace_name_to_id_mapping(include_readonly=include_readonly)
+    return {ws['workspace']['workspaceId']: ws['workspace']['bucketName'] for ws in self.terra_workspaces
+            if ws['workspace']['workspaceId'] in ws_mapping.values()}

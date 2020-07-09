@@ -30,9 +30,9 @@ WORKSPACE_NAMES2ID = collections.OrderedDict(sorted(
     ws_meta.get_workspace_name_to_id_mapping().items()))
 WORKSPACE_NAMES2ID_INCLUDE_READONLY = collections.OrderedDict(sorted(
     ws_meta.get_workspace_name_to_id_mapping(include_readonly=True).items()))
-WORKSPACE_NAMES2BUCKET_INCLUDE_READONLY = ws_meta.get_workspace_name_to_bucket_mapping(include_readonly=True)
+WORKSPACE_IDS2BUCKET_INCLUDE_READONLY = ws_meta.get_workspace_id_to_bucket_mapping(include_readonly=True)
 WORKSPACE_PATHS = {k: WorkspacePaths(workspace_bucket=v)
-                       for k, v in WORKSPACE_NAMES2BUCKET_INCLUDE_READONLY.items()}
+                   for k, v in WORKSPACE_IDS2BUCKET_INCLUDE_READONLY.items()}
 
 # Configure notebook display preferences to better suit this UI.
 pd.set_option('display.max_colwidth', -1)
