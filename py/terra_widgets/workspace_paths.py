@@ -27,7 +27,7 @@ class WorkspacePaths:
   COMMENT_FILE_SUFFIX = '.comment.txt'
   HTML_FILE_SUFFIX = '.html'
   NOTEBOOK_FILE_SUFFIX = '.ipynb'
-  USER_GLOB = '*researchallofus.org'
+  USER_GLOB = '*@*'
   DATE_GLOB = '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
   TIME_GLOB = '[0-9][0-9][0-9][0-9][0-9][0-9]'
   COMMENT_FILE_GLOB = f'*{COMMENT_FILE_SUFFIX}'
@@ -41,7 +41,7 @@ class WorkspacePaths:
     return os.path.join(self.workspace_bucket, self.HTML_COPIES_FOLDER)
 
   def formulate_destination_paths(self, notebooks: List[str]) -> Dict[str, WorkspaceDestination]:
-    """Formulate paths within the workspace bucket where transformations of notebooka can be stored.
+    """Formulate paths within the workspace bucket where transformations of notebooks can be stored.
 
     Args:
       notebooks: List of one or more notebook paths.
@@ -49,6 +49,10 @@ class WorkspacePaths:
       A dictionary of notebooks paths to its corresponding WorkspaceDestination tuple.
     """
     user = os.getenv('OWNER_EMAIL')
+    if not user:
+      raise ValueError('''Environment variable "OWNER_EMAIL" is not defined.
+        If you are using this library outside of Terra, be sure to set a valid email address
+        as the value of that environment variable.''')
     timestamp = datetime.datetime.now().strftime('%Y%m%d/%H%M%S')
     destination = os.path.join(self.get_subfolder(), user, timestamp)
     workspace_destinations = {}
@@ -92,7 +96,7 @@ class WorkspacePaths:
 
   def add_html_glob_to_path(self, path) -> str:
     self._check_path_matches_glob(path, self.get_time_glob())
-    return os.path.join(path, '*html')
+    return os.path.join(path, '*' + self.HTML_FILE_SUFFIX)
 
   @staticmethod
   def _check_path_matches_glob(path: str, glob_to_match: str):

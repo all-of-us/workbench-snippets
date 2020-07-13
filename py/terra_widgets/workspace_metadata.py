@@ -61,9 +61,9 @@ class WorkspaceMetadata:
     return {ws['workspace']['name']: ws['workspace']['bucketName'] for ws in self.terra_workspaces
             if ws['workspace']['name'] in terra_ws_names}
 
-
   def get_workspace_id_to_bucket_mapping(self, include_readonly: bool = False) -> Dict[str, str]:
     """Retrieve a mapping of workspace ids to Cloud Storage bucket names.
+
     Args:
       include_readonly: whether to include workspaces for which the current user has only has read access.
     Returns:
