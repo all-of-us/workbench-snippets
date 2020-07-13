@@ -35,7 +35,10 @@ WORKSPACE_PATHS = {k: WorkspacePaths(workspace_bucket=v)
                    for k, v in WORKSPACE_IDS2BUCKET_INCLUDE_READONLY.items()}
 
 # Configure notebook display preferences to better suit this UI.
-pd.set_option('display.max_colwidth', -1)
+if pd.__version__.startswith('1'):
+  pd.set_option('display.max_colwidth', None)
+else:
+  pd.set_option('display.max_colwidth', -1)
 get_ipython().run_cell_magic(
     'javascript',
     '',
