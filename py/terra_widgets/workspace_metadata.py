@@ -8,8 +8,7 @@ import firecloud.api as fapi
 from IPython import get_ipython
 
 AOU_DOMAIN = '@researchallofus.org'
-AOU_EDIT_ACCESS_LEVELS = ['WRITER', 'OWNER']
-TERRA_EDIT_ACCESS_LEVELS = ['WRITER', 'PROJECT_OWNER']
+EDIT_ACCESS_LEVELS = ['WRITER', 'OWNER', 'PROJECT_OWNER']
 
 
 class WorkspaceMetadata:
@@ -38,10 +37,10 @@ class WorkspaceMetadata:
     """
     if self.aou_workspaces:
       return {ws['workspace']['name']: ws['workspace']['id'] for ws in self.aou_workspaces
-              if include_readonly or ws['accessLevel'] in AOU_EDIT_ACCESS_LEVELS}
+              if include_readonly or ws['accessLevel'] in EDIT_ACCESS_LEVELS}
     else:
       return {ws['workspace']['name']: ws['workspace']['workspaceId'] for ws in self.terra_workspaces
-              if include_readonly or ws['accessLevel'] in TERRA_EDIT_ACCESS_LEVELS}
+              if include_readonly or ws['accessLevel'] in EDIT_ACCESS_LEVELS}
 
   def get_workspace_name_to_bucket_mapping(self, include_readonly: bool = False) -> Dict[str, str]:
     """Retrieve a mapping of workspace names to Cloud Storage bucket names.
