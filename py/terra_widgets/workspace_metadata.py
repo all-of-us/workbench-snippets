@@ -27,30 +27,37 @@ class WorkspaceMetadata:
     else:
       self.aou_workspaces = None
 
-  def get_workspace_name_to_id_mapping(self, include_readonly: bool = False) -> Dict[str, str]:
+  def get_workspace_name_to_id_mapping(self, include_private_readonly: bool = False, include_all: bool = False) -> Dict[str, str]:
     """Retrieve a mapping of workspace names to ids.
 
     Args:
-      include_readonly: whether to include workspaces for which the current user has only has read access.
+      include_private_readonly: whether to include private workspaces for which the current user has only has read access.
+      include_all: whether to include all workspaces visible to the user
     Returns:
       A dictionary of workspace names to workspace ids.
     """
     if self.aou_workspaces:
       return {ws['workspace']['name']: ws['workspace']['id'] for ws in self.aou_workspaces
-              if include_readonly or ws['accessLevel'] in EDIT_ACCESS_LEVELS}
+              if include_all
+              or (include_private_readonly and not ws['workspace']['published'])
+              or ws['accessLevel'] in EDIT_ACCESS_LEVELS}
     else:
       return {ws['workspace']['name']: ws['workspace']['workspaceId'] for ws in self.terra_workspaces
-              if include_readonly or ws['accessLevel'] in EDIT_ACCESS_LEVELS}
+              if include_all
+              or (include_private_readonly and not ws['public'])
+              or ws['accessLevel'] in EDIT_ACCESS_LEVELS}
 
-  def get_workspace_name_to_bucket_mapping(self, include_readonly: bool = False) -> Dict[str, str]:
+  def get_workspace_name_to_bucket_mapping(self, include_private_readonly: bool = False, include_all: bool = False) -> Dict[str, str]:
     """Retrieve a mapping of workspace names to Cloud Storage bucket names.
 
     Args:
-      include_readonly: whether to include workspaces for which the current user has only has read access.
+      include_private_readonly: whether to include private workspaces for which the current user has only has read access.
+      include_all: whether to include all workspaces visible to the user
     Returns:
       A dictionary of workspace names to workspace bucket names.
     """
-    ws_mapping = self.get_workspace_name_to_id_mapping(include_readonly=include_readonly)
+    ws_mapping = self.get_workspace_name_to_id_mapping(include_private_readonly=include_private_readonly,
+                                                       include_all=include_all)
     if self.aou_workspaces:
       # For All of Us workspaces, in the Terra workspace metadata the workspace names are actually
       # the AoU workspace ids.
@@ -60,15 +67,17 @@ class WorkspaceMetadata:
     return {ws['workspace']['name']: ws['workspace']['bucketName'] for ws in self.terra_workspaces
             if ws['workspace']['name'] in terra_ws_names}
 
-  def get_workspace_id_to_bucket_mapping(self, include_readonly: bool = False) -> Dict[str, str]:
+  def get_workspace_id_to_bucket_mapping(self, include_private_readonly: bool = False, include_all: bool = False) -> Dict[str, str]:
     """Retrieve a mapping of workspace ids to Cloud Storage bucket names.
 
     Args:
-      include_readonly: whether to include workspaces for which the current user has only has read access.
+      include_private_readonly: whether to include private workspaces for which the current user has only has read access.
+      include_all: whether to include all workspaces visible to the user
     Returns:
       A dictionary of workspace names to workspace bucket names.
     """
-    ws_mapping = self.get_workspace_name_to_id_mapping(include_readonly=include_readonly)
+    ws_mapping = self.get_workspace_name_to_id_mapping(include_private_readonly=include_private_readonly,
+                                                       include_all=include_all)
     if self.aou_workspaces:
       # For All of Us workspaces, in the Terra workspace metadata the workspace names are actually
       # the AoU workspace ids.
