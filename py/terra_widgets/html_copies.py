@@ -90,10 +90,13 @@ def create_html_copy(notebook_paths: List[str],
       noclobber = '-n' if not overwrite else ''
       # Create and transfer the html file to the workspace bucket.
       get_ipython().system(f"set -o xtrace ; jupyter nbconvert --to html_toc --ExtractOutputPreprocessor.enabled=False '{temp_notebook}'")
-      temp_html = temp_notebook.replace('.ipynb', '.html')
+      temp_html = temp_notebook.replace(WorkspacePaths.NOTEBOOK_FILE_SUFFIX, WorkspacePaths.HTML_FILE_SUFFIX)
       get_ipython().system(f"set -o xtrace ; gsutil cp {noclobber} '{temp_html}' '{destinations[notebook_path].html_file}'")
       # Create and transfer the comment file to the workspace bucket.
-      get_ipython().system(f"set -o xtrace ; echo '{comment}' | gsutil cp {noclobber} - '{destinations[notebook_path].comment_file}'")
+      temp_comment = temp_notebook.replace(WorkspacePaths.NOTEBOOK_FILE_SUFFIX, WorkspacePaths.COMMENT_FILE_SUFFIX)
+      with open(temp_comment, 'w') as f:
+        f.write(comment)
+      get_ipython().system(f"set -o xtrace ; gsutil cp {noclobber} '{temp_comment}' '{destinations[notebook_path].comment_file}'")
       get_ipython().system(f"set -o xtrace ; gsutil setmeta -h 'Content-Type:text/plain' '{destinations[notebook_path].comment_file}'")
 
   # Intentionally empty. 'No clobber' does not throw an error, only warns, so returning success might not be correct.
