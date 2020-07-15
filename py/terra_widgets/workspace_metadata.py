@@ -7,22 +7,26 @@ from typing import Dict
 import firecloud.api as fapi
 from IPython import get_ipython
 
-AOU_DOMAIN = '@researchallofus.org'
-EDIT_ACCESS_LEVELS = ['WRITER', 'OWNER', 'PROJECT_OWNER']
-
 
 class WorkspaceMetadata:
   """Encapsulate all logic for obtaining workspace metadata."""
+
+  AOU_DOMAIN = '@researchallofus.org'
+  EDIT_ACCESS_LEVELS = ['WRITER', 'OWNER', 'PROJECT_OWNER']
+  AOU_PROD_API = 'https://api.workbench.researchallofus.org/v1/workspaces'
 
   def __init__(self):
     self.user = os.getenv('OWNER_EMAIL')
     self.terra_workspaces = fapi.list_workspaces().json()
     if self.user.endswith(AOU_DOMAIN):
+      aou_api = os.getenv('RW_API_BASE_URL')
+      if not aou_api:
+        aou_api = AOU_PROD_API
       # Use the All of Us API to get the human-readable workspace names. For All of Us workspaces,
       # the Terra workspace metadata the workspace names are actually the AoU workspace ids.
-      aou_response = get_ipython().getoutput('''curl -H "Content-Type: application/json" \
+      aou_response = get_ipython().getoutput(f'''curl -H "Content-Type: application/json" \
           -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-          "https://api.workbench.researchallofus.org/v1/workspaces" 2>/dev/null | jq .''')
+          "{aou_api}" 2>/dev/null | jq .''')
       self.aou_workspaces = json.loads(''.join(aou_response))['items']
     else:
       self.aou_workspaces = None

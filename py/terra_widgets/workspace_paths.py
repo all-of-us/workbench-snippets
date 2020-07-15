@@ -15,8 +15,8 @@ class WorkspacePaths:
   """Encapsulate all logic for manipulating workspace paths.
 
   Paths are of the form:
-    gs://<workspace bucket name>/reports/<user>@researchallofus.org/<date>/<time>/<notebook>.html
-    gs://<workspace bucket name>/reports/<user>@researchallofus.org/<date>/<time>/<notebook>.html.comment.txt
+    gs://<workspace bucket name>/reports/<your email address>/<date>/<time>/<notebook>.html
+    gs://<workspace bucket name>/reports/<your email address>/<date>/<time>/<notebook>.html.comment.txt
 
   For example:
     gs://fc-secure-83282461-002f-4bad-86a9-59fdfd11b933/reports/deflaux@researchallofus.org/20200624/211319/Create a version from any of your workspaces.html
