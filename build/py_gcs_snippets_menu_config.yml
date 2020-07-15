@@ -7,4 +7,6 @@ All of Us Python and Cloud Storage snippets:
   - (3) Copy file to or from Workspace Bucket:
     - copy_data_to_workspace_bucket.py: storage-snippets/copy_data_to_workspace_bucket.py
     - copy_file_from_workspace_bucket.py: storage-snippets/copy_file_from_workspace_bucket.py
+    (4) Interact with HTML snapshots in the Workspace Bucket:
+    - interact_with_html_snapshots.py: storage-snippets/interact_with_html_snapshots.py
 
