@@ -98,21 +98,21 @@ def create_html_snapshot_widget(ws_names2id: Dict[str, str], ws_paths: Dict[str,
   workspace_chooser = widgets.Dropdown(
       options=ws_names2id,
       value=None,
-      description='Choose the workspace:',
+      description='<b>Choose the workspace</b>:',
       style={'description_width': 'initial'},
       layout=widgets.Layout(width='900px')
   )
   notebook_chooser = widgets.SelectMultiple(
       options=[],  # This will be populated after a workspace is chosen.
       value=[],
-      description='Choose one or more notebooks for which to create an HTML snapshot:',
+      description='<b>Choose one or more notebooks for which to create an HTML snapshot:</b>',
       style={'description_width': 'initial'},
       layout=widgets.Layout(width='900px')
   )
   commenter = widgets.Textarea(
       value='',
       placeholder='Type a comment here about this HTML snapshot of your notebook',
-      description='Comment:',
+      description='<b>Comment</b>:',
       disabled=False,
       layout=widgets.Layout(width='900px', height='50px'),
       style={'description_width': 'initial'}
@@ -121,7 +121,7 @@ def create_html_snapshot_widget(ws_names2id: Dict[str, str], ws_paths: Dict[str,
       description='Submit',
       disabled=False,
       button_style='success',
-      tooltip='Click the submit button to create the HTML snapshot'
+      tooltip='Click the submit button to create the HTML snapshot.'
   )
 
   def on_button_clicked(_):
@@ -145,8 +145,17 @@ def create_html_snapshot_widget(ws_names2id: Dict[str, str], ws_paths: Dict[str,
   workspace_chooser.observe(on_choose_workspace, names='value')
 
   return widgets.VBox(
-      [widgets.HTML('<h3>Create an HTML snapshot of a notebook</h3>'), workspace_chooser, notebook_chooser,
-       commenter, submit_button],
+      [widgets.HTML('''
+       <h3>Create an HTML snapshot of a notebook</h3>
+       <p>Use this when you want to save an HTML snapshot of a notebook containing its outputs. The notebook will be rendered to HTML as-is (not re-run).
+       <br>It will be saved in the <code>reports</code> folder of the workspace bucket:
+       <br><ul>
+         <li><code>gs://&lt;workspace bucket name&gt;/reports/&lt;your email address&gt;/&lt;date&gt;/&lt;time&gt;/&lt;notebook&gt;.html</code></li>
+         <li><code>gs://&lt;workspace bucket name&gt;/reports/&lt;your email address&gt;/&lt;date&gt;/&lt;time&gt;/&lt;notebook&gt;.comment.txt</code></li>
+         </ul>
+       </p><hr>
+       '''),
+       workspace_chooser, notebook_chooser, commenter, submit_button],
       layout=widgets.Layout(width='auto', border='solid 1px grey'))
 
 
@@ -155,37 +164,44 @@ def create_view_files_widget(ws_names2id: Dict[str, str], ws_paths: Dict[str, Wo
   workspace_chooser = widgets.Dropdown(
       options=ws_names2id,
       value=None,
-      description='Choose the workspace:',
+      description='<b>Choose the workspace</b>:',
       style={'description_width': 'initial'},
       layout=widgets.Layout(width='900px')
   )
   user_chooser = widgets.Dropdown(
       options=[],
       value=None,
-      description='Choose the user:',
+      description='<b>Choose the user</b>:',
       style={'description_width': 'initial'},
       layout=widgets.Layout(width='900px')
   )
   date_chooser = widgets.Dropdown(
       options=[],
       value=None,
-      description='Choose the date:',
+      description='<b>Choose the date</b>:',
       style={'description_width': 'initial'},
       layout=widgets.Layout(width='900px')
   )
   time_chooser = widgets.Dropdown(
       options=[],
       value=None,
-      description='Choose the time:',
+      description='<b>Choose the time</b>:',
       style={'description_width': 'initial'},
       layout=widgets.Layout(width='900px')
   )
   file_chooser = widgets.Dropdown(
       options=[],
       value=None,
-      description='Choose the file:',
+      description='<b>Choose the file</b>:',
       style={'description_width': 'initial'},
       layout=widgets.Layout(width='900px')
+  )
+  view_comment_button = widgets.Button(
+      description='View the comment for the HTML snapshot',
+      disabled=False,
+      button_style='success',
+      layout=widgets.Layout(width='300px'),
+      tooltip='Click the button to view the comment associated with the HTML snapshot of the notebook.'
   )
   view_html_button = widgets.Button(
       description='View the HTML snapshot',
@@ -193,13 +209,6 @@ def create_view_files_widget(ws_names2id: Dict[str, str], ws_paths: Dict[str, Wo
       button_style='success',
       layout=widgets.Layout(width='250px'),
       tooltip='Click the button to view the HTML snapshot of the notebook.'
-  )
-  view_comment_button = widgets.Button(
-      description='View the comment for the HTML snapshot',
-      disabled=False,
-      button_style='success',
-      layout=widgets.Layout(width='250px'),
-      tooltip='Click the button to view the comment associated with the HTML snapshot of the notebook.'
   )
 
   def on_view_comment_button_clicked(_):
@@ -267,8 +276,13 @@ def create_view_files_widget(ws_names2id: Dict[str, str], ws_paths: Dict[str, Wo
   time_chooser.observe(on_choose_time, names='value')
 
   return widgets.VBox(
-      [widgets.HTML('<h3>View an HTML snapshot of a notebook</h3>'), workspace_chooser, user_chooser,
-       date_chooser, time_chooser, file_chooser, widgets.HBox([view_comment_button, view_html_button])],
+      [widgets.HTML('''
+       <h3>View an HTML snapshot of a notebook</h3>
+       <p>Use the dropdowns to select the workspace, user, date, time, and particular HTML snapshot.
+       <br>Then click on the 'view' buttons to see either the comment for the snapshot or the actual snapshot.
+       </p><hr>'''),
+       workspace_chooser, user_chooser, date_chooser, time_chooser, file_chooser,
+       widgets.HBox([view_comment_button, view_html_button])],
       layout=widgets.Layout(width='auto', border='solid 1px grey'))
 
 
@@ -277,7 +291,7 @@ def create_view_all_comments_widget(ws_names2id: Dict[str, str], ws_paths: Dict[
   workspace_chooser = widgets.Dropdown(
       options=ws_names2id,
       value=None,
-      description='Choose a workspace to view:',
+      description='<b>Choose a workspace to view:</b>',
       style={'description_width': 'initial'},
       layout=widgets.Layout(width='900px')
   )
@@ -316,7 +330,12 @@ def create_view_all_comments_widget(ws_names2id: Dict[str, str], ws_paths: Dict[
   workspace_chooser.observe(on_choose_workspace, names='value')
 
   return widgets.VBox(
-      [widgets.HTML('<h3>View all comments for a workspace</h3>'), workspace_chooser],
+      [widgets.HTML('''
+       <h3>View all comments for a workspace</h3>
+       <p>Use the dropdown to choose a workspace. Then this will display the contents of all comment files for the selected workspace.
+       <br>The user, date, time, and notebook name are shown in the left column. The comment is shown in the right column.
+       </p><hr>'''),
+       workspace_chooser],
       layout=widgets.Layout(width='auto', border='solid 1px grey'))
 
 
