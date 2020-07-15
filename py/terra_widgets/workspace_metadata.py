@@ -18,10 +18,10 @@ class WorkspaceMetadata:
   def __init__(self):
     self.user = os.getenv('OWNER_EMAIL')
     self.terra_workspaces = fapi.list_workspaces().json()
-    if self.user.endswith(AOU_DOMAIN):
+    if self.user.endswith(self.AOU_DOMAIN):
       aou_api = os.getenv('RW_API_BASE_URL')
       if not aou_api:
-        aou_api = AOU_PROD_API
+        aou_api = self.AOU_PROD_API
       # Use the All of Us API to get the human-readable workspace names. For All of Us workspaces,
       # the Terra workspace metadata the workspace names are actually the AoU workspace ids.
       aou_response = get_ipython().getoutput(f'''curl -H "Content-Type: application/json" \
@@ -44,12 +44,12 @@ class WorkspaceMetadata:
       return {ws['workspace']['name']: ws['workspace']['id'] for ws in self.aou_workspaces
               if include_all
               or (include_private_readonly and not ws['workspace']['published'])
-              or ws['accessLevel'] in EDIT_ACCESS_LEVELS}
+              or ws['accessLevel'] in self.EDIT_ACCESS_LEVELS}
     else:
       return {ws['workspace']['name']: ws['workspace']['workspaceId'] for ws in self.terra_workspaces
               if include_all
               or (include_private_readonly and not ws['public'])
-              or ws['accessLevel'] in EDIT_ACCESS_LEVELS}
+              or ws['accessLevel'] in self.EDIT_ACCESS_LEVELS}
 
   def get_workspace_name_to_bucket_mapping(self, include_private_readonly: bool = False, include_all: bool = False) -> Dict[str, str]:
     """Retrieve a mapping of workspace names to Cloud Storage bucket names.
