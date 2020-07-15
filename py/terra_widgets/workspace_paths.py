@@ -15,15 +15,15 @@ class WorkspacePaths:
   """Encapsulate all logic for manipulating workspace paths.
 
   Paths are of the form:
-    gs://fc-secure-<guid>/reports/<user>@researchallofus.org/<date>/<time>/<notebook>.html
-    gs://fc-secure-<guid>/reports/<user>@researchallofus.org/<date>/<time>/<notebook>.html.comment.txt
+    gs://<workspace bucket name>/reports/<user>@researchallofus.org/<date>/<time>/<notebook>.html
+    gs://<workspace bucket name>/reports/<user>@researchallofus.org/<date>/<time>/<notebook>.html.comment.txt
 
   For example:
     gs://fc-secure-83282461-002f-4bad-86a9-59fdfd11b933/reports/deflaux@researchallofus.org/20200624/211319/Create a version from any of your workspaces.html
     gs://fc-secure-83282461-002f-4bad-86a9-59fdfd11b933/reports/deflaux@researchallofus.org/20200624/211319/Create a version from any of your workspaces.html.comment.txt
   """
   MANAGED_NOTEBOOKS_FOLDER = 'notebooks'
-  HTML_COPIES_FOLDER = 'reports'
+  HTML_SNAPSHOTS_FOLDER = 'reports'
   COMMENT_FILE_SUFFIX = '.comment.txt'
   HTML_FILE_SUFFIX = '.html'
   NOTEBOOK_FILE_SUFFIX = '.ipynb'
@@ -38,7 +38,7 @@ class WorkspacePaths:
     self.workspace_bucket: str = f'gs://{workspace_bucket}'
 
   def get_subfolder(self) -> str:
-    return os.path.join(self.workspace_bucket, self.HTML_COPIES_FOLDER)
+    return os.path.join(self.workspace_bucket, self.HTML_SNAPSHOTS_FOLDER)
 
   def formulate_destination_paths(self, notebooks: List[str]) -> Dict[str, WorkspaceDestination]:
     """Formulate paths within the workspace bucket where transformations of notebooks can be stored.

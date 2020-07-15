@@ -1,6 +1,6 @@
-"""Methods for creating and viewing HTML copies of notebooks.
+"""Methods for creating and viewing HTML snapshots of notebooks.
 
-It is useful to create and retain HTML copies of notebooks to track how results within
+It is useful to create and retain HTML snapshots of notebooks to track how results within
 a notebook changes over time as analysis work proceeds.
 """
 
@@ -22,17 +22,7 @@ from terra_widgets.workspace_metadata import WorkspaceMetadata
 from terra_widgets.workspace_paths import WorkspacePaths
 
 # Define this in the outer scope so that it lives for the duration of the Jupyter kernel.
-TEMP_HTML = tempfile.NamedTemporaryFile(dir=os.getcwd(), prefix='view_an_html_copy_', suffix='.html')
-
-# Retrieve the workspace metadata for the current user and environment.
-ws_meta = WorkspaceMetadata()
-WORKSPACE_NAMES2ID = collections.OrderedDict(sorted(
-    ws_meta.get_workspace_name_to_id_mapping().items()))
-WORKSPACE_NAMES2ID_INCLUDE_READONLY = collections.OrderedDict(sorted(
-    ws_meta.get_workspace_name_to_id_mapping(include_private_readonly=True).items()))
-WORKSPACE_IDS2BUCKET_INCLUDE_READONLY = ws_meta.get_workspace_id_to_bucket_mapping(include_private_readonly=True)
-WORKSPACE_PATHS = {k: WorkspacePaths(workspace_bucket=v)
-                   for k, v in WORKSPACE_IDS2BUCKET_INCLUDE_READONLY.items()}
+TEMP_HTML = tempfile.NamedTemporaryFile(dir=os.getcwd(), prefix='view_an_html_snapshot_', suffix='.html')
 
 # Configure notebook display preferences to better suit this UI.
 if pd.__version__.startswith('1'):
@@ -46,10 +36,10 @@ get_ipython().run_cell_magic(
        IPython.OutputArea.auto_scroll_threshold = 9999;''')
 
 
-def create_html_copy(notebook_paths: List[str],
-                     comment: str,
-                     workspace_paths: WorkspacePaths,
-                     overwrite: bool = False) -> HTML:
+def create_html_snapshot(notebook_paths: List[str],
+                         comment: str,
+                         workspace_paths: WorkspacePaths,
+                         overwrite: bool = False) -> HTML:
   """Render a notebook to HTML and transfer the HTML and its comment to the workspace bucket.
 
   The notebook is rendered as-is (it is not re-run). The comment is stored in a file in the same folder as the HTML.
@@ -63,17 +53,17 @@ def create_html_copy(notebook_paths: List[str],
     comment: A string to be associated with the HTML file(s) such as a description of recent
              changes to the notebook and the results within it.
     workspace_paths: A list of WorkspacePaths objects indicating the destinations for the HTML and comment files.
-    overwrite: Skip the copy creation if the file already exists.
+    overwrite: Skip the snapshot creation if the file already exists.
   Returns:
     An HTML object for display.
   """
   if not notebook_paths:
     return HTML('''<div class="alert alert-block alert-danger">
-    No notebook was selected. To create an HTML copy of a notebook, select the desired notebook.</div>''')
+    No notebook was selected. To create an HTML snapshot of a notebook, select the desired notebook.</div>''')
   if not comment:
     return HTML('''<div class="alert alert-block alert-danger">
     No comment was specified. Please provide some context in the comment field
-    describing why you wish to make an HTML copy of the selected notebook(s) at this time.</div>''')
+    describing why you wish to make an HTML snapshot of the selected notebook(s) at this time.</div>''')
 
   destinations = workspace_paths.formulate_destination_paths(notebooks=notebook_paths)
 
@@ -103,7 +93,7 @@ def create_html_copy(notebook_paths: List[str],
   return HTML('')
 
 
-def create_html_copy_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, WorkspacePaths], output):
+def create_html_snapshot_widget(ws_names2id: Dict[str, str], ws_paths: Dict[str, WorkspacePaths], output):
   """Create an ipywidget UI for creating html copies."""
   workspace_chooser = widgets.Dropdown(
       options=ws_names2id,
@@ -115,13 +105,13 @@ def create_html_copy_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, Workspa
   notebook_chooser = widgets.SelectMultiple(
       options=[],  # This will be populated after a workspace is chosen.
       value=[],
-      description='Choose one or more notebooks for which to create an HTML copy:',
+      description='Choose one or more notebooks for which to create an HTML snapshot:',
       style={'description_width': 'initial'},
       layout=widgets.Layout(width='900px')
   )
   commenter = widgets.Textarea(
       value='',
-      placeholder='Type a comment here about this HTML copy of your notebook',
+      placeholder='Type a comment here about this HTML snapshot of your notebook',
       description='Comment:',
       disabled=False,
       layout=widgets.Layout(width='900px', height='50px'),
@@ -131,7 +121,7 @@ def create_html_copy_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, Workspa
       description='Submit',
       disabled=False,
       button_style='success',
-      tooltip='Click the submit button to create the HTML copy'
+      tooltip='Click the submit button to create the HTML snapshot'
   )
 
   def on_button_clicked(_):
@@ -139,12 +129,12 @@ def create_html_copy_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, Workspa
       output.clear_output()
       if workspace_chooser.value is None:
         display(HTML('''<div class="alert alert-block alert-danger">
-        No workspace was selected. To create an HTML copy of a notebook, select the desired workspace.</div>'''))
+        No workspace was selected. To create an HTML snapshot of a notebook, select the desired workspace.</div>'''))
         return
       workspace_paths = ws_paths[workspace_chooser.value]
-      display(create_html_copy(notebook_paths=notebook_chooser.value,
-                               comment=commenter.value,
-                               workspace_paths=workspace_paths))
+      display(create_html_snapshot(notebook_paths=notebook_chooser.value,
+                                   comment=commenter.value,
+                                   workspace_paths=workspace_paths))
   submit_button.on_click(on_button_clicked)
 
   def on_choose_workspace(changed):
@@ -155,13 +145,13 @@ def create_html_copy_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, Workspa
   workspace_chooser.observe(on_choose_workspace, names='value')
 
   return widgets.VBox(
-      [widgets.HTML('<h3>Create an HTML copy of a notebook</h3>'), workspace_chooser, notebook_chooser,
+      [widgets.HTML('<h3>Create an HTML snapshot of a notebook</h3>'), workspace_chooser, notebook_chooser,
        commenter, submit_button],
       layout=widgets.Layout(width='auto', border='solid 1px grey'))
 
 
-def view_files_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, WorkspacePaths], output):
-  """Create an ipywidget UI to view HTML copies and their associated comment files."""
+def create_view_files_widget(ws_names2id: Dict[str, str], ws_paths: Dict[str, WorkspacePaths], output):
+  """Create an ipywidget UI to view HTML snapshots and their associated comment files."""
   workspace_chooser = widgets.Dropdown(
       options=ws_names2id,
       value=None,
@@ -198,18 +188,18 @@ def view_files_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, WorkspacePath
       layout=widgets.Layout(width='900px')
   )
   view_html_button = widgets.Button(
-      description='View the HTML copy',
+      description='View the HTML snapshot',
       disabled=False,
       button_style='success',
       layout=widgets.Layout(width='250px'),
-      tooltip='Click the button to view the HTML copy of the notebook.'
+      tooltip='Click the button to view the HTML snapshot of the notebook.'
   )
   view_comment_button = widgets.Button(
-      description='View the comment for the HTML copy',
+      description='View the comment for the HTML snapshot',
       disabled=False,
       button_style='success',
       layout=widgets.Layout(width='250px'),
-      tooltip='Click the button to view the comment associated with the HTML copy of the notebook.'
+      tooltip='Click the button to view the comment associated with the HTML snapshot of the notebook.'
   )
 
   def on_view_comment_button_clicked(_):
@@ -217,7 +207,7 @@ def view_files_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, WorkspacePath
       output.clear_output()
       if not file_chooser.value:
         display(HTML('''<div class="alert alert-block alert-warning">
-        No comment files found for HTML copies in this workspace.</div>'''))
+        No comment files found for HTML snapshots in this workspace.</div>'''))
         return
       comment_file = file_chooser.value.replace('.html', WorkspacePaths.COMMENT_FILE_SUFFIX)
       comment = get_ipython().getoutput(f"gsutil cat '{comment_file}'")
@@ -229,7 +219,7 @@ def view_files_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, WorkspacePath
       output.clear_output()
       if not file_chooser.value:
         display(HTML('''<div class="alert alert-block alert-warning">
-        No HTML copies found in this workspace.</div>'''))
+        No HTML snapshots found in this workspace.</div>'''))
         return
       source = file_chooser.value
       dest = TEMP_HTML.name
@@ -277,12 +267,12 @@ def view_files_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, WorkspacePath
   time_chooser.observe(on_choose_time, names='value')
 
   return widgets.VBox(
-      [widgets.HTML('<h3>View an HTML copy of a notebook</h3>'), workspace_chooser, user_chooser,
+      [widgets.HTML('<h3>View an HTML snapshot of a notebook</h3>'), workspace_chooser, user_chooser,
        date_chooser, time_chooser, file_chooser, widgets.HBox([view_comment_button, view_html_button])],
       layout=widgets.Layout(width='auto', border='solid 1px grey'))
 
 
-def view_all_comments_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, WorkspacePaths], output):
+def create_view_all_comments_widget(ws_names2id: Dict[str, str], ws_paths: Dict[str, WorkspacePaths], output):
   """Create an ipywidget UI to display the contents of all comment files within a particular workspace."""
   workspace_chooser = widgets.Dropdown(
       options=ws_names2id,
@@ -299,7 +289,7 @@ def view_all_comments_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, Worksp
       comment_files = get_ipython().getoutput(f'gsutil ls {workspace_paths.get_comment_file_glob()}')
       if not comment_files[0].startswith('gs://'):
         display(HTML('''<div class="alert alert-block alert-warning">
-          No comment files found for HTML copies in this workspace.</div>'''))
+          No comment files found for HTML snapshots in this workspace.</div>'''))
         return
       progress = widgets.IntProgress(
           value=0,
@@ -330,20 +320,31 @@ def view_all_comments_ui(ws_names2id: Dict[str, str], ws_paths: Dict[str, Worksp
       layout=widgets.Layout(width='auto', border='solid 1px grey'))
 
 
-def html_copies_ui():
-  """Create an ipywidget UI encapsulating all three UIs related to HTML copies."""
+def display_html_snapshots_widget():
+  """Create an ipywidget UI encapsulating all three UIs related to HTML snapshots."""
+
+  # Retrieve the workspace metadata for the current user and environment.
+  ws_meta = WorkspaceMetadata()
+  workspace_names2id = collections.OrderedDict(sorted(
+      ws_meta.get_workspace_name_to_id_mapping().items()))
+  workspace_names2id_include_readonly = collections.OrderedDict(sorted(
+      ws_meta.get_workspace_name_to_id_mapping(include_private_readonly=True).items()))
+  workspace_ids2bucket_include_readonly = ws_meta.get_workspace_id_to_bucket_mapping(include_private_readonly=True)
+  workspace_paths = {k: WorkspacePaths(workspace_bucket=v)
+                     for k, v in workspace_ids2bucket_include_readonly.items()}
+
   ui_output = widgets.Output()
 
   ui_tabs = widgets.Tab()
-  ui_tabs.children = [create_html_copy_ui(ws_names2id=WORKSPACE_NAMES2ID,
-                                          ws_paths=WORKSPACE_PATHS,
-                                          output=ui_output),
-                      view_files_ui(ws_names2id=WORKSPACE_NAMES2ID_INCLUDE_READONLY,
-                                    ws_paths=WORKSPACE_PATHS,
-                                    output=ui_output),
-                      view_all_comments_ui(ws_names2id=WORKSPACE_NAMES2ID_INCLUDE_READONLY,
-                                           ws_paths=WORKSPACE_PATHS,
-                                           output=ui_output)]
+  ui_tabs.children = [create_html_snapshot_widget(ws_names2id=workspace_names2id,
+                                                  ws_paths=workspace_paths,
+                                                  output=ui_output),
+                      create_view_files_widget(ws_names2id=workspace_names2id_include_readonly,
+                                               ws_paths=workspace_paths,
+                                               output=ui_output),
+                      create_view_all_comments_widget(ws_names2id=workspace_names2id_include_readonly,
+                                                      ws_paths=workspace_paths,
+                                                      output=ui_output)]
   ui_tabs.set_title(title='Create', index=0)
   ui_tabs.set_title(title='View one', index=1)
   ui_tabs.set_title(title='View all', index=2)
