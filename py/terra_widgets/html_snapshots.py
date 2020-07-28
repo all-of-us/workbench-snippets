@@ -24,17 +24,6 @@ from terra_widgets.workspace_paths import WorkspacePaths
 # Define this in the outer scope so that it lives for the duration of the Jupyter kernel.
 TEMP_HTML = tempfile.NamedTemporaryFile(dir=os.getcwd(), prefix='view_an_html_snapshot_', suffix='.html')
 
-# Configure notebook display preferences to better suit this UI.
-if pd.__version__.startswith('1'):
-  pd.set_option('display.max_colwidth', None)
-else:
-  pd.set_option('display.max_colwidth', -1)
-get_ipython().run_cell_magic(
-    'javascript',
-    '',
-    '''// Display cell outputs to full height (no vertical scroll bar)
-       IPython.OutputArea.auto_scroll_threshold = 9999;''')
-
 
 def create_html_snapshot(notebook_paths: List[str],
                          comment: str,
@@ -341,6 +330,17 @@ def create_view_all_comments_widget(ws_names2id: Dict[str, str], ws_paths: Dict[
 
 def display_html_snapshots_widget():
   """Create an ipywidget UI encapsulating all three UIs related to HTML snapshots."""
+
+  # Configure notebook display preferences to better suit this UI.
+  if pd.__version__.startswith('1'):
+    pd.set_option('display.max_colwidth', None)
+  else:
+    pd.set_option('display.max_colwidth', -1)
+  get_ipython().run_cell_magic(
+      'javascript',
+      '',
+      '''// Display cell outputs to full height (no vertical scroll bar)
+         IPython.OutputArea.auto_scroll_threshold = 9999;''')
 
   # Retrieve the workspace metadata for the current user and environment.
   ws_meta = WorkspaceMetadata()
