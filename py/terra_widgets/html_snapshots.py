@@ -331,7 +331,8 @@ def create_view_all_comments_widget(ws_names2id: Dict[str, str], ws_paths: Dict[
 def display_html_snapshots_widget():
   """Create an ipywidget UI encapsulating all three UIs related to HTML snapshots."""
 
-  # Configure notebook display preferences to better suit this UI.
+  # Configure notebook display preferences to better suit this UI. These display settings
+  # will be in effect for all cells in the notebook run after this one is run.
   if pd.__version__.startswith('1'):
     pd.set_option('display.max_colwidth', None)
   else:
