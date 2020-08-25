@@ -1,5 +1,5 @@
 All of Us Dataset Builder R snippets:
-  - Documentation: https://github.com/all-of-us/workbench-snippets
+  - Documentation: https://aousupporthelp.zendesk.com/hc/en-us/articles/360039856791-How-to-use-code-snippets-in-Jupyter-Notebooks
   - divider: divider
   - (1) Setup: dataset-snippets/snippets_setup.R
   - (2) Basic operations:
