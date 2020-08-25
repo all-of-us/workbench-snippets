@@ -14,4 +14,4 @@ Otherwise, see the other snippets collections such as
 
 * [sql-snippets/README](./sql-snippets/README.md)
 * [storage-snippets/README](./storage-snippets/README.md)
-* [terra-widgest/README](./py/README.md)
+* [terra-widgets/README](./py/README.md)
