@@ -5,7 +5,7 @@ A python package for ipywidget-based user interfaces for performing tasks within
 
 ## Create and view HTML snapshots of notebooks
 
-The workbench takes care of saving the current version of your notebooks for you. But what if you want to know **what your notebook looked like two weeks ago?** Use `display_html_snapshots_widget()` to display a user interface that allows users to track how results in our notebooks change over time. To do this, it:
+The workbench takes care of saving the current version of your notebooks for you. But what if you want to know **what your notebook looked like two weeks ago?** Use `display_html_snapshots_widget()` to display a widget which can save snapshots of a notebook for later review, allowing users to track changes to results in notebooks over time. To do this, it:
 
 1. Converts the selected notebook to an HTML file (without re-running the notebook).
 1. And then copies that HTML file to subfolder within the same workspace bucket where the notebook file is stored.
