@@ -12,7 +12,9 @@ denominator <- NULL
 #                           DON'T CHANGE FROM HERE
 ####################################################################################
 summarize_a_question_concept_id <- function(df, q_concept_id, denominator=NULL){
-    df <- df %>% filter(question_concept_id == q_concept_id)
+    df <- df %>% 
+        mutate(question_concept_id = as.numeric(question_concept_id)) %>%
+        filter(question_concept_id == q_concept_id)
     
     new_df <- df %>% group_by(answer_concept_id, answer) %>%
                     summarize(n_participant = n_distinct(person_id)) %>%
