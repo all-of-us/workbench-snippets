@@ -68,7 +68,7 @@ def create_html_snapshot(notebook_paths: List[str],
 
       noclobber = '-n' if not overwrite else ''
       # Create and transfer the html file to the workspace bucket.
-      get_ipython().system(f"set -o xtrace ; jupyter nbconvert --to html_toc --ExtractOutputPreprocessor.enabled=False '{temp_notebook}'")
+      get_ipython().system(f"set -o xtrace ; jupyter nbconvert --to html --ExtractOutputPreprocessor.enabled=False '{temp_notebook}'")
       temp_html = temp_notebook.replace(WorkspacePaths.NOTEBOOK_FILE_SUFFIX, WorkspacePaths.HTML_FILE_SUFFIX)
       get_ipython().system(f"set -o xtrace ; gsutil cp {noclobber} '{temp_html}' '{destinations[notebook_path].html_file}'")
       # Create and transfer the comment file to the workspace bucket.
