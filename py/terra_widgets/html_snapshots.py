@@ -330,6 +330,9 @@ def create_view_all_comments_widget(ws_names2id: Dict[str, str], ws_paths: Dict[
 
 def display_html_snapshots_widget():
   """Create an ipywidget UI encapsulating all three UIs related to HTML snapshots."""
+  if not get_ipython():
+    print('The HTML snapshot widget cannot be display in environments other than IPython.') 
+    return
 
   # Configure notebook display preferences to better suit this UI. These display settings
   # will be in effect for all cells in the notebook run after this one is run.
