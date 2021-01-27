@@ -3,7 +3,7 @@
 
 # Update the next 3 lines
 
-survey_df <- YOUR_SURVEY_df
+survey_df <- YOUR_DATASET_NAME_survey_df
 module_name <- 'The Basics'
 denominator <- NULL
 

@@ -4,7 +4,7 @@
 # The snippet also assumes that setup has been run
 
 # Update the next 3 lines
-survey_df = YOUR_SURVEY_df
+survey_df = YOUR_DATASET_NAME_survey_df
 question_concept_id = 1585940
 denominator = None # e.g: 200000
 
