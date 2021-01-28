@@ -118,7 +118,7 @@ YOUR_DATASET_NAME_survey_sql <- paste("
     WHERE
         (
             question_concept_id in (
-                1585723, 1585711
+                1585723, 1585711, 1585940
             )
         )  
         AND (
