@@ -2,7 +2,7 @@
 # The snippet assumes that a dataframe containing survey questions and answers already exists
 
 # Update the next 3 lines
-survey_df = YOUR_SURVEY_df
+survey_df = YOUR_DATASET_NAME_survey_df
 module_name = 'The Basics' # e.g: 'The Basics', 'Lifestyle', 'Overall Health', etc.
 denominator = None # e.g: 200000
 

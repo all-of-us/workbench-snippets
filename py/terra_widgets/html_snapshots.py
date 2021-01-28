@@ -68,7 +68,7 @@ def create_html_snapshot(notebook_paths: List[str],
 
       noclobber = '-n' if not overwrite else ''
       # Create and transfer the html file to the workspace bucket.
-      get_ipython().system(f"set -o xtrace ; jupyter nbconvert --to html_toc --ExtractOutputPreprocessor.enabled=False '{temp_notebook}'")
+      get_ipython().system(f"set -o xtrace ; jupyter nbconvert --to html --ExtractOutputPreprocessor.enabled=False '{temp_notebook}'")
       temp_html = temp_notebook.replace(WorkspacePaths.NOTEBOOK_FILE_SUFFIX, WorkspacePaths.HTML_FILE_SUFFIX)
       get_ipython().system(f"set -o xtrace ; gsutil cp {noclobber} '{temp_html}' '{destinations[notebook_path].html_file}'")
       # Create and transfer the comment file to the workspace bucket.
@@ -330,6 +330,9 @@ def create_view_all_comments_widget(ws_names2id: Dict[str, str], ws_paths: Dict[
 
 def display_html_snapshots_widget():
   """Create an ipywidget UI encapsulating all three UIs related to HTML snapshots."""
+  if not get_ipython():
+    print('The HTML snapshot widget cannot be display in environments other than IPython.') 
+    return
 
   # Configure notebook display preferences to better suit this UI. These display settings
   # will be in effect for all cells in the notebook run after this one is run.
