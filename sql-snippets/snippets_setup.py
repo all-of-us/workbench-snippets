@@ -28,7 +28,7 @@ COHORT_QUERY = f'SELECT person_id FROM `{CDR}.person`'  # Default to all partici
 MEASUREMENT_OF_INTEREST = 'hemoglobin'
 # Tip: the next four parameters could be set programmatically using one row from
 # the result of measurements_of_interest_summary.sql
-MEASUREMENT_CONCEPT_ID = 3000963        # Hemoglobin
-UNIT_CONCEPT_ID = 8636                  # gram per liter
+MEASUREMENT_CONCEPT_ID = 3004410        # Hemoglobin A1c
+UNIT_CONCEPT_ID = 8554                  # percent
 MEASUREMENT_NAME = '<this should be the measurement name>'
 UNIT_NAME = '<this should be the unit name>'
