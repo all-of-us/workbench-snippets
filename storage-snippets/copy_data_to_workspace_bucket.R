@@ -21,7 +21,7 @@ write_excel_csv(my_dataframe, destination_filename)
 my_bucket <- Sys.getenv('WORKSPACE_BUCKET')
 
 # Copy the file from current workspace to the bucket
-system(paste0("gsutil cp ./", destination_filename, " ", my_bucket, "/data/"), intern=T)
+system(paste0("gsutil cp ./", destination_filename, " ", my_bucket, "/notebooks/data/"), intern=T)
 
 # Check if file is in the bucket
-system(paste0("gsutil ls ", my_bucket, "/data/*.csv"), intern=T)
+system(paste0("gsutil ls ", my_bucket, "/notebooks/data/*.csv"), intern=T)

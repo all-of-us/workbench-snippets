@@ -21,5 +21,5 @@ my_dataframe.to_csv(destination_filename, index=False)
 my_bucket = os.getenv('WORKSPACE_BUCKET')
 
 # copy csv file to the bucket
-os.system(f"gsutil cp './{destination_filename}' '{my_bucket}/data/'")
+os.system(f"gsutil cp './{destination_filename}' '{my_bucket}/notebooks/data/'")
 print(f'[INFO] {destination_filename} is successfully uploaded in your bucket.')

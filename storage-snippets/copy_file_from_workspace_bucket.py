@@ -15,7 +15,7 @@ name_of_file_in_bucket = 'test.csv'
 my_bucket = os.getenv('WORKSPACE_BUCKET')
 
 # copy csv file from the bucket to the current working space
-os.system(f"gsutil cp '{my_bucket}/data/{name_of_file_in_bucket}' .")
+os.system(f"gsutil cp '{my_bucket}/notebooks/data/{name_of_file_in_bucket}' .")
 
 print(f'[INFO] {name_of_file_in_bucket} is successfully downloaded into your working space')
 # save dataframe in a csv file in the same workspace as the notebook
