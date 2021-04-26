@@ -24,4 +24,5 @@ my_bucket = os.getenv('WORKSPACE_BUCKET')
 args = ["gsutil", "cp", f"./{destination_filename}", f"{my_bucket}/data/"]
 output = subprocess.run(args, capture_output=True)
 
+# print output from gsutil
 output.stderr
