@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# This cohort was created using Dataset Builder on 01/26/2021.
+# This cohort was created using Dataset Builder on 12/26/2021.
 #
 # Feel free to update it with a new/different cohort, but please follow these two caveats:
 #  1) Keep the number of members below 5000 so that the smoke test runs relatively quickly.
@@ -12,333 +12,349 @@
 import pandas
 import os
 
-# This query represents dataset "Young hypertensive low BMI" for domain "person" and was generated for All of Us Dataset v4
+# This query represents dataset "Young hypertensive low BMI" for domain "person" and was generated for All of Us Registered Tier Dataset v5
 YOUR_DATASET_NAME_person_sql = """
     SELECT
-        person.SEX_AT_BIRTH_CONCEPT_ID,
-        person.BIRTH_DATETIME as DATE_OF_BIRTH,
-        person.PERSON_ID,
-        person.GENDER_CONCEPT_ID,
-        person.ETHNICITY_CONCEPT_ID,
-        person.RACE_CONCEPT_ID,
-        p_race_concept.concept_name as RACE,
-        p_gender_concept.concept_name as GENDER,
-        p_ethnicity_concept.concept_name as ETHNICITY,
-        p_sex_at_birth_concept.concept_name as SEX_AT_BIRTH 
+        person.person_id,
+        person.gender_concept_id,
+        p_gender_concept.concept_name as gender,
+        person.birth_datetime as date_of_birth,
+        person.race_concept_id,
+        p_race_concept.concept_name as race,
+        person.ethnicity_concept_id,
+        p_ethnicity_concept.concept_name as ethnicity,
+        person.sex_at_birth_concept_id,
+        p_sex_at_birth_concept.concept_name as sex_at_birth
     FROM
-        `""" + os.environ["WORKSPACE_CDR"] + """.person` person 
+        `""" + os.environ["WORKSPACE_CDR"] + """.person` person
     LEFT JOIN
-        `""" + os.environ["WORKSPACE_CDR"] + """.concept` p_race_concept 
-            on person.race_concept_id = p_race_concept.CONCEPT_ID 
+        `""" + os.environ["WORKSPACE_CDR"] + """.concept` p_gender_concept
+            ON person.gender_concept_id = p_gender_concept.concept_id
     LEFT JOIN
-        `""" + os.environ["WORKSPACE_CDR"] + """.concept` p_gender_concept 
-            on person.gender_concept_id = p_gender_concept.CONCEPT_ID 
+        `""" + os.environ["WORKSPACE_CDR"] + """.concept` p_race_concept
+            ON person.race_concept_id = p_race_concept.concept_id
     LEFT JOIN
-        `""" + os.environ["WORKSPACE_CDR"] + """.concept` p_ethnicity_concept 
-            on person.ethnicity_concept_id = p_ethnicity_concept.CONCEPT_ID 
+        `""" + os.environ["WORKSPACE_CDR"] + """.concept` p_ethnicity_concept
+            ON person.ethnicity_concept_id = p_ethnicity_concept.concept_id
     LEFT JOIN
-        `""" + os.environ["WORKSPACE_CDR"] + """.concept` p_sex_at_birth_concept 
-            on person.sex_at_birth_concept_id = p_sex_at_birth_concept.CONCEPT_ID  
+        `""" + os.environ["WORKSPACE_CDR"] + """.concept` p_sex_at_birth_concept
+            ON person.sex_at_birth_concept_id = p_sex_at_birth_concept.concept_id
     WHERE
         person.PERSON_ID IN (
-            select
-                person_id  
-            from
-                `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_person` cb_search_person  
-            where
-                cb_search_person.person_id in (
-                    select
-                        person_id 
-                    from
-                        `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_person` p 
-                    where
-                        DATE_DIFF(CURRENT_DATE,dob, YEAR) - IF(EXTRACT(MONTH 
+            SELECT
+                person_id
+            FROM
+                `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_person` cb_search_person
+            WHERE
+                cb_search_person.person_id IN (
+                    SELECT
+                        person_id
                     FROM
-                        dob)*100 + EXTRACT(DAY 
+                        `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_person` p
+                    WHERE
+                        DATE_DIFF(CURRENT_DATE,dob, YEAR) - IF(EXTRACT(MONTH
                     FROM
-                        dob) > EXTRACT(MONTH 
+                        dob)*100 + EXTRACT(DAY
                     FROM
-                        CURRENT_DATE)*100 + EXTRACT(DAY 
+                        dob) > EXTRACT(MONTH
+                    FROM
+                        CURRENT_DATE)*100 + EXTRACT(DAY
                     FROM
                         CURRENT_DATE),
                         1,
-                        0) BETWEEN 20 and 25 
-                        and not exists ( SELECT
-                            'x' 
+                        0) BETWEEN 20 AND 25
+                        AND NOT EXISTS ( SELECT
+                            'x'
                         FROM
-                            `""" + os.environ["WORKSPACE_CDR"] + """.death` d 
-                        where
-                            d.person_id = p.person_id) ) 
-                        and cb_search_person.person_id not in (select
-                            criteria.person_id 
-                        from
-                            (select
-                                distinct person_id,
+                            `""" + os.environ["WORKSPACE_CDR"] + """.death` d
+                        WHERE
+                            d.person_id = p.person_id) )
+                        AND cb_search_person.person_id NOT IN (SELECT
+                            criteria.person_id
+                        FROM
+                            (SELECT
+                                DISTINCT person_id,
                                 entry_date,
-                                concept_id 
-                            from
-                                `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_all_events` 
-                            where
+                                concept_id
+                            FROM
+                                `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_all_events`
+                            WHERE
                                 (
-                                    is_standard = 0 
-                                    and concept_id in (903118, 903115)  
-                                    and systolic <= 90.0 
-                                    and diastolic <= 60.0 
-                                    or  is_standard = 0 
-                                    and concept_id in (903118, 903115)  
-                                    and systolic <= 120.0 
-                                    and diastolic <= 80.0 
-                                    or  is_standard = 0 
-                                    and concept_id in (903118, 903115)  
-                                    and systolic BETWEEN 121.0 and 139.0 
-                                    and diastolic BETWEEN 81.0 and 89.0 
-                                    or  is_standard = 0 
-                                    and concept_id in (903124)  
-                                    and  value_as_number >= 20.0
+                                    is_standard = 0
+                                    AND concept_id IN (903118, 903115)
+                                    AND systolic <= 90.0
+                                    AND diastolic <= 60.0
+                                    OR  is_standard = 0
+                                    AND concept_id IN (903118, 903115)
+                                    AND systolic <= 120.0
+                                    AND diastolic <= 80.0
+                                    OR  is_standard = 0
+                                    AND concept_id IN (903118, 903115)
+                                    AND systolic BETWEEN 121.0 AND 139.0
+                                    AND diastolic BETWEEN 81.0 AND 89.0
+                                    OR  is_standard = 0
+                                    AND concept_id IN (903124)
+                                    AND  value_as_number >= 20.0
                                 )) criteria ) )"""
 
-YOUR_DATASET_NAME_person_df = pandas.read_gbq(YOUR_DATASET_NAME_person_sql, dialect="standard")
+YOUR_DATASET_NAME_person_df = pandas.read_gbq(
+    YOUR_DATASET_NAME_person_sql,
+    dialect="standard",
+    use_bqstorage_api=("BIGQUERY_STORAGE_API_ENABLED" in os.environ),
+    progress_bar_type="tqdm_notebook")
 
 YOUR_DATASET_NAME_person_df.head(5)
+
 import pandas
 import os
 
-# This query represents dataset "Young hypertensive low BMI" for domain "survey" and was generated for All of Us Dataset v4
+# This query represents dataset "Young hypertensive low BMI" for domain "survey" and was generated for All of Us Registered Tier Dataset v5
 YOUR_DATASET_NAME_survey_sql = """
     SELECT
-        answer.answer,
         answer.person_id,
-        answer.survey,
-        answer.question,
         answer.survey_datetime,
+        answer.survey,
+        answer.question_concept_id,
+        answer.question,
         answer.answer_concept_id,
+        answer.answer,
         answer.survey_version_concept_id,
-        answer.survey_version_name,
-        answer.question_concept_id  
+        answer.survey_version_name
     FROM
-        `""" + os.environ["WORKSPACE_CDR"] + """.ds_survey` answer   
+        `""" + os.environ["WORKSPACE_CDR"] + """.ds_survey` answer
     WHERE
         (
-            question_concept_id in (
-                1585723, 1585711, 1585940
+            question_concept_id IN (
+                1585723, 1585711
             )
-        )  
+        )
         AND (
             answer.PERSON_ID IN (
-                select
-                    person_id  
-                from
-                    `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_person` cb_search_person  
-                where
-                    cb_search_person.person_id in (
-                        select
-                            person_id 
-                        from
-                            `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_person` p 
-                        where
-                            DATE_DIFF(CURRENT_DATE,dob, YEAR) - IF(EXTRACT(MONTH 
+                SELECT
+                    person_id
+                FROM
+                    `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_person` cb_search_person
+                WHERE
+                    cb_search_person.person_id IN (
+                        SELECT
+                            person_id
                         FROM
-                            dob)*100 + EXTRACT(DAY 
+                            `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_person` p
+                        WHERE
+                            DATE_DIFF(CURRENT_DATE,dob, YEAR) - IF(EXTRACT(MONTH
                         FROM
-                            dob) > EXTRACT(MONTH 
+                            dob)*100 + EXTRACT(DAY
                         FROM
-                            CURRENT_DATE)*100 + EXTRACT(DAY 
+                            dob) > EXTRACT(MONTH
+                        FROM
+                            CURRENT_DATE)*100 + EXTRACT(DAY
                         FROM
                             CURRENT_DATE),
                             1,
-                            0) BETWEEN 20 and 25 
-                            and not exists ( SELECT
-                                'x' 
+                            0) BETWEEN 20 AND 25
+                            AND NOT EXISTS ( SELECT
+                                'x'
                             FROM
-                                `""" + os.environ["WORKSPACE_CDR"] + """.death` d 
-                            where
-                                d.person_id = p.person_id) ) 
-                            and cb_search_person.person_id not in (select
-                                criteria.person_id 
-                            from
-                                (select
-                                    distinct person_id,
+                                `""" + os.environ["WORKSPACE_CDR"] + """.death` d
+                            WHERE
+                                d.person_id = p.person_id) )
+                            AND cb_search_person.person_id NOT IN (SELECT
+                                criteria.person_id
+                            FROM
+                                (SELECT
+                                    DISTINCT person_id,
                                     entry_date,
-                                    concept_id 
-                                from
-                                    `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_all_events` 
-                                where
+                                    concept_id
+                                FROM
+                                    `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_all_events`
+                                WHERE
                                     (
-                                        is_standard = 0 
-                                        and concept_id in (903118, 903115)  
-                                        and systolic <= 90.0 
-                                        and diastolic <= 60.0 
-                                        or  is_standard = 0 
-                                        and concept_id in (903118, 903115)  
-                                        and systolic <= 120.0 
-                                        and diastolic <= 80.0 
-                                        or  is_standard = 0 
-                                        and concept_id in (903118, 903115)  
-                                        and systolic BETWEEN 121.0 and 139.0 
-                                        and diastolic BETWEEN 81.0 and 89.0 
-                                        or  is_standard = 0 
-                                        and concept_id in (903124)  
-                                        and  value_as_number >= 20.0
+                                        is_standard = 0
+                                        AND concept_id IN (903118, 903115)
+                                        AND systolic <= 90.0
+                                        AND diastolic <= 60.0
+                                        OR  is_standard = 0
+                                        AND concept_id IN (903118, 903115)
+                                        AND systolic <= 120.0
+                                        AND diastolic <= 80.0
+                                        OR  is_standard = 0
+                                        AND concept_id IN (903118, 903115)
+                                        AND systolic BETWEEN 121.0 AND 139.0
+                                        AND diastolic BETWEEN 81.0 AND 89.0
+                                        OR  is_standard = 0
+                                        AND concept_id IN (903124)
+                                        AND  value_as_number >= 20.0
                                     )) criteria ) ))"""
 
-YOUR_DATASET_NAME_survey_df = pandas.read_gbq(YOUR_DATASET_NAME_survey_sql, dialect="standard")
+YOUR_DATASET_NAME_survey_df = pandas.read_gbq(
+    YOUR_DATASET_NAME_survey_sql,
+    dialect="standard",
+    use_bqstorage_api=("BIGQUERY_STORAGE_API_ENABLED" in os.environ),
+    progress_bar_type="tqdm_notebook")
 
 YOUR_DATASET_NAME_survey_df.head(5)
+
 import pandas
 import os
 
-# This query represents dataset "Young hypertensive low BMI" for domain "measurement" and was generated for All of Us Dataset v4
+# This query represents dataset "Young hypertensive low BMI" for domain "measurement" and was generated for All of Us Registered Tier Dataset v5
 YOUR_DATASET_NAME_measurement_sql = """
     SELECT
-        measurement.PERSON_ID,
-        measurement.RANGE_HIGH,
-        measurement.RANGE_LOW,
-        measurement.VALUE_AS_NUMBER,
-        measurement.VISIT_OCCURRENCE_ID,
-        measurement.OPERATOR_CONCEPT_ID,
-        measurement.MEASUREMENT_SOURCE_CONCEPT_ID,
-        measurement.VALUE_AS_CONCEPT_ID,
-        measurement.UNIT_SOURCE_VALUE,
-        measurement.MEASUREMENT_SOURCE_VALUE,
-        measurement.MEASUREMENT_TYPE_CONCEPT_ID,
-        measurement.UNIT_CONCEPT_ID,
-        measurement.VALUE_SOURCE_VALUE,
-        measurement.MEASUREMENT_CONCEPT_ID,
-        measurement.MEASUREMENT_DATETIME,
-        m_unit.concept_name as UNIT_CONCEPT_NAME,
-        m_value.concept_name as VALUE_AS_CONCEPT_NAME,
-        m_operator.concept_name as OPERATOR_CONCEPT_NAME,
-        m_type.concept_name as MEASUREMENT_TYPE_CONCEPT_NAME,
-        m_standard_concept.concept_code as STANDARD_CONCEPT_CODE,
-        m_standard_concept.concept_name as STANDARD_CONCEPT_NAME,
-        m_standard_concept.vocabulary_id as STANDARD_VOCABULARY,
-        m_source_concept.concept_name as SOURCE_CONCEPT_NAME,
-        m_source_concept.vocabulary_id as SOURCE_VOCABULARY,
-        m_source_concept.concept_code as SOURCE_CONCEPT_CODE,
-        m_visit.concept_name as VISIT_OCCURRENCE_CONCEPT_NAME 
-    from
+        measurement.person_id,
+        measurement.measurement_concept_id,
+        m_standard_concept.concept_name as standard_concept_name,
+        m_standard_concept.concept_code as standard_concept_code,
+        m_standard_concept.vocabulary_id as standard_vocabulary,
+        measurement.measurement_datetime,
+        measurement.measurement_type_concept_id,
+        m_type.concept_name as measurement_type_concept_name,
+        measurement.operator_concept_id,
+        m_operator.concept_name as operator_concept_name,
+        measurement.value_as_number,
+        measurement.value_as_concept_id,
+        m_value.concept_name as value_as_concept_name,
+        measurement.unit_concept_id,
+        m_unit.concept_name as unit_concept_name,
+        measurement.range_low,
+        measurement.range_high,
+        measurement.visit_occurrence_id,
+        m_visit.concept_name as visit_occurrence_concept_name,
+        measurement.measurement_source_value,
+        measurement.measurement_source_concept_id,
+        m_source_concept.concept_name as source_concept_name,
+        m_source_concept.concept_code as source_concept_code,
+        m_source_concept.vocabulary_id as source_vocabulary,
+        measurement.unit_source_value,
+        measurement.value_source_value
+    FROM
         ( SELECT
-            * 
-        from
-            `""" + os.environ["WORKSPACE_CDR"] + """.measurement` measurement 
+            *
+        FROM
+            `""" + os.environ["WORKSPACE_CDR"] + """.measurement` measurement
         WHERE
             (
-                measurement_concept_id in  (
-                    select
-                        distinct c.concept_id 
-                    from
-                        `""" + os.environ["WORKSPACE_CDR"] + """.cb_criteria` c 
-                    join
+                measurement_concept_id IN  (
+                    SELECT
+                        DISTINCT c.concept_id
+                    FROM
+                        `""" + os.environ["WORKSPACE_CDR"] + """.cb_criteria` c
+                    JOIN
                         (
                             select
-                                cast(cr.id as string) as id 
-                            from
-                                `""" + os.environ["WORKSPACE_CDR"] + """.cb_criteria` cr 
-                            where
-                                domain_id = 'MEASUREMENT' 
-                                and is_standard = 1 
-                                and concept_id in (
+                                cast(cr.id as string) as id
+                            FROM
+                                `""" + os.environ["WORKSPACE_CDR"] + """.cb_criteria` cr
+                            WHERE
+                                domain_id = 'MEASUREMENT'
+                                AND is_standard = 1
+                                AND concept_id IN (
                                     3027018, 3000034, 3036277, 3012888, 3004249, 3025315, 3017250
-                                ) 
-                                and is_selectable = 1
-                        ) a 
-                            on (
-                                c.path like concat('%.',
+                                )
+                                AND is_selectable = 1
+                                AND full_text LIKE '%[measurement_rank1]%'
+                        ) a
+                            ON (
+                                c.path LIKE CONCAT('%.',
                             a.id,
-                            '.%') 
-                            or c.path like concat('%.',
-                            a.id) 
-                            or c.path like concat(a.id,
-                            '.%')) 
-                        where
-                            domain_id = 'MEASUREMENT' 
-                            and is_standard = 1 
-                            and is_selectable = 1
+                            '.%')
+                            OR c.path LIKE CONCAT('%.',
+                            a.id)
+                            OR c.path LIKE CONCAT(a.id,
+                            '.%')
+                            OR c.path = a.id)
+                        WHERE
+                            domain_id = 'MEASUREMENT'
+                            AND is_standard = 1
+                            AND is_selectable = 1
                         )
-                )  
+                )
                 AND (
                     measurement.PERSON_ID IN (
-                        select
-                            person_id  
-                        from
-                            `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_person` cb_search_person  
-                        where
-                            cb_search_person.person_id in (
-                                select
-                                    person_id 
-                                from
-                                    `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_person` p 
-                                where
-                                    DATE_DIFF(CURRENT_DATE,dob, YEAR) - IF(EXTRACT(MONTH 
+                        SELECT
+                            person_id
+                        FROM
+                            `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_person` cb_search_person
+                        WHERE
+                            cb_search_person.person_id IN (
+                                SELECT
+                                    person_id
                                 FROM
-                                    dob)*100 + EXTRACT(DAY 
+                                    `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_person` p
+                                WHERE
+                                    DATE_DIFF(CURRENT_DATE,dob, YEAR) - IF(EXTRACT(MONTH
                                 FROM
-                                    dob) > EXTRACT(MONTH 
+                                    dob)*100 + EXTRACT(DAY
                                 FROM
-                                    CURRENT_DATE)*100 + EXTRACT(DAY 
+                                    dob) > EXTRACT(MONTH
+                                FROM
+                                    CURRENT_DATE)*100 + EXTRACT(DAY
                                 FROM
                                     CURRENT_DATE),
                                     1,
-                                    0) BETWEEN 20 and 25 
-                                    and not exists ( SELECT
-                                        'x' 
+                                    0) BETWEEN 20 AND 25
+                                    AND NOT EXISTS ( SELECT
+                                        'x'
                                     FROM
-                                        `""" + os.environ["WORKSPACE_CDR"] + """.death` d 
-                                    where
-                                        d.person_id = p.person_id) ) 
-                                    and cb_search_person.person_id not in (select
-                                        criteria.person_id 
-                                    from
-                                        (select
-                                            distinct person_id,
+                                        `""" + os.environ["WORKSPACE_CDR"] + """.death` d
+                                    WHERE
+                                        d.person_id = p.person_id) )
+                                    AND cb_search_person.person_id NOT IN (SELECT
+                                        criteria.person_id
+                                    FROM
+                                        (SELECT
+                                            DISTINCT person_id,
                                             entry_date,
-                                            concept_id 
-                                        from
-                                            `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_all_events` 
-                                        where
+                                            concept_id
+                                        FROM
+                                            `""" + os.environ["WORKSPACE_CDR"] + """.cb_search_all_events`
+                                        WHERE
                                             (
-                                                is_standard = 0 
-                                                and concept_id in (903118, 903115)  
-                                                and systolic <= 90.0 
-                                                and diastolic <= 60.0 
-                                                or  is_standard = 0 
-                                                and concept_id in (903118, 903115)  
-                                                and systolic <= 120.0 
-                                                and diastolic <= 80.0 
-                                                or  is_standard = 0 
-                                                and concept_id in (903118, 903115)  
-                                                and systolic BETWEEN 121.0 and 139.0 
-                                                and diastolic BETWEEN 81.0 and 89.0 
-                                                or  is_standard = 0 
-                                                and concept_id in (903124)  
-                                                and  value_as_number >= 20.0
+                                                is_standard = 0
+                                                AND concept_id IN (903118, 903115)
+                                                AND systolic <= 90.0
+                                                AND diastolic <= 60.0
+                                                OR  is_standard = 0
+                                                AND concept_id IN (903118, 903115)
+                                                AND systolic <= 120.0
+                                                AND diastolic <= 80.0
+                                                OR  is_standard = 0
+                                                AND concept_id IN (903118, 903115)
+                                                AND systolic BETWEEN 121.0 AND 139.0
+                                                AND diastolic BETWEEN 81.0 AND 89.0
+                                                OR  is_standard = 0
+                                                AND concept_id IN (903124)
+                                                AND  value_as_number >= 20.0
                                             )) criteria ) ))
-                            ) measurement 
-                        left join
-                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_unit 
-                                on measurement.unit_concept_id = m_unit.concept_id 
-                        left join
-                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_value 
-                                on measurement.value_as_concept_id = m_value.concept_id 
-                        left join
-                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_operator 
-                                on measurement.operator_concept_id = m_operator.concept_id 
-                        left join
-                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_type 
-                                on measurement.measurement_type_concept_id = m_type.concept_id 
-                        left join
-                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_standard_concept 
-                                on measurement.measurement_concept_id = m_standard_concept.concept_id 
-                        left join
-                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_source_concept 
-                                on measurement.measurement_source_concept_id = m_source_concept.concept_id 
-                        left join
-                            `""" + os.environ["WORKSPACE_CDR"] + """.visit_occurrence` v 
-                                on measurement.visit_occurrence_id = v.visit_occurrence_id 
-                        left join
-                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_visit 
-                                on v.visit_concept_id = m_visit.concept_id"""
+                            ) measurement
+                        LEFT JOIN
+                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_standard_concept
+                                ON measurement.measurement_concept_id = m_standard_concept.concept_id
+                        LEFT JOIN
+                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_type
+                                ON measurement.measurement_type_concept_id = m_type.concept_id
+                        LEFT JOIN
+                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_operator
+                                ON measurement.operator_concept_id = m_operator.concept_id
+                        LEFT JOIN
+                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_value
+                                ON measurement.value_as_concept_id = m_value.concept_id
+                        LEFT JOIN
+                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_unit
+                                ON measurement.unit_concept_id = m_unit.concept_id
+                        LEFT JOIn
+                            `""" + os.environ["WORKSPACE_CDR"] + """.visit_occurrence` v
+                                ON measurement.visit_occurrence_id = v.visit_occurrence_id
+                        LEFT JOIN
+                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_visit
+                                ON v.visit_concept_id = m_visit.concept_id
+                        LEFT JOIN
+                            `""" + os.environ["WORKSPACE_CDR"] + """.concept` m_source_concept
+                                ON measurement.measurement_source_concept_id = m_source_concept.concept_id"""
 
-YOUR_DATASET_NAME_measurement_df = pandas.read_gbq(YOUR_DATASET_NAME_measurement_sql, dialect="standard")
+YOUR_DATASET_NAME_measurement_df = pandas.read_gbq(
+    YOUR_DATASET_NAME_measurement_sql,
+    dialect="standard",
+    use_bqstorage_api=("BIGQUERY_STORAGE_API_ENABLED" in os.environ),
+    progress_bar_type="tqdm_notebook")
 
 YOUR_DATASET_NAME_measurement_df.head(5)
