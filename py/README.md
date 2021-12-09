@@ -22,4 +22,4 @@ Implementation details:
     * [gsutil](https://cloud.google.com/storage/docs/gsutil)
     * [Tensorflow GFile](https://www.tensorflow.org/api_docs/python/tf/io/gfile/GFile).
     
-* The few files of code implementing this interface are preinstalled as a [Python library](https://github.com/all-of-us/workbench-snippets/blob/master/py/setup.py) on the AoU workbench.
+* The few files of code implementing this interface are preinstalled as a [Python library](https://github.com/all-of-us/workbench-snippets/blob/main/py/setup.py) on the AoU workbench.

@@ -26,6 +26,6 @@ setup(
     url='https://github.com/all-of-us/workbench-snippets',
     project_urls={
         'Bug Reports': 'https://github.com/all-of-us/workbench-snippets/issues',
-        'Source': 'https://github.com/all-of-us/workbench-snippets/blob/master/py',
+        'Source': 'https://github.com/all-of-us/workbench-snippets/blob/main/py',
     },
 )
