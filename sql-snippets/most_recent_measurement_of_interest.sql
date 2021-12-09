@@ -2,8 +2,8 @@
 -- Return row level data for a measurement, limited to only the most recent result per person in our cohort.
 --
 -- PARAMETERS:
---   MEASUREMENT_CONCEPT_ID: for example 3000963  # Hemoglobin
---   UNIT_CONCEPT_ID: for example 8636            # gram per liter
+--   MEASUREMENT_CONCEPT_ID: for example 3004410        # Hemoglobin A1c
+--   UNIT_CONCEPT_ID: for example 8554                  # percent
 
 WITH
   --
