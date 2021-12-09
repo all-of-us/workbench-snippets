@@ -38,7 +38,7 @@ class QueryTest(bq_test_case.BQTestCase):
 SELECT * FROM UNNEST([
 STRUCT<person_id INT64,
        birth_datetime TIMESTAMP,
-       gender_concept_id INT64>
+       sex_at_birth_concept_id INT64>
     (1001, '1990-12-31 00:00:00 UTC', 501),
     (1002, '1950-08-01 00:00:00 UTC', 500),
     (1003, '1965-06-30 00:00:00 UTC', 500)
@@ -107,7 +107,7 @@ STRUCT<measurement_id INT64,
         UNIT_CONCEPT_ID=456)
 
     expected = [
-        # person_id	birth_datetime	gender	src_id	 measurement_concept_id	measurement_date	measurement_datetime	measurement_type_concept_id	operator_concept_id	value_as_number	value_as_concept_id	unit_concept_id range_low	range_high
+        # person_id	birth_datetime	sex_at_birth	src_id	 measurement_concept_id	measurement_date	measurement_datetime	measurement_type_concept_id	operator_concept_id	value_as_number	value_as_concept_id	unit_concept_id range_low	range_high
         (1001, datetime(1990, 12, 31, 0, 0, tzinfo=tz.gettz("UTC")),  "MALE", "EHR site1", 123, date(2005, 12, 31), datetime(2005, 12, 31, 10, 30, tzinfo=tz.gettz("UTC")), None, None, 42.0, None, 456, 0, 999),
         (1001, datetime(1990, 12, 31, 0, 0, tzinfo=tz.gettz("UTC")),  "MALE", "EHR site1", 123, date(2007,  9, 11), datetime(2007,  9, 11,  8,  0, tzinfo=tz.gettz("UTC")), None, None, 13.5, None, 456, 0, 999),
         (1001, datetime(1990, 12, 31, 0, 0, tzinfo=tz.gettz("UTC")),  "MALE", "PPI/PM", 123, date(2007,  9, 11), datetime(2007,  9, 11, 20, 59, tzinfo=tz.gettz("UTC")), None, None, None,  100, 456, 0, 999),

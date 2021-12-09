@@ -1,4 +1,4 @@
-# Use snippet 'measurement_by_gender' to plot joined demographics and measurements dataframes.
+# Use snippet 'measurement_by_sex_at_birth' to plot joined demographics and measurements dataframes.
 # This plot assumes 'measurement_df' was created using snippet 'Basic operations -> join_dataframes' to
 # join together demographics and measurements dataframes.
 # See also https://plotnine.readthedocs.io/en/stable/
@@ -14,11 +14,11 @@ meas_filter = ((measurement_df.STANDARD_CONCEPT_NAME == measurement_to_plot)
   & (measurement_df.VALUE_AS_NUMBER < 9999999)  # Get rid of nonsensical outliers.
 )
 
-(ggplot(measurement_df[meas_filter], aes(x = 'GENDER', y = 'VALUE_AS_NUMBER')) +
+(ggplot(measurement_df[meas_filter], aes(x = 'SEX_AT_BIRTH', y = 'VALUE_AS_NUMBER')) +
     geom_boxplot() +
     stat_summary(fun_data = get_boxplot_fun_data, geom = 'text', size = 10,
                  position = position_dodge(width = 0.9), va = 'top') +
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     facet_wrap(('STANDARD_CONCEPT_NAME', 'UNIT_CONCEPT_NAME'), ncol = 2, scales = 'free') +
-    ggtitle(f'Numeric values of measurements, by gender\nSource: All Of Us Data') +
+    ggtitle(f'Numeric values of measurements, by sex_at_birth\nSource: All Of Us Data') +
     theme(figure_size=(12, 6), panel_spacing = .5, axis_text_x = element_text(angle=25, hjust=1)))

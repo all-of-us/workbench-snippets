@@ -35,7 +35,7 @@ class QueryTest(bq_test_case.BQTestCase):
 SELECT * FROM UNNEST([
 STRUCT<person_id INT64,
        birth_datetime TIMESTAMP,
-       gender_concept_id INT64>
+       sex_at_birth_concept_id INT64>
     (1001, '1990-12-31 00:00:00 UTC', 501),
     (1002, '1950-08-01 00:00:00 UTC', 500),
     (1003, '1965-06-30 00:00:00 UTC', 500)

@@ -1,4 +1,4 @@
-# Use snippet 'measurement_by_age_and_gender' to plot joined demographics and measurements dataframes.
+# Use snippet 'measurement_by_age_and_sex_at_birth' to plot joined demographics and measurements dataframes.
 # This plot assumes 'measurement_df' was created using snippet 'Basic operations -> join_dataframes' to
 # join together demographics and measurements dataframes.
 # See also https://r4ds.had.co.nz/data-visualisation.html
@@ -12,7 +12,7 @@ measurement_to_plot <- unique(measurement_df$STANDARD_CONCEPT_NAME)[1]
 measurement_df %>%
     filter(STANDARD_CONCEPT_NAME == measurement_to_plot) %>%
     filter(!UNIT_CONCEPT_NAME %in% c('No matching concept', 'NULL')) %>%
-    filter(GENDER != 'No matching concept') %>%
+    filter(SEX_AT_BIRTH != 'No matching concept') %>%
     filter(VALUE_AS_NUMBER < 9999999) %>%  # Get rid of nonsensical outliers.
     mutate(age_at_measurement = year(as.period(interval(start = DATE_OF_BIRTH, end = MEASUREMENT_DATETIME)))) %>%
     ggplot(aes(x = cut_width(age_at_measurement, width = 5, boundary = 0), y = VALUE_AS_NUMBER)) +
@@ -21,6 +21,6 @@ measurement_df %>%
                  position = position_dodge(width = 0.9), vjust = -0.8) +
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     coord_flip() +
-    facet_wrap(STANDARD_CONCEPT_NAME + UNIT_CONCEPT_NAME ~ GENDER, ncol = 2, scales = 'free') +
+    facet_wrap(STANDARD_CONCEPT_NAME + UNIT_CONCEPT_NAME ~ SEX_AT_BIRTH, ncol = 2, scales = 'free') +
     xlab('age group') +
-    labs(title = str_glue('Numeric values of measurements by age and gender'), caption = 'Source: All Of Us Data')
+    labs(title = str_glue('Numeric values of measurements by age and sex_at_birth'), caption = 'Source: All Of Us Data')

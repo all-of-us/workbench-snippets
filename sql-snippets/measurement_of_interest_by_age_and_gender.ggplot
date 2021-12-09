@@ -10,8 +10,8 @@ measurement_of_interest_df %>%
                  position = position_dodge(width = 0.9), vjust = -0.8) +
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     coord_flip() +
-    facet_wrap(~ gender, nrow = length(unique(measurement_of_interest_df$gender))) +
+    facet_wrap(~ sex_at_birth, nrow = length(unique(measurement_of_interest_df$sex_at_birth))) +
     xlab('age') +
     ylab(str_glue('{UNIT_NAME}')) +
-    labs(title = str_glue('All {MEASUREMENT_NAME} measurements, by age, faceted by gender'),
+    labs(title = str_glue('All {MEASUREMENT_NAME} measurements, by age, faceted by sex_at_birth'),
          caption = 'Source: All Of Us Data')
