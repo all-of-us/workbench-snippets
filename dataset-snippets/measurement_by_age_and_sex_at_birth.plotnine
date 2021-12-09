@@ -8,8 +8,8 @@
 measurement_to_plot = measurement_df.standard_concept_name.unique()[0]
 
 # Create a derived variable for age group.
-measurement_df['age_at_measurement'] = ((measurement_df['MEASUREMENT_DATETIME'].dt.tz_localize(None)
-                                     - measurement_df['DATE_OF_BIRTH'].dt.tz_localize(None)).dt.days)//365.24
+measurement_df['age_at_measurement'] = ((measurement_df['measurement_datetime'].dt.tz_localize(None)
+                                     - measurement_df['date_of_birth'].dt.tz_localize(None)).dt.days)//365.24
 measurement_df['age_group'] = pd.cut(measurement_df['age_at_measurement'],
                                                  [-np.inf, 34.5, 49.5, 64.5, np.inf],
                                                  labels=["<35", "35-49", "50-64", "65+"])
