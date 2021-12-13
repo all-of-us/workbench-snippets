@@ -291,19 +291,28 @@ def create_view_all_comments_widget(ws_names2id: Dict[str, str], ws_paths: Dict[
     with output:
       output.clear_output()
       workspace_paths = ws_paths[changed['new']]
-      comment_files = get_ipython().getoutput(f'gsutil ls {workspace_paths.get_comment_file_glob()}')
-      if not comment_files[0].startswith('gs://'):
+      try:
+        comment_files = tf.io.gfile.glob(pattern=workspace_paths.get_comment_file_glob())
+      except tf.errors.PermissionDeniedError as e:
+        target_workspace = [name for name, id in ws_names2id.items() if id == changed['new']]
+        display(HTML(f'''<div class="alert alert-block alert-danger">
+          <b>Warning:</b> Unable to view HTML snapshots in workspace {target_workspace} from <b>this workspace</b>.
+          <hr><p><pre>{e.message}</pre></p>
+          </div>'''))
+        return
+      if not comment_files:
         display(HTML('''<div class="alert alert-block alert-warning">
           No comment files found for HTML snapshots in this workspace.</div>'''))
         return
 
       def get_comment(f):
-        return get_ipython().getoutput(f"gsutil cat '{f}'")
+        with tf.io.gfile.GFile(f, 'r') as fh:
+          return fh.readlines()
 
       def process_task(f):
         return f, get_comment(f)
 
-      max_pool = 16
+      max_pool = 8
       with Pool(max_pool) as p:
         pool_outputs = list(tqdm(p.imap(process_task, comment_files), total=len(comment_files)))
 
