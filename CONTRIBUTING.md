@@ -43,7 +43,7 @@ Once this happens, new snippets contents go live in users' Jupyter servers on a 
 
 # Appendix
 
-For the workbench-snippets GitHub repository, we are doing ‘merge and squash’ of pull requests. So that means your fork does not match upstream after your pull request has been merged. The easiest way to manage this is to always work in a feature branch, instead of checking changes into your fork’s master branch.
+For the workbench-snippets GitHub repository, we are doing ‘merge and squash’ of pull requests. So that means your fork does not match upstream after your pull request has been merged. The easiest way to manage this is to always work in a feature branch, instead of checking changes into your fork’s main branch.
 
 
 ## How to work on a new feature
@@ -60,15 +60,15 @@ Note: If you get an error saying that upstream is unknown, run the following rem
 git remote add upstream https://github.com/all-of-us/workbench-snippets.git
 ```
 
-(2) Make sure your master branch is “even” with upstream.
+(2) Make sure your main branch is “even” with upstream.
 
 ```
-git checkout master
-git merge --ff-only upstream/master
+git checkout main
+git merge --ff-only upstream/main
 git push
 ```
 
-Now the master branch of your fork on GitHub should say *"This branch is even with all-of-us:master."*.
+Now the main branch of your fork on GitHub should say *"This branch is even with all-of-us:main."*.
 
 
 (3) Create a feature branch for your change.
@@ -77,7 +77,7 @@ Now the master branch of your fork on GitHub should say *"This branch is even wi
 git checkout -b my-feature-branch-name
 ```
 
-Because you created this feature branch from your master branch that was up to date with upstream (step 2), your feature branch is also up to date with upstream. Commit your changes to this branch until you are happy with them.
+Because you created this feature branch from your main branch that was up to date with upstream (step 2), your feature branch is also up to date with upstream. Commit your changes to this branch until you are happy with them.
 
 (4) Push your changes to GitHub and send a pull request.
 
@@ -87,12 +87,12 @@ git push --set-upstream origin my-feature-branch-name
 
 After your pull request is merged, its safe to delete your branch!
 
-## I accidentally checked a new change to my master branch instead of a feature branch. How to fix this?
+## I accidentally checked a new change to my main branch instead of a feature branch. How to fix this?
 
 (1) Soft undo your change(s). This leaves the changes in the files on disk but undoes the commit.
 
 ```
-git checkout master
+git checkout main
 # Moves pointer back to previous HEAD
 git reset --soft HEAD@{1}
 ```
@@ -105,11 +105,11 @@ Or if you need to move back several commits to the most recent one in common wit
 git stash
 ```
 
-(3) Now do the [How to work on a new feature](#how-to-work-on-a-new-feature) step to bring master up to date and create your new feature branch that is “even” with upstream. Here are those commands again:
+(3) Now do the [How to work on a new feature](#how-to-work-on-a-new-feature) step to bring main up to date and create your new feature branch that is “even” with upstream. Here are those commands again:
 
 ```
 git fetch upstream
-git merge --ff-only upstream/master
+git merge --ff-only upstream/main
 git checkout -b my-feature-branch-name
 ```
 
