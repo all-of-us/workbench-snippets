@@ -321,7 +321,7 @@ def create_view_all_comments_widget(ws_names2id: Dict[str, str], ws_paths: Dict[
                                         columns = ['comment']
                                        ).reset_index()
       comments[['extra', 'author', 'date', 'time', 'item']] = comments['index'].str.split(pat='/', expand=True)
-      display(comments[['date', 'time', 'author', 'item', 'comment']].sort_values(by=['date', 'time']))
+      display(comments[['date', 'time', 'author', 'item', 'comment']].sort_values(by=['date', 'time']).reset_index(drop=True))
   workspace_chooser.observe(on_choose_workspace, names='value')
 
   return widgets.VBox(
