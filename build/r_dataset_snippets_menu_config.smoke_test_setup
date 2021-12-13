@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-# This cohort was created using Dataset Builder on 12/26/2021.
+# This cohort was created using Dataset Builder on 12/09/2021.
 #
 # Feel free to update it with a new/different cohort, but please follow these two caveats:
 #  1) Keep the number of members below 5000 so that the smoke test runs relatively quickly.
