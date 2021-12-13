@@ -1,4 +1,5 @@
-firecloud>=0.16.25
-ipython>=5.7.0
-ipywidgets>=7.5.1
-pandas>=0.25.3
+firecloud
+ipython
+ipywidgets
+multiprocess
+pandas

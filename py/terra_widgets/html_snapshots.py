@@ -15,8 +15,10 @@ from IPython.display import display
 from IPython.display import HTML
 from IPython.display import IFrame
 from ipywidgets import widgets
+from multiprocess import Pool
 import pandas as pd
 import tensorflow as tf
+from tqdm import tqdm
 
 from terra_widgets.workspace_metadata import WorkspaceMetadata
 from terra_widgets.workspace_paths import WorkspacePaths
@@ -289,33 +291,37 @@ def create_view_all_comments_widget(ws_names2id: Dict[str, str], ws_paths: Dict[
     with output:
       output.clear_output()
       workspace_paths = ws_paths[changed['new']]
-      comment_files = get_ipython().getoutput(f'gsutil ls {workspace_paths.get_comment_file_glob()}')
-      if not comment_files[0].startswith('gs://'):
+      try:
+        comment_files = tf.io.gfile.glob(pattern=workspace_paths.get_comment_file_glob())
+      except tf.errors.PermissionDeniedError as e:
+        target_workspace = [name for name, id in ws_names2id.items() if id == changed['new']]
+        display(HTML(f'''<div class="alert alert-block alert-danger">
+          <b>Warning:</b> Unable to view HTML snapshots in workspace {target_workspace} from <b>this workspace</b>.
+          <hr><p><pre>{e.message}</pre></p>
+          </div>'''))
+        return
+      if not comment_files:
         display(HTML('''<div class="alert alert-block alert-warning">
           No comment files found for HTML snapshots in this workspace.</div>'''))
         return
-      progress = widgets.IntProgress(
-          value=0,
-          min=0,
-          max=len(comment_files),
-          step=1,
-          description=f'Retrieving {len(comment_files)} comments:',
-          bar_style='success',
-          orientation='horizontal',
-          layout=widgets.Layout(width='450px'),
-          style={'description_width': 'initial'}
-      )
-      display(progress)
-      comment_num = 0
-      comment_file_contents = []
-      for file in comment_files:
-        comment = get_ipython().getoutput(f"gsutil cat '{file}'")
-        version = file.replace(workspace_paths.get_subfolder(), '')
-        comment_file_contents.append({'version': version, 'comment': comment})
-        comment_num += 1
-        progress.value = comment_num
-      comments = pd.DataFrame(comment_file_contents)
-      display(comments)
+
+      def get_comment(f):
+        with tf.io.gfile.GFile(f, 'r') as fh:
+          return fh.readlines()
+
+      def process_task(f):
+        return f, get_comment(f)
+
+      max_pool = 8
+      with Pool(max_pool) as p:
+        pool_outputs = list(tqdm(p.imap(process_task, comment_files), total=len(comment_files)))
+
+      comments = pd.DataFrame.from_dict({f.replace(workspace_paths.get_subfolder(), ''): c[0] for f, c in pool_outputs},
+                                        orient = 'index',
+                                        columns = ['comment']
+                                       ).reset_index()
+      comments[['extra', 'author', 'date', 'time', 'item']] = comments['index'].str.split(pat='/', expand=True)
+      display(comments[['date', 'time', 'author', 'item', 'comment']].sort_values(by=['date', 'time']).reset_index(drop=True))
   workspace_chooser.observe(on_choose_workspace, names='value')
 
   return widgets.VBox(
@@ -331,15 +337,13 @@ def create_view_all_comments_widget(ws_names2id: Dict[str, str], ws_paths: Dict[
 def display_html_snapshots_widget():
   """Create an ipywidget UI encapsulating all three UIs related to HTML snapshots."""
   if not get_ipython():
-    print('The HTML snapshot widget cannot be display in environments other than IPython.') 
+    print('The HTML snapshot widget cannot be display in environments other than IPython.')
     return
 
   # Configure notebook display preferences to better suit this UI. These display settings
   # will be in effect for all cells in the notebook run after this one is run.
-  if pd.__version__.startswith('1'):
-    pd.set_option('display.max_colwidth', None)
-  else:
-    pd.set_option('display.max_colwidth', -1)
+  pd.set_option('display.max_colwidth', None)
+  pd.set_option('display.max_rows', None)
   get_ipython().run_cell_magic(
       'javascript',
       '',
