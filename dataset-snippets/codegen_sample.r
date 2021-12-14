@@ -78,9 +78,9 @@ bq_table_save(
 
 # Copy the CSV file(s) to the local VM file system.
 dir.create(out_dir_15947426)
-system2("gsutil", paste("-m", "cp", export_15947426_path, paste(out_dir_15947426, "/"), stdout=TRUE, stderr=TRUE)
+system2("gsutil", paste("-m", "cp", export_15947426_path, paste(out_dir_15947426, "/")), stdout=TRUE, stderr=TRUE)
 
 # Load the local CSV file(s) as a data frame.
-dataset_15947426_survey_df = data.table::rbindlist(lapply(Sys.glob(export_15947426_glob), data.table::fread))
+dataset_15947426_survey_df <- data.table::rbindlist(lapply(Sys.glob(export_15947426_glob), data.table::fread))
 
 head(dataset_15947426_survey_df)
