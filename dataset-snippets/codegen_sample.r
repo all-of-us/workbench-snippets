@@ -66,21 +66,39 @@ AND (
                 )
  ", sep="")
 
-# Extract the cohort to Cloud Storage as CSV.
-out_dir_15947426 <- "out_15947426"
-export_15947426_glob <- paste(out_dir_15947426, "/export15947426-*.csv")
-export_15947426_path <- paste(Sys.getenv("WORKSPACE_BUCKET"), "/bq_exports/", export_15947426_glob, sep="")
+# Formuate a Cloud Storage destination path for the data exported from BigQuery.
+# NOTE: By default data exported multiple times on the same day will overwrite older copies.
+#       But data exported on a different days will write to a new location so that historical
+#       copies can be kept as the dataset definition is changed.
+survey_export_87319558_path <- file.path(
+    Sys.getenv("WORKSPACE_BUCKET"),
+    "bq_exports",
+    Sys.getenv("OWNER_EMAIL"),
+    strftime(lubridate::now(), "%Y%m%d"),  # Comment out this line if you want the export to always overwrite.
+    "survey_87319558",
+    "survey_87319558_*.csv")
+message(str_glue('The data will be written to {survey_export_87319558_path}. Use this path when reading ',
+                 'the data into your notebooks in the future.'))
+
+# Perform the query and export the dataset to Cloud Storage as CSV files.
+# NOTE: You only need to run `bq_table_save` once. After that, you can
+#       just read data from the CSVs in Cloud Storage.
 bq_table_save(
-    bq_dataset_query(Sys.getenv("WORKSPACE_CDR"), dataset_15947426_survey_sql, billing=Sys.getenv("GOOGLE_PROJECT")),
-    export_15947426_path,
-    destination_format="CSV"
-)
+    bq_dataset_query(Sys.getenv("WORKSPACE_CDR"), dataset_87319558_survey_sql, billing = Sys.getenv("GOOGLE_PROJECT")),
+    survey_export_87319558_path,
+    destination_format = "CSV")
 
-# Copy the CSV file(s) to the local VM file system.
-dir.create(out_dir_15947426)
-system2("gsutil", paste("-m", "cp", export_15947426_path, paste(out_dir_15947426, "/")), stdout=TRUE, stderr=TRUE)
+# Read the data directly from Cloud Storage into memory.
+# NOTE: Alternatively you can `gsutil -m cp {survey_export_87319558_path}` to copy these files
+#       to the Jupyter disk.
+dataset_87319558_survey_df <- bind_rows(
+    map(system2('gsutil', args = c('ls', survey_export_87319558_path), stdout = TRUE, stderr = TRUE),
+        function(csv) {
+            message(str_glue('Loading {csv}.'))
+            read_csv(pipe(str_glue('gsutil cat {csv}')))
+        })
+    )
 
-# Load the local CSV file(s) as a data frame.
-dataset_15947426_survey_df <- data.table::rbindlist(lapply(Sys.glob(export_15947426_glob), data.table::fread))
+dim(dataset_87319558_survey_df)
 
-head(dataset_15947426_survey_df)
+head(dataset_87319558_survey_df)
