@@ -1,0 +1,26 @@
+# Use snippet 'measurement_by_age_and_sex_at_birth' to plot joined demographics and measurements dataframes.
+# This plot assumes 'measurement_df' was created using snippet 'Basic operations -> join_dataframes' to
+# join together demographics and measurements dataframes.
+# See also https://r4ds.had.co.nz/data-visualisation.html
+
+
+options(repr.plot.height = 16, repr.plot.width = 16)
+
+# There could be many different measurements in the dataframe. By default, plot the first one.
+measurement_to_plot <- unique(measurement_df$standard_concept_name)[1]
+
+measurement_df %>%
+    filter(standard_concept_name == measurement_to_plot) %>%
+    filter(!unit_concept_name %in% c('No matching concept', 'NULL')) %>%
+    filter(sex_at_birth != 'No matching concept') %>%
+    filter(value_as_number < 9999999) %>%  # Get rid of nonsensical outliers.
+    mutate(age_at_measurement = year(as.period(interval(start = date_of_birth, end = measurement_datetime)))) %>%
+    ggplot(aes(x = cut_width(age_at_measurement, width = 5, boundary = 0), y = value_as_number)) +
+    geom_boxplot() +
+    stat_summary(fun.data = get_boxplot_fun_data, geom = 'text', size = 2,
+                 position = position_dodge(width = 0.9), vjust = -0.8) +
+#    scale_y_log10() +  # Uncomment if the data looks skewed.
+    coord_flip() +
+    facet_wrap(standard_concept_name + unit_concept_name ~ sex_at_birth, ncol = 2, scales = 'free') +
+    xlab('age group') +
+    labs(title = str_glue('Numeric values of measurements by age and sex_at_birth'), caption = 'Source: All Of Us Data')

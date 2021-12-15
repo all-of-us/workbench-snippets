@@ -2,21 +2,21 @@
 -- Return row level data for a measurement for our cohort.
 --
 -- PARAMETERS:
---   MEASUREMENT_CONCEPT_ID: for example 3000963  # Hemoglobin
---   UNIT_CONCEPT_ID: for example 8636            # gram per liter
+--   MEASUREMENT_CONCEPT_ID: for example 3004410        # Hemoglobin A1c
+--   UNIT_CONCEPT_ID: for example 8554                  # percent
 
 WITH
   --
-  -- Retrieve participants birthdate and gender.
+  -- Retrieve participants birthdate and sex_at_birth.
   --
 persons AS (
   SELECT
     person_id,
     birth_datetime,
-    concept_name AS gender
+    concept_name AS sex_at_birth
   FROM
     `{CDR}.person`
-  LEFT JOIN `{CDR}.concept` ON concept_id = gender_concept_id),
+  LEFT JOIN `{CDR}.concept` ON concept_id = sex_at_birth_concept_id),
   --
   -- Retrieve the row-level data for our measurement of interest.
   --
@@ -41,7 +41,7 @@ measurements AS (
     AND unit_concept_id = {UNIT_CONCEPT_ID}
     AND person_id IN ({COHORT_QUERY}))
   --
-  -- Lastly, JOIN all this data together so that we have the birthdate, gender and site for each measurement.
+  -- Lastly, JOIN all this data together so that we have the birthdate, sex_at_birth and site for each measurement.
   --
 SELECT
   persons.*,

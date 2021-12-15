@@ -83,7 +83,7 @@ def render_files(config_file, query_template, output_file,
                  smoke_test_setup_file, smoke_test_file):
   """Use configuration to drive the autogeneration of snippets and tests."""
   with open(config_file, 'r') as f:
-    config = yaml.load(f.read())
+    config = yaml.safe_load(f.read())
 
   print(yaml.dump(config))
 

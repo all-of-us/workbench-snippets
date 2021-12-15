@@ -7,8 +7,8 @@ All of Us Dataset Builder Python snippets:
     - summarize_a_dataframe.py: dataset-snippets/summarize_a_dataframe.py
     - add_age_to_demographics.py: dataset-snippets/add_age_to_demographics.py
   - (3) Plot measurements:
-    - measurement_by_age_and_gender.plotnine: dataset-snippets/measurement_by_age_and_gender.plotnine
-    - measurement_by_gender.plotnine: dataset-snippets/measurement_by_gender.plotnine
+    - measurement_by_age_and_sex_at_birth.plotnine: dataset-snippets/measurement_by_age_and_sex_at_birth.plotnine
+    - measurement_by_sex_at_birth.plotnine: dataset-snippets/measurement_by_sex_at_birth.plotnine
   - (4) Summarize survey data:
     - summarize_a_survey_module.py: dataset-snippets/summarize_a_survey_module.py
     - summarize_a_survey_by_question_concept_id.py: dataset-snippets/summarize_a_survey_by_question_concept_id.py

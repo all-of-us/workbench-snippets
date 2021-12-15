@@ -1,35 +1,35 @@
-# Use snippet 'measurement_by_age_and_gender' to plot joined demographics and measurements dataframes.
+# Use snippet 'measurement_by_age_and_sex_at_birth' to plot joined demographics and measurements dataframes.
 # This plot assumes 'measurement_df' was created using snippet 'Basic operations -> join_dataframes' to
 # join together demographics and measurements dataframes.
 # See also https://plotnine.readthedocs.io/en/stable/
 
 
 # There could be many different measurements in the dataframe. By default, plot the first one.
-measurement_to_plot = measurement_df.STANDARD_CONCEPT_NAME.unique()[0]
+measurement_to_plot = measurement_df.standard_concept_name.unique()[0]
 
 # Create a derived variable for age group.
-measurement_df['age_at_measurement'] = ((measurement_df['MEASUREMENT_DATETIME'].dt.tz_localize(None)
-                                     - measurement_df['DATE_OF_BIRTH'].dt.tz_localize(None)).dt.days)//365.24
+measurement_df['age_at_measurement'] = ((measurement_df['measurement_datetime'].dt.tz_localize(None)
+                                     - measurement_df['date_of_birth'].dt.tz_localize(None)).dt.days)//365.24
 measurement_df['age_group'] = pd.cut(measurement_df['age_at_measurement'],
                                                  [-np.inf, 34.5, 49.5, 64.5, np.inf],
                                                  labels=["<35", "35-49", "50-64", "65+"])
 
 # meas_filter is a column of True and False
-meas_filter = ((measurement_df.STANDARD_CONCEPT_NAME == measurement_to_plot)
-  & (measurement_df.UNIT_CONCEPT_NAME != 'No matching concept')
-  & (measurement_df.UNIT_CONCEPT_NAME.notna())
-  & (measurement_df.GENDER != 'No matching concept')
-  & (measurement_df.VALUE_AS_NUMBER < 9999999)
+meas_filter = ((measurement_df.standard_concept_name == measurement_to_plot)
+  & (measurement_df.unit_concept_name != 'No matching concept')
+  & (measurement_df.unit_concept_name.notna())
+  & (measurement_df.sex_at_birth != 'No matching concept')
+  & (measurement_df.value_as_number < 9999999)
   & (measurement_df['age_at_measurement'].notnull())  # Get rid of nonsensical outliers.
 )
 
-(ggplot(measurement_df[meas_filter], aes(x = 'age_group', y = 'VALUE_AS_NUMBER')) +
+(ggplot(measurement_df[meas_filter], aes(x = 'age_group', y = 'value_as_number')) +
     geom_boxplot() +
     stat_summary(fun_data = get_boxplot_fun_data, geom = 'text', size = 10,
                  position = position_dodge(width = 0.9), va = 'top') +
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     coord_flip() +
-    facet_wrap(['STANDARD_CONCEPT_NAME + ": " + UNIT_CONCEPT_NAME', 'GENDER'], ncol = 2, scales = 'free') +
+    facet_wrap(['standard_concept_name + ": " + unit_concept_name', 'sex_at_birth'], ncol = 2, scales = 'free') +
     xlab('age group') +
-    ggtitle('Numeric values of measurements by age and gender\nSource: All Of Us Data') +
+    ggtitle('Numeric values of measurements by age and sex_at_birth\nSource: All Of Us Data') +
     theme(figure_size = (12, 12), panel_spacing = .5))

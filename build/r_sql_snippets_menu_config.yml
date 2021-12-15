@@ -10,11 +10,11 @@ All of Us R and SQL snippets:
     - measurements_of_interest_summary.sql: sql-snippets/measurements_of_interest_summary.sql
   - (4a) Retrieve a measurement of interest:
     - measurement_of_interest.sql: sql-snippets/measurement_of_interest.sql
-    - measurement_of_interest_by_age_and_gender.ggplot: sql-snippets/measurement_of_interest_by_age_and_gender.ggplot
-    - measurement_of_interest_by_gender.ggplot: sql-snippets/measurement_of_interest_by_gender.ggplot
+    - measurement_of_interest_by_age_and_sex_at_birth.ggplot: sql-snippets/measurement_of_interest_by_age_and_sex_at_birth.ggplot
+    - measurement_of_interest_by_sex_at_birth.ggplot: sql-snippets/measurement_of_interest_by_sex_at_birth.ggplot
     - measurement_of_interest_by_site.ggplot: sql-snippets/measurement_of_interest_by_site.ggplot
   - (4b) Retrieve the most recent measurement of interest per person:
     - most_recent_measurement_of_interest.sql: sql-snippets/most_recent_measurement_of_interest.sql
-    - most_recent_measurement_of_interest_by_age_and_gender.ggplot: sql-snippets/most_recent_measurement_of_interest_by_age_and_gender.ggplot
-    - most_recent_measurement_of_interest_by_gender.ggplot: sql-snippets/most_recent_measurement_of_interest_by_gender.ggplot
+    - most_recent_measurement_of_interest_by_age_and_sex_at_birth.ggplot: sql-snippets/most_recent_measurement_of_interest_by_age_and_sex_at_birth.ggplot
+    - most_recent_measurement_of_interest_by_sex_at_birth.ggplot: sql-snippets/most_recent_measurement_of_interest_by_sex_at_birth.ggplot
     - most_recent_measurement_of_interest_by_site.ggplot: sql-snippets/most_recent_measurement_of_interest_by_site.ggplot

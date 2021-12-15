@@ -10,11 +10,11 @@ All of Us Python and SQL snippets:
     - measurements_of_interest_summary.sql: sql-snippets/measurements_of_interest_summary.sql
   - (4a) Retrieve a measurement of interest:
     - measurement_of_interest.sql: sql-snippets/measurement_of_interest.sql
-    - measurement_of_interest_by_age_and_gender.plotnine: sql-snippets/measurement_of_interest_by_age_and_gender.plotnine
-    - measurement_of_interest_by_gender.plotnine: sql-snippets/measurement_of_interest_by_gender.plotnine
+    - measurement_of_interest_by_age_and_sex_at_birth.plotnine: sql-snippets/measurement_of_interest_by_age_and_sex_at_birth.plotnine
+    - measurement_of_interest_by_sex_at_birth.plotnine: sql-snippets/measurement_of_interest_by_sex_at_birth.plotnine
     - measurement_of_interest_by_site.plotnine: sql-snippets/measurement_of_interest_by_site.plotnine
   - (4b) Retrieve the most recent measurement of interest per person:
     - most_recent_measurement_of_interest.sql: sql-snippets/most_recent_measurement_of_interest.sql
-    - most_recent_measurement_of_interest_by_age_and_gender.plotnine: sql-snippets/most_recent_measurement_of_interest_by_age_and_gender.plotnine
-    - most_recent_measurement_of_interest_by_gender.plotnine: sql-snippets/most_recent_measurement_of_interest_by_gender.plotnine
+    - most_recent_measurement_of_interest_by_age_and_sex_at_birth.plotnine: sql-snippets/most_recent_measurement_of_interest_by_age_and_sex_at_birth.plotnine
+    - most_recent_measurement_of_interest_by_sex_at_birth.plotnine: sql-snippets/most_recent_measurement_of_interest_by_sex_at_birth.plotnine
     - most_recent_measurement_of_interest_by_site.plotnine: sql-snippets/most_recent_measurement_of_interest_by_site.plotnine

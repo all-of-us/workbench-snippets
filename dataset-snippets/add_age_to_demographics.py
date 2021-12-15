@@ -6,4 +6,4 @@
 
 
 ## -----[ CHANGE THE DATAFRAME NAME(S) `YOUR_DATASET_NAME_person_df` TO MATCH YOURS FROM DATASET BUILDER] -----
-YOUR_DATASET_NAME_person_df['AGE'] = pd.to_datetime('today').year - YOUR_DATASET_NAME_person_df['DATE_OF_BIRTH'].dt.year
+YOUR_DATASET_NAME_person_df['age'] = pd.to_datetime('today').year - YOUR_DATASET_NAME_person_df['date_of_birth'].dt.year

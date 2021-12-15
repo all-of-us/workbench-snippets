@@ -3,12 +3,12 @@ options(repr.plot.height = 8, repr.plot.width = 16)
 
 most_recent_measurement_of_interest_df %>%
     filter(value_as_number < 9999999) %>% # Get rid of nonsensical outliers.
-    ggplot(aes(x = gender, y = value_as_number)) +
+    ggplot(aes(x = sex_at_birth, y = value_as_number)) +
     geom_boxplot() +
     stat_summary(fun.data = get_boxplot_fun_data, geom = 'text', size = 4,
                  position = position_dodge(width = 0.9), vjust = -0.8) +
 #    scale_y_log10() +  # Uncomment if the data looks skewed.
     ylab(str_glue('{UNIT_NAME}')) +
-    labs(title = str_glue('Most recent {MEASUREMENT_NAME} measurement\nper person, by gender'),
+    labs(title = str_glue('Most recent {MEASUREMENT_NAME} measurement\nper person, by sex_at_birth'),
          caption = 'Source: All Of Us Data') +
     theme(axis.text.x = element_text(angle=25, hjust=1))
