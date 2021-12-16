@@ -95,7 +95,7 @@ dataset_15947426_survey_df <- bind_rows(
   map(system2('gsutil', args = c('ls', survey_export_15947426_path), stdout = TRUE, stderr = TRUE),
       function(csv) {
         message(str_glue('Loading {csv}.'))
-        read_csv(pipe(str_glue('gsutil cat {csv}')))
+        read_csv(pipe(str_glue('gsutil cat {csv}')), col_types = cols(person_id=col_double())
       })
 )
 
