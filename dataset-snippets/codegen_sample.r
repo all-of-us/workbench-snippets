@@ -96,7 +96,7 @@ dataset_15947426_survey_df <- bind_rows(
   map(system2('gsutil', args = c('ls', survey_export_15947426_path), stdout = TRUE, stderr = TRUE),
       function(csv) {
         message(str_glue('Loading {csv}.'))
-        chunk <- read_csv(pipe(str_glue('gsutil cat {csv}')), col_types = col_types)
+        chunk <- read_csv(pipe(str_glue('gsutil cat {csv}')), col_types = col_types, show_col_types = FALSE)
         if (is.null(col_types)) {
           col_types <- spec(chunk)    
         }
