@@ -89,20 +89,23 @@ bq_table_save(
   destination_format = "CSV")
 
 # Read the data directly from Cloud Storage into memory.
-# NOTE: Alternatively you can `gsutil -m cp {survey_export_15947426_path}` to copy these files
+# NOTE: Alternatively you can `gsutil -m cp {survey_export_15947426_path} .` to copy these files
 #       to the Jupyter disk.
-col_types <- NULL
-dataset_15947426_survey_df <- bind_rows(
-  map(system2('gsutil', args = c('ls', survey_export_15947426_path), stdout = TRUE, stderr = TRUE),
-      function(csv) {
-        message(str_glue('Loading {csv}.'))
-        chunk <- read_csv(pipe(str_glue('gsutil cat {csv}')), col_types = col_types, show_col_types = FALSE)
-        if (is.null(col_types)) {
-          col_types <- spec(chunk)    
-        }
-        chunk
-      })
-)
+read_bq_export_from_workspace_bucket <- function(export_path) {
+    col_types <- NULL
+    bind_rows(
+        map(system2('gsutil', args = c('ls', export_path), stdout = TRUE, stderr = TRUE),
+            function(csv) {
+                message(str_glue('Loading {csv}.'))
+                chunk <- read_csv(pipe(str_glue('gsutil cat {csv}')), col_types = col_types, show_col_types = FALSE)
+                if (is.null(col_types)) {
+                    col_types <- spec(chunk)    
+                }
+                chunk
+            })
+    )
+}
+dataset_15947426_survey_df <- read_bq_export_from_workspace_bucket(survey_export_15947426_path)
 
 dim(dataset_15947426_survey_df)
 
