@@ -91,11 +91,16 @@ bq_table_save(
 # Read the data directly from Cloud Storage into memory.
 # NOTE: Alternatively you can `gsutil -m cp {survey_export_15947426_path}` to copy these files
 #       to the Jupyter disk.
+col_types <- NULL
 dataset_15947426_survey_df <- bind_rows(
   map(system2('gsutil', args = c('ls', survey_export_15947426_path), stdout = TRUE, stderr = TRUE),
       function(csv) {
         message(str_glue('Loading {csv}.'))
-        read_csv(pipe(str_glue('gsutil cat {csv}')), col_types = cols(person_id=col_double())
+        chunk <- read_csv(pipe(str_glue('gsutil cat {csv}')), col_types = col_types)
+        if (is.null(col_types)) {
+          col_types <- spec(chunk)    
+        }
+        chunk
       })
 )
 
