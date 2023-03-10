@@ -15,9 +15,13 @@ name_of_file_in_bucket = 'test.csv'
 my_bucket = os.getenv('WORKSPACE_BUCKET')
 
 # copy csv file from the bucket to the current working space
-os.system(f"gsutil cp '{my_bucket}/data/{name_of_file_in_bucket}' .")
+args = ["gsutil", "cp", f"{my_bucket}/data/{name_of_file_in_bucket}", "."]
+output = subprocess.run(args, capture_output=True)
 
-print(f'[INFO] {name_of_file_in_bucket} is successfully downloaded into your working space')
-# save dataframe in a csv file in the same workspace as the notebook
-my_dataframe = pd.read_csv(name_of_file_in_bucket)
-my_dataframe.head()
+if output.returncode != 0:
+    # failed to copy the file - add appropriate error handling here
+    print(output.stderr)
+else:
+    print(f'[INFO] {name_of_file_in_bucket} is successfully downloaded into your working space')
+    my_dataframe = pd.read_csv(name_of_file_in_bucket)
+    my_dataframe.head()
