@@ -108,7 +108,6 @@ def main():
     # Iteration 1: these ENV reads will throw errors if not set.
     env = {
         'workspace_namespace': os.environ['WORKSPACE_NAMESPACE'],
-        'workspace_name': os.environ['WORKSPACE_NAME'],
         'workspace_bucket': os.environ['WORKSPACE_BUCKET'],
         'user_email': os.environ.get('PET_SA_EMAIL', default = os.environ['OWNER_EMAIL']),
         'owner_email': os.environ['OWNER_EMAIL'],
