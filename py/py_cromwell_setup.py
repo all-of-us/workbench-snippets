@@ -55,10 +55,29 @@ def get_app_details(env, app_name):
 
 # Checks that cromshell is installed. Otherwise raises an error.
 def validate_cromshell():
-    print('Scanning for cromshell 2...')
-    validate_command = subprocess.run(['cromshell-alpha', 'version'], capture_output=True, check=True, encoding='utf-8')
-    version = str.strip(validate_command.stderr).split(' cromshell ')[-1]
-    print(f'Cromshell 2 version detected: {version}')
+    if validate_cromshell_beta():
+        print("Found cromshell_beta, please use cromshell_beta")
+    elif validate_cromshell_alpha():
+        print("Found cromshell_alpha, please use cromshell_alpha")
+    else:
+        raise Exception("Cromshell is not installed.")
+
+# Checks that cromshell is installed. Otherwise raises an error.
+def validate_cromshell_alpha():
+    print('Scanning for cromshell 2 alpha...')
+    try:
+        subprocess.run(['cromshell-alpha', 'version'], capture_output=True, check=True, encoding='utf-8')
+    except FileNotFoundError:
+        return False
+    return True
+# Checks that cromshell is installed. Otherwise raises an error.
+def validate_cromshell_beta():
+    print('Scanning for cromshell 2 beta')
+    try:
+        subprocess.run(['cromshell-beta', 'version'], capture_output=True, check=True, encoding='utf-8')
+    except FileNotFoundError:
+        return False
+    return True
 
 def configure_cromwell(env, proxy_url):
      print('Updating cromwell config')
@@ -89,7 +108,6 @@ def main():
     # Iteration 1: these ENV reads will throw errors if not set.
     env = {
         'workspace_namespace': os.environ['WORKSPACE_NAMESPACE'],
-        'workspace_name': os.environ['WORKSPACE_NAME'],
         'workspace_bucket': os.environ['WORKSPACE_BUCKET'],
         'user_email': os.environ.get('PET_SA_EMAIL', default = os.environ['OWNER_EMAIL']),
         'owner_email': os.environ['OWNER_EMAIL'],
@@ -109,3 +127,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+ 
