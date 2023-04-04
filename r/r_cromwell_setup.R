@@ -70,7 +70,7 @@ validate_cromshell_alpha <- function() {
   cat('Scanning for cromshell 2 alpha..')
   tryCatch({
     system2('cromshell-alpha', args = 'version', stdout = TRUE, stderr = TRUE)
-    cat('cromshell-alpha found\n')
+    cat('\nFound cromshell_alpha, please use cromshell_alpha\n')
   }, error = function(e) {
     cat('cromshell-alpha not found\n')
       stop(e)
@@ -83,7 +83,7 @@ validate_cromshell_beta <- function() {
   cat('Scanning for cromshell 2 beta...\n')
   tryCatch({
     system2('cromshell-beta', args = 'version', stdout = TRUE, stderr = TRUE)
-    cat('cromshell-beta found')
+    cat('\nFound cromshell_beta, please use cromshell_beta\n')
   }, error = function(e) {
     stop(e)
   })
