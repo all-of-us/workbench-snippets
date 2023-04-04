@@ -125,7 +125,6 @@ main <- function() {
   # Iteration 1: these ENV reads will throw errors if not set.
   env <- list(
     workspace_namespace = Sys.getenv('WORKSPACE_NAMESPACE'),
-    workspace_name = Sys.getenv('WORKSPACE_NAME'),
     workspace_bucket = Sys.getenv('WORKSPACE_BUCKET'),
     user_email = ifelse(is.null(Sys.getenv('PET_SA_EMAIL')), Sys.getenv('OWNER_EMAIL'), Sys.getenv('PET_SA_EMAIL')),
     owner_email = Sys.getenv('OWNER_EMAIL'),
