@@ -94,7 +94,7 @@ configure_cromwell <- function(env, proxy_url) {
   cat("Updating cromwell config\n")
   file_path <- file.path(path.expand("~"), ".cromshell", "cromshell_config.json")
   configuration <- list(
-    cromwell_server = ifelse(!is.null(proxy_url), proxy_url, ""),
+    cromwell_server = ifelse(!is.null(proxy_url), proxy_url, "invalid url"),
     requests_timeout = 5,
     gcloud_token_email = env$user_email,
     referer_header_url = env$leonardo_url

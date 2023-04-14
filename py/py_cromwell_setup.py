@@ -83,7 +83,7 @@ def configure_cromwell(env, proxy_url):
      print('Updating cromwell config')
      file = f'{str(Path.home())}/.cromshell/cromshell_config.json'
      configuration = {
-        'cromwell_server': proxy_url.split("swagger/", 1)[0] if proxy_url else "",
+        'cromwell_server': proxy_url.split("swagger/", 1)[0] if proxy_url else "invalid url",
         'requests_timeout': 5,
         'gcloud_token_email': env['user_email'],
         'referer_header_url': env['leonardo_url']
