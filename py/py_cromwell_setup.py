@@ -56,9 +56,9 @@ def get_app_details(env, app_name):
 # Checks that cromshell is installed. Otherwise raises an error.
 def validate_cromshell():
     if validate_cromshell_beta():
-        print("Found cromshell_beta, please use cromshell_beta")
+        print("Found cromshell-beta, please use cromshell-beta")
     elif validate_cromshell_alpha():
-        print("Found cromshell_alpha, please use cromshell_alpha")
+        print("Found cromshell-alpha, please use cromshell-alpha")
     else:
         raise Exception("Cromshell is not installed.")
 

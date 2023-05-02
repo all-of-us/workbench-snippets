@@ -70,7 +70,7 @@ validate_cromshell_alpha <- function() {
   cat('Scanning for cromshell 2 alpha..')
   tryCatch({
     system2('cromshell-alpha', args = 'version', stdout = TRUE, stderr = TRUE)
-    cat('\nFound cromshell_alpha, please use cromshell_alpha\n')
+    cat('\nFound cromshell-alpha, please use cromshell-alpha\n')
   }, error = function(e) {
     cat('cromshell-alpha not found\n')
       stop(e)
@@ -83,7 +83,7 @@ validate_cromshell_beta <- function() {
   cat('Scanning for cromshell 2 beta...\n')
   tryCatch({
     system2('cromshell-beta', args = 'version', stdout = TRUE, stderr = TRUE)
-    cat('\nFound cromshell_beta, please use cromshell_beta\n')
+    cat('\nFound cromshell-beta, please use cromshell-beta\n')
   }, error = function(e) {
     stop(e)
   })
@@ -113,10 +113,10 @@ find_app_status <- function(env) {
   configure_cromwell(env, proxy_url)
 
   if (is.null(app_name)) {
-    message('CROMWELL app does not exist. Please create cromwell server from workbench\n')
+    cat('CROMWELL app does not exist. Please create cromwell server from workbench\n')
   } else {
     cat(sprintf('app_name=%s; app_status=%s\n', app_name, app_status))
-    message(sprintf('Existing CROMWELL app found (app_name=%s; app_status=%s).\n', app_name, app_status))
+    cat(sprintf('Existing CROMWELL app found (app_name=%s; app_status=%s).\n', app_name, app_status))
     quit(save = "no", status = 1, runLast = FALSE)
   }
 }
