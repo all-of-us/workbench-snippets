@@ -110,7 +110,7 @@ find_app_status <- function(env) {
   app_status <- app_info[[2]]
   proxy_url <- app_info[[3]]
 
-  configure_cromwell(env, proxy_url)
+  configure_cromwell(env, proxy_url[[1]])
 
   if (is.null(app_name)) {
     cat('CROMWELL app does not exist. Please create cromwell server from workbench\n')
