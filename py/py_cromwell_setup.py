@@ -55,7 +55,7 @@ def get_app_details(env, app_name):
 
 # Checks that cromshell is installed. Otherwise raises an error.
 def validate_cromshell():
-    if validate_cromshell():
+    if validate_cromshell_alias():
         print("Found cromshell, please use cromshell")
     elif validate_cromshell_alpha():
         print("Found cromshell-alpha, please use cromshell-alpha")
@@ -71,7 +71,7 @@ def validate_cromshell_alpha():
         return False
     return True
 # Checks that cromshell is installed. Otherwise raises an error.
-def validate_cromshell():
+def validate_cromshell_alias():
     print('Scanning for cromshell 2')
     try:
         subprocess.run(['cromshell', 'version'], capture_output=True, check=True, encoding='utf-8')
