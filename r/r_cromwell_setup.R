@@ -59,12 +59,13 @@ get_app_details <- function(env, app_name) {
 validate_cromshell <- function() {
   cat('Scanning for correct cromshell version...\n')
   tryCatch({
-    validate_cromshell_beta()
+    validate_cromshell_alias()
   }, error = function(e) {
     validate_cromshell_alpha()
   })
   return
 }
+
 
 validate_cromshell_alpha <- function() {
   cat('Scanning for cromshell 2 alpha..')
@@ -79,11 +80,11 @@ validate_cromshell_alpha <- function() {
   return
 }
 
-validate_cromshell_beta <- function() {
-  cat('Scanning for cromshell 2 beta...\n')
+validate_cromshell_alias <- function() {
+  cat('Scanning for cromshell 2...\n')
   tryCatch({
-    system2('cromshell-beta', args = 'version', stdout = TRUE, stderr = TRUE)
-    cat('\nFound cromshell-beta, please use cromshell-beta\n')
+    system2('cromshell', args = 'version', stdout = TRUE, stderr = TRUE)
+    cat('\nFound cromshell, please use cromshell\n')
   }, error = function(e) {
     stop(e)
   })
